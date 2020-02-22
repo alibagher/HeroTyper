@@ -4,6 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".GameActivity">
+        tools:context=".activities.GameActivity">
 
+    <com.phatphoophoo.pdtran.herotyper.views.GameScreenView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/game_screen_view"
+            />
 </android.support.constraint.ConstraintLayout>

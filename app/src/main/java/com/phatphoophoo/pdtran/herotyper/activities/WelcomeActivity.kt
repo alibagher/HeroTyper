@@ -1,8 +1,9 @@
-package com.phatphoophoo.pdtran.herotyper
+package com.phatphoophoo.pdtran.herotyper.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.phatphoophoo.pdtran.herotyper.R
 import kotlinx.android.synthetic.main.activity_welcome.*
 
 /**

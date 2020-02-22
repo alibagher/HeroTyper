@@ -3,17 +3,19 @@ package com.phatphoophoo.pdtran.herotyper.views
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
+import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 
-class DeliveryInformationListScreenView : ConstraintLayout {
+class GameScreenView : ConstraintLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
 
     init {
-        inflate(context, R.layout.delivery_information_list_screen_layout, this)
+        inflate(context, R.layout.game_screen_layout, this)
     }
 
-    fun setModel(modelStream: DeliveryInformationListScreenModel) {
+    fun setModel(modelStream: GameScreenModel) {
         // TODO redraw the screen here
 
     }
