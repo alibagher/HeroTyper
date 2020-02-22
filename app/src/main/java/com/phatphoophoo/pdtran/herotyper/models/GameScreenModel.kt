@@ -16,7 +16,7 @@ data class GameScreenModel(val difficulty: Int = 0) {
     val curTypedState : TypedState = TypedState.DEFAULT
 
     // Objects
-    val player : Player = Player()
+    val player : Player? = Player(Pair(0,0))
     val bullets : List<Bullet> = emptyList()
     val enemies : List<Enemy> = emptyList()
 }

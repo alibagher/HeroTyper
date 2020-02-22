@@ -3,13 +3,18 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 
-class GameScreenPresenter(val gameScreenView: GameScreenView) {
-    val gameModel = GameScreenModel()
+class GameScreenPresenter(
+    val gameScreenView: GameScreenView,
+    val windowSize: Pair<Int,Int>
+) {
+     var gameModel : GameScreenModel
 
     // TODO Add timer objects etc
     init {
         // Create stuff
 
+
+        gameModel = GameScreenModel()
         // Setup a timer that runs game loop
     }
 
