@@ -1,6 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.objects
 
-class Enemy(override var position: Pair<Int, Int>, override var velocity: Float) : GameObject {
+class Enemy(override var position: Pair<Float, Float>, override var velocity: Float) : GameObject {
     override val direction: Direction = Direction.DOWN
     override val height: Float = 30f
     override val width: Float = 30f

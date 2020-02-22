@@ -1,7 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.objects
 
 interface GameObject {
-    var position : Pair<Int,Int>
+    var position: Pair<Float, Float>
     val direction : Direction
     var velocity : Float
 
