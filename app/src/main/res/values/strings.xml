@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hero Typer</string>
+
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="dummy_button">Start Game</string>
+    <string name="dummy_content">Hero Typer</string>
 </resources>
