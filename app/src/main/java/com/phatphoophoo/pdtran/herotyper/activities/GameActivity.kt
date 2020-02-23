@@ -22,6 +22,6 @@ class GameActivity : Activity() {
         val width = size.x.toFloat()
         val height = size.y.toFloat()
 
-        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
+        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.HARD)
     }
 }

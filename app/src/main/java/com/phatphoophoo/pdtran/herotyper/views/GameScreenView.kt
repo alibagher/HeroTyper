@@ -41,11 +41,6 @@ class GameScreenView : View {
 
     override fun onDraw(c: Canvas?) {
         super.onDraw(c)
-        var p = Paint()
-        p.setARGB(1, 0, 0, 0)
-        p.textSize = 100F
-        p.color = Color.DKGRAY
-
         if (c != null && cnv == null) cnv = c
         Log.i("current canvas", cnv.toString())
         var bounds = RectF(c?.clipBounds)
@@ -60,9 +55,9 @@ class GameScreenView : View {
         }
 
         c?.drawBitmap(spaceship, centerX, bottomY, null)
-
-        for ((posX, posY) in enemyPosList) {
-            c?.drawBitmap(Bitmap.createScaledBitmap(enemy, 100, 100, false), posX, posY, null)
+        enemyPosList.forEachIndexed{i, (posX, posY) ->
+            c?.drawBitmap(enemyBmList[i], posX, posY, null)
         }
+
     }
 }
