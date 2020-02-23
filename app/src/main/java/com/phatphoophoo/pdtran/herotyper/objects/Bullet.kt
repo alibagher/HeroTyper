@@ -6,6 +6,6 @@ class Bullet(override var position: Pair<Float, Float>, override var velocity: F
     override val width: Float = 10f
 
     override fun updatePosition() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.position = Pair(position.first, position.second - velocity)
     }
 }
