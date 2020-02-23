@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 import android.graphics.Point
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
+import com.phatphoophoo.pdtran.herotyper.presenters.CustomKeyboardPresenter
 
 
 class GameActivity : Activity() {
@@ -24,6 +25,7 @@ class GameActivity : Activity() {
         val width = size.x.toFloat()
         val height = size.y.toFloat()
 
-        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
+        val gameScreenPresenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
+        val keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
     }
 }
