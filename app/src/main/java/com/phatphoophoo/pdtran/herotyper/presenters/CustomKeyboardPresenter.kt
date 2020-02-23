@@ -8,6 +8,8 @@ import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
 
 const val PACKAGE_NAME = "com.phatphoophoo.pdtran.herotyper"
 
+val easyWords = listOf("")
+
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     GAME_DIFFICULTY.EASY to listOf("what", "some", "trail"),
     GAME_DIFFICULTY.MEDIUM to listOf("according", "against", "business"),
@@ -57,7 +59,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
 
     private fun setNewWord() {
 
-        curWord = curLevelWords[(0 until (curLevelWords.size - 1)).random()]
+        curWord = curLevelWords[(0 until (curLevelWords.size)).random()]
         curLetterIndex = 0
     }
 
