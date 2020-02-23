@@ -54,6 +54,7 @@ class EnemyFactory(
     }
 
     fun updateEnemies(enemies: List<Enemy>) : List<Enemy> {
+        currentTick++
         val newList = (enemies.toMutableList())
 
         moveEnemies(newList)

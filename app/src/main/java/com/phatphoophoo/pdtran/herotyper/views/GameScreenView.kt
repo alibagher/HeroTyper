@@ -14,8 +14,9 @@ class GameScreenView : View {
     private val spaceshipY: Int = 200
     private var enemy: Bitmap? = null
     private var enemyPosList: MutableList<Pair<Float, Float>> = mutableListOf()
-    private var enemySzList: MutableList<Pair<Int, Int>> = mutableListOf()
+    private var enemySzList: MutableList<Pair<Float, Float>> = mutableListOf()
     private var enemyBmList: MutableList<Bitmap> = mutableListOf()
+    private var cnv: Canvas? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -27,41 +28,41 @@ class GameScreenView : View {
     init {
         spaceship = BitmapFactory.decodeResource(resources, R.drawable.spaceship)
         enemy = BitmapFactory.decodeResource(resources, R.drawable.meteor)
+//        this.update(c)
     }
 
     fun setModel(modelStream: GameScreenModel) {
-        Log.e("setModel", "test")
         // TODO: Add logic to fetch enemy list
-        enemyPosList = mutableListOf()
-        enemySzList = mutableListOf()
+        var loe = modelStream.enemies.toMutableList()
+        enemyPosList = loe.map { enemy -> enemy.position }.toMutableList()
+        enemySzList = loe.map { enemy -> Pair(enemy.width, enemy.height) }.toMutableList()
+        this.invalidate()
     }
 
     override fun onDraw(c: Canvas?) {
         super.onDraw(c)
         var p = Paint()
-        Log.e("onDraw", "test test test")
         p.setARGB(1, 0, 0, 0)
         p.textSize = 100F
         p.color = Color.DKGRAY
 
-
+        if (c != null && cnv == null) cnv = c
+        Log.i("current canvas", cnv.toString())
         var bounds = RectF(c?.clipBounds)
         var centerX: Float = bounds.centerX() - (spaceshipX / 2)
         var bottomY: Float = bounds.bottom - spaceshipY
 
-        Log.e("centerX", centerX.toString())
-        Log.e("bottomY", bottomY.toString())
-
 
         spaceship = Bitmap.createScaledBitmap(spaceship, spaceshipX, spaceshipY, false)
-        enemyBmList = mutableListOf()
+        enemyBmList.clear()
         for ((szX, szY) in enemySzList) {
-            enemyBmList.add(Bitmap.createScaledBitmap(enemy, szX, szY, false))
+            enemyBmList.add(Bitmap.createScaledBitmap(enemy, szX.toInt(), szY.toInt(), false))
         }
 
         c?.drawBitmap(spaceship, centerX, bottomY, null)
+
         for ((posX, posY) in enemyPosList) {
-            c?.drawBitmap(enemy, posX, posY, null)
+            c?.drawBitmap(Bitmap.createScaledBitmap(enemy, 100, 100, false), posX, posY, null)
         }
     }
 }
