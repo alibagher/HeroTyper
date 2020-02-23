@@ -25,7 +25,7 @@ class GameScreenPresenter(
 
     init {
         gameModel = GameScreenModel()
-        enemyFactory = EnemyFactory(difficulty, windowSize.second)
+        enemyFactory = EnemyFactory(difficulty, windowSize)
 
         val mainHandler = Handler(Looper.getMainLooper())
 
@@ -44,11 +44,25 @@ class GameScreenPresenter(
         // Make changes to the model
 
 
-        // The factories return values which we update  the game model with
+        // Update the state of the game objects
         gameModel.enemies = enemyFactory.updateEnemeies(gameModel.enemies)
+
+        // Check for collisions
+        val livesLost = enemyFactory.popHitStack()
+        val livesLeft = gameModel.lives - livesLost
+
+        if (livesLeft <= 0){
+            endGame()
+        }
+
+        gameModel.lives = livesLeft
 
         // Update the view
         gameScreenView.setModel(gameModel)
+    }
+
+    fun endGame() {
+        // Cover the screen with something?
     }
 
     // Call when the game ends

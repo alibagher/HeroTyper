@@ -6,6 +6,7 @@ import com.phatphoophoo.pdtran.herotyper.presenters.GameScreenPresenter
 import kotlinx.android.synthetic.main.activity_game.*
 import android.graphics.Point
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 
 
 class GameActivity : AppCompatActivity() {
@@ -18,9 +19,11 @@ class GameActivity : AppCompatActivity() {
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
-        val width = size.x
-        val height = size.y
+        val width = 600f
+        val height = 600f
 
-        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height))
+        // TODO calculate the height properly
+
+        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
     }
 }
