@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
@@ -40,7 +41,8 @@ class GameScreenPresenter(
         })
 
         gameScreenView.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            lastXPos = motionEvent.x
+            // Update the position within screen constraints
+            lastXPos = Math.max(Math.min(motionEvent.x, windowSize.first), 0f)
             true
         }
     }
