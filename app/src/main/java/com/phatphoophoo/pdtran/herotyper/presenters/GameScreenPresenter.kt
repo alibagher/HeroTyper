@@ -2,15 +2,19 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
+import android.view.View
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
+import com.phatphoophoo.pdtran.herotyper.objects.Player
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 
 
 class GameScreenPresenter(
     val gameScreenView: GameScreenView,
+    val customKeyboardPresenter: CustomKeyboardPresenter,
     val windowSize: Pair<Float,Float>,
     val difficulty: GAME_DIFFICULTY
 ) {
@@ -19,12 +23,14 @@ class GameScreenPresenter(
         const val REFRESH_RATE : Long = 50 // In MS
     }
 
+    var lastXPos: Float = 0f
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
 
     init {
         val mainHandler = Handler(Looper.getMainLooper())
+        gameModel.player = Player(Pair(windowSize.first/2, windowSize.second))
 
         mainHandler.post(object : Runnable {
             override fun run() {
@@ -32,16 +38,22 @@ class GameScreenPresenter(
                 mainHandler.postDelayed(this, REFRESH_RATE)
             }
         })
-    }
 
-    // TODO Manage the player movement and update their position in gameModel
+        gameScreenView.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            lastXPos = motionEvent.x
+            true
+        }
+    }
 
     fun gameLoop() {
         // Update the state of the game objects
+        gameModel.player!!.position = Pair(lastXPos, gameModel.player!!.position.second)
+
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // TODO Check if we completed a word. If so, run the other update function
         // gameModel.bullets = bulletService.updateBullets(gameModel.bullets, player.position)
+//        customKeyboardPresenter.
         gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
 
         // Check for barrier collisions

@@ -25,7 +25,7 @@ class GameActivity : Activity() {
         val width = size.x.toFloat()
         val height = size.y.toFloat()
 
-        val gameScreenPresenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
         val keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
+        val gameScreenPresenter = GameScreenPresenter(game_screen_view, keyboardPresenter, Pair(width, height), GAME_DIFFICULTY.EASY)
     }
 }
