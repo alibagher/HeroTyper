@@ -5,8 +5,8 @@ class Enemy(
     override var velocity: Float
 ) : GameObject {
     override val direction: Direction = Direction.DOWN
-    override var height: Float = (200 + Math.random() * 400).toFloat()
-    override var width: Float = (200 + Math.random() * 400).toFloat()
+    override val height: Float = (200 + Math.random() * 300).toFloat()
+    override val width: Float = this.height
 
     val scoreValue = 100
 
