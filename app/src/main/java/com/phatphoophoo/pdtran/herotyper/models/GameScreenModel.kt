@@ -8,7 +8,7 @@ data class GameScreenModel(val difficulty: GAME_DIFFICULTY = GAME_DIFFICULTY.EAS
     // Game properties
     var score : Int = 0
     var lives : Int = 3
-    var timeLimit : Int = 30000 // MS
+    val timeLimit : Int = 30000 // MS
     var curTime : Int = 0 // MS
 
     var curGoalWord : String = ""
