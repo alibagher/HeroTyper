@@ -2,49 +2,71 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/constraintLayout"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="#1A083A"
-                                             tools:context=".activities.WelcomeActivity" android:id="@+id/constraintLayout">
+                                             tools:context=".activities.WelcomeActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content"
+
+    <ImageView android:id="@+id/fullscreen_content"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="8dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginEnd="8dp"
+               android:layout_marginBottom="8dp"
+               android:contentDescription="@string/background_desc"
+               android:gravity="center"
+               android:keepScreenOn="true"
+               android:scaleType="centerCrop"
+               android:src="@drawable/background"
+               android:text="@string/game_title" android:textColor="#33b5e5"
+               android:textSize="50sp" android:textStyle="bold"
+               app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.421"/>
+
+    <TextView android:id="@+id/game_title"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:keepScreenOn="true"
-              android:textColor="#33b5e5"
-              android:textStyle="bold"
-              android:textSize="50sp"
-              android:gravity="center"
-              android:text="@string/game_title"
+              android:layout_marginStart="8dp"
+              android:layout_marginTop="8dp"
               android:layout_marginEnd="8dp"
-              app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-              app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-              app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-              app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.421"/>
+              android:layout_marginBottom="8dp"
+              android:gravity="center"
+              android:keepScreenOn="true"
+              android:text="@string/game_title" android:textColor="#33b5e5"
+              android:textSize="50sp"
+              android:textStyle="bold" app:layout_constraintBottom_toTopOf="@+id/start_game"
+              app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="1.0"/>
     <Button
             android:id="@+id/start_game"
-            android:text="@string/start_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/fullscreen_content" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.021"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            android:text="@string/start_game" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintVertical_bias="0.521"/>
+
     <Button
             android:id="@+id/View_stats"
-            android:text="@string/view_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            android:text="@string/view_stats"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start_game" app:layout_constraintVertical_bias="0.0"/>
 
     <!-- This FrameLayout insets its children based on system windows using

@@ -2,7 +2,6 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.phatphoophoo.pdtran.herotyper.factories.EnemyFactory
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
@@ -43,9 +42,8 @@ class GameScreenPresenter(
 
         // Make changes to the model
 
-
         // Update the state of the game objects
-        gameModel.enemies = enemyFactory.updateEnemeies(gameModel.enemies)
+        gameModel.enemies = enemyFactory.updateEnemies(gameModel.enemies)
 
         // Check for collisions
         val livesLost = enemyFactory.popHitStack()
