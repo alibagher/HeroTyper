@@ -20,7 +20,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
     private var curWord = ""
     private var curLetterIndex = 0
     private val difficulty = GAME_DIFFICULTY.EASY
-    private var hasWordFinished = false
+    private var hasWordCompleted = false
 
     init {
         setKeyboardEventListeners(activity)
@@ -40,18 +40,15 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
     }
 
     private fun onKeyPress(btn: Button) {
-        Log.e("keyboard", btn.text.toString())
         val btnText = btn.text.toString().toLowerCase()
         val curLetter = curWord[curLetterIndex].toString().toLowerCase()
+
         if(btnText == curLetter) {
             curLetterIndex += 1
             if(curLetterIndex == curWord.length) {
                 setNewWord()
-                hasWordFinished = true
+                hasWordCompleted = true
             }
-            Log.e("keyboard","Good!")
-        } else {
-            Log.e("keyboard","bad!")
         }
 
         keyboardView.renderWord(curWord, curLetterIndex)
@@ -64,10 +61,10 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         curLetterIndex = 0
     }
 
-    private fun didWordFinish(): Boolean {
+    fun hasWordCompleted(): Boolean {
 
-        return if(hasWordFinished){
-            hasWordFinished = false
+        return if(hasWordCompleted){
+            hasWordCompleted = false
             true
         } else {
             false

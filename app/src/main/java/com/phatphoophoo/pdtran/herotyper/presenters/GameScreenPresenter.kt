@@ -54,9 +54,12 @@ class GameScreenPresenter(
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // TODO Check if we completed a word. If so, run the other update function
-        // gameModel.bullets = bulletService.updateBullets(gameModel.bullets, player.position)
-//        customKeyboardPresenter.
-        gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
+        if(customKeyboardPresenter.hasWordCompleted()) {
+            gameModel.bullets = bulletService.updateBullets(gameModel.bullets, gameModel.player!!.position)
+        } else {
+            gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
+        }
+
 
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
