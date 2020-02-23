@@ -16,13 +16,14 @@ class EnemyService(
             GAME_DIFFICULTY.MEDIUM to 0.5f,
             GAME_DIFFICULTY.HARD to 1f
         )
+        const val SPAWN_OFFSET : Int = 200 // To make sure no enemies are offscreen
     }
 
     private var currentTick = 0
     private var hitStack = 0
 
     private fun randomEnemyPosition(): Pair<Float,Float> {
-        return Pair((Math.random() * (windowSize.first - 100f)).toFloat(), 0f)
+        return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
     }
 
     private fun addEnemy(enemies: List<Enemy>) : List<Enemy> {
