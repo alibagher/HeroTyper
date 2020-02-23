@@ -1,14 +1,15 @@
 package com.phatphoophoo.pdtran.herotyper.activities
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
 import com.phatphoophoo.pdtran.herotyper.presenters.GameScreenPresenter
 import kotlinx.android.synthetic.main.activity_game.*
 import android.graphics.Point
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +19,9 @@ class GameActivity : AppCompatActivity() {
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
-        val width = size.x
-        val height = size.y
+        val width = size.x.toFloat()
+        val height = size.y.toFloat()
 
-        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height))
+        val presenter = GameScreenPresenter(game_screen_view, Pair(width, height), GAME_DIFFICULTY.EASY)
     }
 }

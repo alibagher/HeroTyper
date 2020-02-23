@@ -2,7 +2,6 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.phatphoophoo.pdtran.herotyper.factories.EnemyFactory
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
@@ -45,7 +44,7 @@ class GameScreenPresenter(
 
 
         // The factories return values which we update  the game model with
-        gameModel.enemies = enemyFactory.updateEnemeies(gameModel.enemies)
+        gameModel.enemies = enemyFactory.updateEnemies(gameModel.enemies)
 
         // Update the view
         gameScreenView.setModel(gameModel)

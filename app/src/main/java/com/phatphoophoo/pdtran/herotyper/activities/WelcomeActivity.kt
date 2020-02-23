@@ -1,5 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,14 +11,12 @@ import kotlinx.android.synthetic.main.activity_welcome.*
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class WelcomeActivity : AppCompatActivity() {
+class WelcomeActivity : Activity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_welcome)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         // Upon interacting with UI controls, delay any scheduled hide()

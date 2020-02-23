@@ -53,8 +53,8 @@ class EnemyFactory(
         }
     }
 
-    fun updateEnemeies(enemies: List<Enemy>) : List<Enemy> {
-        val newList = (enemies as MutableList)
+    fun updateEnemies(enemies: List<Enemy>) : List<Enemy> {
+        val newList = (enemies.toMutableList())
 
         moveEnemies(newList)
         checkScreenCollision(newList)
