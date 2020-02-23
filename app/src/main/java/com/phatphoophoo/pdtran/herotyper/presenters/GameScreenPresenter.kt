@@ -24,7 +24,7 @@ class GameScreenPresenter(
         const val REFRESH_RATE : Long = 50 // In MS
     }
 
-    var lastXPos: Float = 0f
+    var lastXPos: Float = windowSize.first/2
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
@@ -54,9 +54,12 @@ class GameScreenPresenter(
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // TODO Check if we completed a word. If so, run the other update function
-        // gameModel.bullets = bulletService.updateBullets(gameModel.bullets, player.position)
-//        customKeyboardPresenter.
-        gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
+        if(customKeyboardPresenter.hasWordCompleted()) {
+            gameModel.bullets = bulletService.updateBullets(gameModel.bullets, gameModel.player!!.position)
+        } else {
+            gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
+        }
+
 
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
@@ -84,7 +87,6 @@ class GameScreenPresenter(
             var curIndex = 0
 
             for(enemy in newEnemyList) {
-                curIndex ++
                 collided =
                     // X collision
                     (bullet.position.first <= enemy.position.first + enemy.width ||
@@ -99,6 +101,7 @@ class GameScreenPresenter(
 
                     break
                 }
+                curIndex ++
             }
 
             !collided

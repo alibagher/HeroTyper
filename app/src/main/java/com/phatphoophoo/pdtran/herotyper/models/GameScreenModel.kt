@@ -16,7 +16,7 @@ data class GameScreenModel(val difficulty: GAME_DIFFICULTY = GAME_DIFFICULTY.EAS
     var curTypedState : TypedState = TypedState.DEFAULT
 
     // Objects
-    var player : Player? = Player(Pair(0f,0f))
+    var player : Player = Player(Pair(0f,0f))
     var bullets : List<Bullet> = emptyList()
     var enemies : List<Enemy> = emptyList()
 }
