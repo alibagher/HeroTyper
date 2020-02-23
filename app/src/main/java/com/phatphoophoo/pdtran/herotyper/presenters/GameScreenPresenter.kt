@@ -87,7 +87,6 @@ class GameScreenPresenter(
             var curIndex = 0
 
             for(enemy in newEnemyList) {
-                curIndex ++
                 collided =
                     // X collision
                     (bullet.position.first <= enemy.position.first + enemy.width ||
@@ -102,6 +101,7 @@ class GameScreenPresenter(
 
                     break
                 }
+                curIndex ++
             }
 
             !collided
