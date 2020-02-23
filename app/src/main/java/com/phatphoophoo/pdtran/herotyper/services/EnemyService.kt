@@ -22,7 +22,7 @@ class EnemyService(
     private var hitStack = 0
 
     private fun randomEnemyPosition(): Pair<Float,Float> {
-        return Pair((Math.random() * windowSize.first).toFloat(), 0f)
+        return Pair((Math.random() * (windowSize.first - 40f)).toFloat(), 0f)
     }
 
     private fun addEnemy(enemies: List<Enemy>) : List<Enemy> {
