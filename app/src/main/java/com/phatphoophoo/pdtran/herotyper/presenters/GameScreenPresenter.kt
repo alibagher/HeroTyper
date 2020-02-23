@@ -24,7 +24,7 @@ class GameScreenPresenter(
         const val REFRESH_RATE : Long = 50 // In MS
     }
 
-    var lastXPos: Float = 0f
+    var lastXPos: Float = windowSize.first/2
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
