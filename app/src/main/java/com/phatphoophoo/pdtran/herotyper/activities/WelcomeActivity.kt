@@ -26,6 +26,11 @@ class WelcomeActivity : Activity() {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
+
+        View_stats.setOnClickListener {
+            val intent = Intent(this, StatsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {
