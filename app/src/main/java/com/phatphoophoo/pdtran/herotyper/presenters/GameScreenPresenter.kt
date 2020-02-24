@@ -1,10 +1,11 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
+import android.app.PendingIntent.getActivity
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
@@ -14,6 +15,7 @@ import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 
 
 class GameScreenPresenter(
+    val gameActivity: GameActivity,
     val gameScreenView: GameScreenView,
     val customKeyboardPresenter: CustomKeyboardPresenter,
     val windowSize: Pair<Float,Float>,
@@ -29,16 +31,20 @@ class GameScreenPresenter(
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
 
+    val gameHandler : Handler
+    val gameLooper : Runnable
+
     init {
-        val mainHandler = Handler(Looper.getMainLooper())
+        gameHandler = Handler(Looper.getMainLooper())
         gameModel.player = Player(Pair(lastXPos, windowSize.second - 200))
 
-        mainHandler.post(object : Runnable {
+
+        gameLooper = object : Runnable {
             override fun run() {
                 gameLoop()
-                mainHandler.postDelayed(this, REFRESH_RATE)
             }
-        })
+        }
+        gameHandler.post(gameLooper)
 
         gameScreenView.setOnTouchListener { view: View, motionEvent: MotionEvent ->
             // Update the position within screen constraints
@@ -66,10 +72,6 @@ class GameScreenPresenter(
         val livesLost = enemyService.popHitStack()
         val livesLeft = gameModel.lives - livesLost
 
-        if (livesLeft <= 0){
-            endGame()
-        }
-
         gameModel.lives = livesLeft
 
         // Check for bullet-enemy collisions
@@ -77,6 +79,13 @@ class GameScreenPresenter(
 
         // Update the view
         gameScreenView.setModel(gameModel)
+
+        if (livesLeft <= 0){
+            endGame()
+        }
+        else {
+            gameHandler.postDelayed(gameLooper, REFRESH_RATE)
+        }
     }
 
     fun handleEnemyHit(gameModel: GameScreenModel) {
@@ -112,7 +121,10 @@ class GameScreenPresenter(
     }
 
     fun endGame() {
-        // Cover the screen with something?
+        // Stop the game loop from posting so we pause
+        gameHandler.removeCallbacks(gameLooper)
+
+        gameActivity.showGameOverFragment()
     }
 
     // Call when the game ends
