@@ -42,7 +42,7 @@ class GameScreenPresenter(
 
         gameScreenView.setOnTouchListener { view: View, motionEvent: MotionEvent ->
             // Update the position within screen constraints
-            lastXPos = Math.max(Math.min(motionEvent.x, windowSize.first), 0f)
+            lastXPos = Math.max(Math.min(motionEvent.x, windowSize.first - 250), 50f)
             true
         }
     }
