@@ -19,7 +19,8 @@ class GameActivity : Activity() {
         // Calculate the game screen size
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val height = (displayMetrics.heightPixels - 500).toFloat()
+        val scale = resources.displayMetrics.density
+        val height = (displayMetrics.heightPixels - 200*scale)
         val width = (displayMetrics.widthPixels).toFloat()
 
         val keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)

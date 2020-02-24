@@ -10,11 +10,11 @@ class EnemyService(
 {
     companion object {
         // Const values
-        const val SPAWN_RATE : Int = 250 // In number of ticks
+        const val SPAWN_RATE : Int = 200 // In number of ticks
         val VELOCITY_MAP : Map<GAME_DIFFICULTY, Float> = mapOf(
-            GAME_DIFFICULTY.EASY to 2.2f,
-            GAME_DIFFICULTY.MEDIUM to 3.8f,
-            GAME_DIFFICULTY.HARD to 5f
+            GAME_DIFFICULTY.EASY to 2.8f,
+            GAME_DIFFICULTY.MEDIUM to 4.8f,
+            GAME_DIFFICULTY.HARD to 6f
         )
         const val SPAWN_OFFSET : Int = 200 // To make sure no enemies are offscreen
     }

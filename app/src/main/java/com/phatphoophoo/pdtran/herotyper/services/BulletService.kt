@@ -3,7 +3,7 @@ package com.phatphoophoo.pdtran.herotyper.services
 import com.phatphoophoo.pdtran.herotyper.objects.Bullet
 
 class BulletService {
-    private val bulletVelocity = 4.2f
+    private val bulletVelocity = 9.2f
 
     fun updateBullets(bullets: List<Bullet>) : List<Bullet> {
         // Loop over existing bullets and update their position
