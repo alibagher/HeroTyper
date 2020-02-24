@@ -10,63 +10,45 @@ class EnemyService(
 {
     companion object {
         // Const values
-        const val SPAWN_RATE : Int = 100 // In number of ticks
+        const val SPAWN_RATE : Int = 250 // In number of ticks
         val VELOCITY_MAP : Map<GAME_DIFFICULTY, Float> = mapOf(
-            GAME_DIFFICULTY.EASY to 0.2f,
-            GAME_DIFFICULTY.MEDIUM to 0.5f,
-            GAME_DIFFICULTY.HARD to 1f
+            GAME_DIFFICULTY.EASY to 2.2f,
+            GAME_DIFFICULTY.MEDIUM to 3.8f,
+            GAME_DIFFICULTY.HARD to 5f
         )
         const val SPAWN_OFFSET : Int = 200 // To make sure no enemies are offscreen
     }
 
-    private var currentTick = 0
+    private var currentTick = 150 // Reduce the initial wait
     private var hitStack = 0
 
     private fun randomEnemyPosition(): Pair<Float,Float> {
         return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
     }
 
-    private fun addEnemy(enemies: List<Enemy>) : List<Enemy> {
-         return if (currentTick > SPAWN_RATE) {
-             // Add a new enemy
-            currentTick = 0
-            val newList = (enemies as MutableList)
-            newList.add(Enemy(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
-            newList
-        }
-        else {
-             // Do not modify if it's not time
-             enemies
-        }
-    }
+    fun updateEnemies(enemies: List<Enemy>) : List<Enemy> {
+        currentTick++
 
-    private fun checkScreenCollision(enemies: List<Enemy>)  {
-        // Loop over existing enemies and update their position
-        enemies.filter{ enemy ->
-            val collided = enemy.position.second + enemy.height >= windowSize.second
+        // Loop over existing enemies and check for collisions
+        val newList = enemies.filter{ enemy ->
+            val collided = (enemy.position.second + enemy.height) >= windowSize.second
             if (collided) {
                 hitStack ++
             }
             !collided
-        }
-    }
+        }.toMutableList()
 
-    private fun moveEnemies(enemies: List<Enemy>){
         // Loop over existing enemies and update their position
-        enemies.forEach{ enemy -> enemy.updatePosition() }
-    }
-
-    fun updateEnemies(enemies: List<Enemy>) : List<Enemy> {
-        currentTick++
-        val newList = (enemies.toMutableList())
-
-        currentTick ++
-
-        moveEnemies(newList)
-        checkScreenCollision(newList)
+        newList.forEach{ enemy -> enemy.updatePosition() }
 
         // Attempt to add new enemies
-        return addEnemy(newList)
+        if (currentTick > SPAWN_RATE) {
+            // Add a new enemy
+            currentTick = 0
+            newList.add(Enemy(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
+        }
+
+        return newList
     }
 
     fun popHitStack() : Int {

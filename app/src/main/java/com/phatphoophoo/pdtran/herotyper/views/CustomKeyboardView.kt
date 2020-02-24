@@ -19,8 +19,6 @@ class CustomKeyboardView:
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
 
-
-
     init {
         inflate(context, R.layout.custom_keyboard_layout, this)
     }
@@ -39,6 +37,5 @@ class CustomKeyboardView:
 
         val curWordTextView = findViewById(R.id.curWordTextView) as TextView
         curWordTextView.setText(Html.fromHtml("$prefixHtml$suffixHtml"))
-
     }
 }

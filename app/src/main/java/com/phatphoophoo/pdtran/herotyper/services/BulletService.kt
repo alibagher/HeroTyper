@@ -3,29 +3,20 @@ package com.phatphoophoo.pdtran.herotyper.services
 import com.phatphoophoo.pdtran.herotyper.objects.Bullet
 
 class BulletService {
-    private val bulletVelocity = 0.5f
+    private val bulletVelocity = 4.2f
 
-    private fun checkScreenCollision(bullets: List<Bullet>)  {
+    fun updateBullets(bullets: List<Bullet>) : List<Bullet> {
         // Loop over existing bullets and update their position
-        bullets.filter{ Bullet ->
+        val movedBullets = bullets.filter{ Bullet ->
             val collided = Bullet.position.second <= 0
 
             !collided
-        }
-    }
+        }.toMutableList()
 
-    private fun moveBullets(bullets: List<Bullet>){
         // Loop over existing bullets and update their position
-        bullets.forEach{ bullet -> bullet.updatePosition()}
-    }
+        movedBullets.forEach{ bullet -> bullet.updatePosition()}
 
-    fun updateBullets(bullets: List<Bullet>) : List<Bullet> {
-        val newList = (bullets.toMutableList())
-
-        moveBullets(newList)
-        checkScreenCollision(newList)
-
-        return newList
+        return movedBullets
     }
 
     fun updateBullets(bullets: List<Bullet>, newBulletPosition: Pair<Float,Float>) : List<Bullet> {

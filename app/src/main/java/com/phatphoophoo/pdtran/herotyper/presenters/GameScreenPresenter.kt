@@ -31,7 +31,7 @@ class GameScreenPresenter(
 
     init {
         val mainHandler = Handler(Looper.getMainLooper())
-        gameModel.player = Player(Pair(windowSize.first/2, windowSize.second))
+        gameModel.player = Player(Pair(lastXPos, windowSize.second - 200))
 
         mainHandler.post(object : Runnable {
             override fun run() {
@@ -50,16 +50,17 @@ class GameScreenPresenter(
     fun gameLoop() {
         // Update the state of the game objects
         gameModel.player!!.position = Pair(lastXPos, gameModel.player!!.position.second)
-
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
-        // TODO Check if we completed a word. If so, run the other update function
+        // Check for completed words to fire bullets
         if(customKeyboardPresenter.hasWordCompleted()) {
-            gameModel.bullets = bulletService.updateBullets(gameModel.bullets, gameModel.player!!.position)
+            var bulletPos = Pair(gameModel.player!!.position.first + 50,
+                gameModel.player!!.position.second)
+
+            gameModel.bullets = bulletService.updateBullets(gameModel.bullets, bulletPos)
         } else {
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
         }
-
 
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
@@ -79,21 +80,20 @@ class GameScreenPresenter(
     }
 
     fun handleEnemyHit(gameModel: GameScreenModel) {
-        val newBulletList = gameModel.bullets.toMutableList()
         val newEnemyList = gameModel.enemies.toMutableList()
 
-        newBulletList.filter { bullet ->
+        val newBulletList = gameModel.bullets.filter { bullet ->
             var collided = false
             var curIndex = 0
 
             for(enemy in newEnemyList) {
                 collided =
                     // X collision
-                    (bullet.position.first <= enemy.position.first + enemy.width ||
+                    (bullet.position.first <= enemy.position.first + enemy.width &&
                             bullet.position.first + bullet.width >= enemy.position.first) &&
                     // Y collision
-                    (bullet.position.second <= enemy.position.first + enemy.width ||
-                            bullet.position.first + bullet.width >= enemy.position.first)
+                    (bullet.position.second <= enemy.position.second + enemy.height &&
+                            bullet.position.second >= enemy.position.second)
 
                 if (collided) {
                     gameModel.score += enemy.scoreValue
@@ -101,7 +101,7 @@ class GameScreenPresenter(
 
                     break
                 }
-                curIndex ++
+                curIndex++
             }
 
             !collided

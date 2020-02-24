@@ -9,7 +9,7 @@ import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
 const val PACKAGE_NAME = "com.phatphoophoo.pdtran.herotyper"
 
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
-    GAME_DIFFICULTY.EASY to listOf("what", "some", "trail"),
+    GAME_DIFFICULTY.EASY to listOf("wheat", "some", "trail", "food", "cool", "random", "jazz", "friend"),
     GAME_DIFFICULTY.MEDIUM to listOf("according", "against", "business"),
     GAME_DIFFICULTY.HARD to listOf("logorrhea", "pochemuchka", "gobbledegook", "sacrilegious")
 )
