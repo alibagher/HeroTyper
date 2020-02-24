@@ -1,6 +1,5 @@
 package com.phatphoophoo.pdtran.herotyper.activities
 
-import android.content.res.Resources
 import android.os.Bundle
 import com.phatphoophoo.pdtran.herotyper.presenters.GameScreenPresenter
 import kotlinx.android.synthetic.main.activity_game.*
