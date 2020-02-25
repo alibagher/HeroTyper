@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
@@ -51,6 +52,15 @@ class GameScreenPresenter(
             lastXPos = Math.max(Math.min(motionEvent.x, windowSize.first - 250), 50f)
             true
         }
+
+        // pause button event listener
+        val id = gameActivity.resources.getIdentifier("pause", "id", PACKAGE_NAME)
+        val btn = gameActivity.findViewById(id) as Button
+        btn.setOnClickListener{
+            gameHandler.removeCallbacks(gameLooper)
+            gameActivity.showPauseFragment()
+        }
+
     }
 
     fun gameLoop() {

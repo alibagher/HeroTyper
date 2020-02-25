@@ -10,6 +10,7 @@ data class GameScreenModel(val difficulty: GAME_DIFFICULTY = GAME_DIFFICULTY.EAS
     var lives : Int = 3
     val timeLimit : Int = 30000 // MS
     var curTime : Int = 0 // MS
+    var pause : Boolean = false
 
     var curGoalWord : String = ""
     var curTypedIndex : String = ""

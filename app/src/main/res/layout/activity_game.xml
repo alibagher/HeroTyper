@@ -8,6 +8,14 @@
         tools:context=".activities.GameActivity"
         >
 
+    <Button
+            android:id="@+id/pause"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/pause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
             android:id="@+id/fullscreen_content"
             android:layout_width="wrap_content"
@@ -44,8 +52,8 @@
         <com.phatphoophoo.pdtran.herotyper.views.GameScreenView
                 android:id="@+id/game_screen_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
+
     </FrameLayout>
 
     <com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
@@ -54,6 +62,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" >
+
+    </com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

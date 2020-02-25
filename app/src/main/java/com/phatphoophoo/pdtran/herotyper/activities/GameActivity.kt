@@ -17,6 +17,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var keyboardPresenter: CustomKeyboardPresenter
     lateinit var gameScreenPresenter: GameScreenPresenter
     private var gameMenuFragment: Fragment? = null
+    private var pauseMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
 
     var gameOver = false
@@ -49,6 +50,15 @@ class GameActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    // TODO: show the pause fragment
+    fun showPauseFragment() {
+        //if (gameOver) return
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        gameMenuFragment = GameMenuFragment.newInstance(isGameOver = false)
+        fragmentTransaction.add(R.id.game_screen_layout, gameMenuFragment!!)
+        fragmentTransaction.commit()
+    }
+
     // Interactions from the fragment
     // TODO Look at a way to remove activity responsibilty for this
     fun onRetryPressed(view: View) {
@@ -71,4 +81,6 @@ class GameActivity : AppCompatActivity() {
         gameOver = true
         finish()
     }
+
+    //fun onPausePressed()
 }
