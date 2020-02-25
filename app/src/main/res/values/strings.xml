@@ -6,6 +6,6 @@
     <string name="view_stats">View Stats</string>
     <string name="game_title">Hero Typer</string>
     <string name="background_desc">Space Background</string>
-    <string name="view_leaderBoard">View LeaderBoard</string>
+    <string name="view_leaderBoard">View Leaderboard</string>
     <string name="pause">pause</string>
 </resources>
