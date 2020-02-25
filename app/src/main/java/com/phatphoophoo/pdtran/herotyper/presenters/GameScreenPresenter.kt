@@ -120,6 +120,10 @@ class GameScreenPresenter(
         gameModel.enemies = newEnemyList
     }
 
+    fun resumeGame(){
+        gameHandler.postDelayed(gameLooper, REFRESH_RATE)
+    }
+
     fun endGame() {
         // Stop the game loop from posting so we pause
         gameHandler.removeCallbacks(gameLooper)

@@ -1,15 +1,13 @@
 package com.phatphoophoo.pdtran.herotyper.fragments
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 import com.phatphoophoo.pdtran.herotyper.R
+import kotlinx.android.synthetic.main.fragment_game_menu.*
 
 /**
  * A simple [Fragment] subclass.
@@ -20,14 +18,12 @@ import com.phatphoophoo.pdtran.herotyper.R
  * create an instance of this fragment.
  */
 class GameMenuFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var canResume: Boolean? = false
-    private var listener: GameMenuFragmentInteractionListener? = null
+    private var isGameOver: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            canResume = it.getBoolean(ARG_IS_GAME_OVER)
+            isGameOver = it.getBoolean(ARG_IS_GAME_OVER)
         }
     }
 
@@ -35,34 +31,14 @@ class GameMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        Log.e("Roland", "Inflated")
         return inflater.inflate(R.layout.fragment_game_menu, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-//        listener?.onFragmentInteraction(uri)
-    }
+    override fun onStart() {
+        super.onStart()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is GameMenuFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement GameMenuFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface GameMenuFragmentInteractionListener {
-        fun onRestartPressed()
-        fun onResumePressed()
-        fun onExitPressed()
+        resume_button.visibility = if (isGameOver) View.GONE else View.VISIBLE
+        menu_header_text.text = if (isGameOver) "Game Over" else "Game Paused"
     }
 
     companion object {

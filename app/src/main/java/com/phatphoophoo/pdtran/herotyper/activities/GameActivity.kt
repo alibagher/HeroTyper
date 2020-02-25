@@ -6,13 +6,21 @@ import kotlinx.android.synthetic.main.activity_game.*
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.presenters.CustomKeyboardPresenter
 import android.util.DisplayMetrics
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.fragments.GameMenuFragment
 
 
-class GameActivity : AppCompatActivity(), GameMenuFragment.GameMenuFragmentInteractionListener {
+class GameActivity : AppCompatActivity() {
+    lateinit var keyboardPresenter: CustomKeyboardPresenter
+    lateinit var gameScreenPresenter: GameScreenPresenter
+    private var gameMenuFragment: Fragment? = null
+    lateinit var screenSize: Pair<Float,Float>
+
+    var gameOver = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -23,29 +31,44 @@ class GameActivity : AppCompatActivity(), GameMenuFragment.GameMenuFragmentInter
         val scale = resources.displayMetrics.density
         val height = (displayMetrics.heightPixels - 200*scale)
         val width = (displayMetrics.widthPixels).toFloat()
+        screenSize = Pair(width, height)
 
-        val keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
-        val gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, Pair(width, height), GAME_DIFFICULTY.EASY)
+        initGame()
+    }
+
+    fun initGame() {
+        keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
+        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, screenSize, GAME_DIFFICULTY.EASY)
     }
 
     fun showGameOverFragment() {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = GameMenuFragment() as Fragment
-        fragmentTransaction.add(R.id.game_screen_layout, fragment)
+        if (gameOver) return
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        gameMenuFragment = GameMenuFragment.newInstance(isGameOver = true)
+        fragmentTransaction.add(R.id.game_screen_layout, gameMenuFragment!!)
         fragmentTransaction.commit()
     }
 
     // Interactions from the fragment
-    override fun onRestartPressed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    // TODO Look at a way to remove activity responsibilty for this
+    fun onRetryPressed(view: View) {
+        supportFragmentManager.popBackStackImmediate()
+        for (fragment in supportFragmentManager.fragments){
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        }
+        initGame()
     }
 
-    override fun onResumePressed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun onResumePressed(view: View) {
+        supportFragmentManager.popBackStackImmediate()
+        for (fragment in supportFragmentManager.fragments){
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        }
+        gameScreenPresenter.resumeGame()
     }
 
-    override fun onExitPressed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun onExitPressed(view: View) {
+        gameOver = true
+        finish()
     }
 }
