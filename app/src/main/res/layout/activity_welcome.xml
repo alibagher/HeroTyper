@@ -15,10 +15,6 @@
     <ImageView android:id="@+id/fullscreen_content"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginStart="8dp"
-               android:layout_marginTop="8dp"
-               android:layout_marginEnd="8dp"
-               android:layout_marginBottom="8dp"
                android:contentDescription="@string/background_desc"
                android:gravity="center"
                android:keepScreenOn="true"
@@ -46,7 +42,7 @@
               app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="1.0"/>
     <Button
             android:id="@+id/start_game"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -58,7 +54,7 @@
 
     <Button
             android:id="@+id/View_stats"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -71,7 +67,7 @@
 
     <Button
             android:id="@+id/LeaderBoard"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"

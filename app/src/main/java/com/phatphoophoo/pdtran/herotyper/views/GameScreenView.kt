@@ -83,7 +83,7 @@ class GameScreenView : View {
             c?.drawBitmap(bulletBmList[i], posX, posY, null)
         }
 
-        c?.drawText("$scoreText$score", 50f, 50f, textPaint)
-        c?.drawText("$livesText$lives", 50f, 100f, textPaint)
+        c?.drawText("$scoreText$score", 50f, 75f, textPaint)
+        c?.drawText("$livesText$lives", 50f, 125f, textPaint)
     }
 }
