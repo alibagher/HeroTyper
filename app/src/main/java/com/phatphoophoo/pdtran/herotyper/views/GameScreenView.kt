@@ -84,6 +84,6 @@ class GameScreenView : View {
         }
 
         c?.drawText("$scoreText$score", 50f, 75f, textPaint)
-        c?.drawText("$livesText$lives", 50f, 125f, textPaint)
+        c?.drawText("$livesText$lives", 50f, 130f, textPaint)
     }
 }
