@@ -16,6 +16,7 @@ class StatsActivity : AppCompatActivity() {
         val sp: SharedPreferences? = getSharedPreferences("my_prefs", Activity.MODE_PRIVATE)
         val model: StatsModel = StatsModel(sp)
 
+        //testing
         model.writeStats(1)
         model.readStats()
     }

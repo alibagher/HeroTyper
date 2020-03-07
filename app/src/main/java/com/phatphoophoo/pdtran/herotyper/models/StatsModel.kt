@@ -22,7 +22,7 @@ class StatsModel(var sp: SharedPreferences?){
     //        Misses: Int
     // var : MutableList<Pair<Int, Pair<Int, Int>>> = mutableListOf()
 
-    Map<String, Pair<Int, Int>>
+    // Map<String, Pair<Int, Int>>
 
 
     fun readStats(){

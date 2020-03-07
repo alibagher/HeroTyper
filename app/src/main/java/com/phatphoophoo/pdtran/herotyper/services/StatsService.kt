@@ -1,19 +1,15 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
-class StatsService{
-    fun updateMaxWPM(n: Int){
+class StatsService {
+    fun updateMaxWPM(n: Int) {
 
     }
 
-    fun updateAvgWPM(){
+    fun updateAvgWPM() {
 
     }
 
-    fun incSessions(){
-
-    }
-
-    fun addKeyHit(String, Pair{
+    fun incSessions() {
 
     }
 }
