@@ -3,7 +3,7 @@ package com.phatphoophoo.pdtran.herotyper.objects
 import android.graphics.Bitmap
 
 abstract class GameObject {
-    abstract var velocity : Float
+    abstract val velocity : Float
     abstract val bitmapResId : Int
     var bitmap : Bitmap? = null
 

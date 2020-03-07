@@ -11,17 +11,18 @@ class EnemyService(
 {
     companion object {
         // Const values
-        const val SPAWN_RATE : Int = 200 // In number of ticks
-        val VELOCITY_MAP : Map<GAME_DIFFICULTY, Float> = mapOf(
-            GAME_DIFFICULTY.EASY to 2.8f,
-            GAME_DIFFICULTY.MEDIUM to 4.8f,
-            GAME_DIFFICULTY.HARD to 6f
+        val SPAWN_RATE_MAP : Map<GAME_DIFFICULTY, Int> = mapOf(
+            GAME_DIFFICULTY.EASY to 200,
+            GAME_DIFFICULTY.MEDIUM to 160,
+            GAME_DIFFICULTY.HARD to 120
         )
+
         const val SPAWN_OFFSET : Int = 200 // To make sure no enemies are offscreen
     }
 
     private var currentTick = 150 // Reduce the initial wait
     private var hitStack = 0
+    private var spawnRate : Int = SPAWN_RATE_MAP.getValue(this.difficulty)
 
     private fun randomEnemyPosition(): Pair<Float,Float> {
         return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
@@ -43,10 +44,10 @@ class EnemyService(
         newList.forEach{ enemy -> enemy.updatePosition() }
 
         // Attempt to add new enemies
-        if (currentTick > SPAWN_RATE) {
+        if (currentTick > spawnRate) {
             // Add a new enemy
             currentTick = 0
-            newList.add(BasicEnemy(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
+            newList.add(BasicEnemy(randomEnemyPosition()))
         }
 
         return newList
