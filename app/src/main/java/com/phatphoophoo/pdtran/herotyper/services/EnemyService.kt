@@ -1,7 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
-import com.phatphoophoo.pdtran.herotyper.objects.Enemy
+import com.phatphoophoo.pdtran.herotyper.objects.EnemyObject
 
 class EnemyService(
     private val difficulty: GAME_DIFFICULTY,
@@ -26,7 +26,7 @@ class EnemyService(
         return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
     }
 
-    fun updateEnemies(enemies: List<Enemy>) : List<Enemy> {
+    fun updateEnemies(enemies: List<EnemyObject>) : List<EnemyObject> {
         currentTick++
 
         // Loop over existing enemies and check for collisions
@@ -45,7 +45,7 @@ class EnemyService(
         if (currentTick > SPAWN_RATE) {
             // Add a new enemy
             currentTick = 0
-            newList.add(Enemy(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
+            newList.add(EnemyObject(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
         }
 
         return newList

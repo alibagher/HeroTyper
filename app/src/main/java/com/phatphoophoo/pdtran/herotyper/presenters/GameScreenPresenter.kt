@@ -1,6 +1,5 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
-import android.app.PendingIntent.getActivity
 import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent

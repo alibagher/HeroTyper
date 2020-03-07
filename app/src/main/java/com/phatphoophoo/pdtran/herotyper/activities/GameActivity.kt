@@ -81,6 +81,4 @@ class GameActivity : AppCompatActivity() {
         gameOver = true
         finish()
     }
-
-    //fun onPausePressed()
 }

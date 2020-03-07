@@ -1,12 +1,12 @@
 package com.phatphoophoo.pdtran.herotyper.objects
 
+import com.phatphoophoo.pdtran.herotyper.R
+
 class Player(override var position: Pair<Float, Float>) : GameObject {
-    override val direction = Direction.NONE
     override var velocity: Float = 0f
     override val height: Float = 200f
     override val width: Float = 200f
+    override val bitmapResId: Int = R.drawable.spaceship
 
-    override fun updatePosition() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun updatePosition() {}
 }

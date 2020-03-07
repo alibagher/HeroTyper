@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
+import com.phatphoophoo.pdtran.herotyper.objects.GameObject
 import com.phatphoophoo.pdtran.herotyper.objects.Player
 
 class GameScreenView : View {
@@ -77,13 +78,18 @@ class GameScreenView : View {
 
         c?.drawBitmap(spaceshipBitmap, player?.position.first, player?.position.second, null)
         enemyPosList.forEachIndexed{i, (posX, posY) ->
-            c?.drawBitmap(enemyBmList[i], posX, posY, null)
+            c?.drawBitmap(enemyBmList[0], posX, posY, null)
         }
         bulletPosList.forEachIndexed{i, (posX, posY) ->
-            c?.drawBitmap(bulletBmList[i], posX, posY, null)
+            c?.drawBitmap(bulletBmList[0], posX, posY, null)
         }
 
         c?.drawText("$scoreText$score", 50f, 75f, textPaint)
         c?.drawText("$livesText$lives", 50f, 130f, textPaint)
+    }
+
+    fun GameObject.getObjectBitmap(gameObject: GameObject): Bitmap {
+        val baseBitmap = BitmapFactory.decodeResource(resources, gameObject.bitmapResId)
+        return Bitmap.createScaledBitmap(baseBitmap, gameObject.width.toInt(), gameObject.height.toInt(), false)
     }
 }
