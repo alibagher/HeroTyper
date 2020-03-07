@@ -1,6 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
+import com.phatphoophoo.pdtran.herotyper.objects.BasicEnemy
 import com.phatphoophoo.pdtran.herotyper.objects.EnemyObject
 
 class EnemyService(
@@ -45,7 +46,7 @@ class EnemyService(
         if (currentTick > SPAWN_RATE) {
             // Add a new enemy
             currentTick = 0
-            newList.add(EnemyObject(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
+            newList.add(BasicEnemy(randomEnemyPosition(), VELOCITY_MAP[difficulty] ?: 1f))
         }
 
         return newList

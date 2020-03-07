@@ -1,12 +1,15 @@
 package com.phatphoophoo.pdtran.herotyper.objects
 
-interface GameObject {
-    var velocity : Float
-    val bitmapResId : Int
+import android.graphics.Bitmap
 
-    var position: Pair<Float, Float>
-    val width : Float
-    val height : Float
+abstract class GameObject {
+    abstract var velocity : Float
+    abstract val bitmapResId : Int
+    var bitmap : Bitmap? = null
 
-    fun updatePosition()
+    abstract var position: Pair<Float, Float>
+    abstract val width : Float
+    abstract val height : Float
+
+    abstract fun updatePosition()
 }

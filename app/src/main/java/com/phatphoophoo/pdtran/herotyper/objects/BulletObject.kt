@@ -5,7 +5,7 @@ import com.phatphoophoo.pdtran.herotyper.R
 abstract class BulletObject(
     override var position: Pair<Float, Float>,
     override var velocity: Float
-) : GameObject {
+) : GameObject() {
     override fun updatePosition() {
         this.position = Pair(position.first, position.second - velocity)
     }

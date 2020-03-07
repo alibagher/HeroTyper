@@ -5,7 +5,7 @@ import com.phatphoophoo.pdtran.herotyper.R
 abstract class EnemyObject(
     override var position: Pair<Float, Float>,
     override var velocity: Float
-) : GameObject {
+) : GameObject() {
     abstract val scoreValue: Int
 
     override fun updatePosition() {
