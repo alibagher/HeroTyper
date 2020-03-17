@@ -31,11 +31,6 @@ class WelcomeActivity : Activity() {
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
         }
-
-        LeaderBoard.setOnClickListener {
-            val intent = Intent(this, LeaderBoardActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     companion object {
