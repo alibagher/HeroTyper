@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class WelcomeActivity : Activity() {
+class MainMenuActivity : Activity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

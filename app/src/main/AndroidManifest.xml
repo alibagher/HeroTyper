@@ -19,7 +19,7 @@
                 android:theme="@style/AppTheme">
         </activity>
         <activity
-                android:name=".activities.WelcomeActivity"
+                android:name=".activities.MainMenuActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:theme="@style/FullscreenTheme">
             <intent-filter>
