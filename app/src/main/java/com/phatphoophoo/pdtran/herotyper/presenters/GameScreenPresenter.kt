@@ -62,9 +62,13 @@ class GameScreenPresenter(
 
     }
 
+    // Where the Game tells various helper classes to update the state of the game,
+    // while the Game itself handles logic not able to be handled solely by the object
+    // type in question
     fun gameLoop() {
         // Update the state of the game objects
         gameModel.player!!.position = Pair(lastXPos, gameModel.player!!.position.second)
+
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // Check for completed words to fire bullets
@@ -97,10 +101,12 @@ class GameScreenPresenter(
         }
     }
 
+    // Marks all objects as destroyed; they can-self handle this
+    // in the next game loop
     fun handleEnemyHit(gameModel: GameScreenModel) {
-        val newEnemyList = gameModel.enemies.toMutableList()
+        val newEnemyList = gameModel.enemies.filter{ !it.isDestroyed }
 
-        val newBulletList = gameModel.bullets.filter { bullet ->
+        val newBulletList = gameModel.bullets.forEach { bullet ->
             var collided = false
             var curIndex = 0
 
@@ -115,18 +121,13 @@ class GameScreenPresenter(
 
                 if (collided) {
                     gameModel.score += enemy.scoreValue
-                    newEnemyList.removeAt(curIndex)
-
+                    enemy.isDestroyed = true
+                    bullet.isDestroyed = true
                     break
                 }
                 curIndex++
             }
-
-            !collided
         }
-
-        gameModel.bullets = newBulletList
-        gameModel.enemies = newEnemyList
     }
 
     fun resumeGame(){

@@ -7,14 +7,16 @@ class BulletService {
 
     fun updateBullets(bullets: List<BulletObject>) : List<BulletObject> {
         // Loop over existing bullets and update their position
-        val movedBullets = bullets.filter{ Bullet ->
-            val collided = Bullet.position.second <= 0
-
-            !collided
-        }.toMutableList()
+        bullets.forEach{ bullet ->
+            if (!bullet.isDestroyed){
+                val collided = bullet.position.second <= 0
+                bullet.isDestroyed = collided
+            }
+        }
 
         // Loop over existing bullets and update their position
-        movedBullets.forEach{ bullet -> bullet.updatePosition()}
+        val movedBullets = mutableListOf<BulletObject>()
+        bullets.forEach{ bullet -> movedBullets.addAll(bullet.updateState())}
 
         return movedBullets
     }

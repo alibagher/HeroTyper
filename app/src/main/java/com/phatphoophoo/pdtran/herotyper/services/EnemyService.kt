@@ -31,17 +31,21 @@ class EnemyService(
     fun updateEnemies(enemies: List<EnemyObject>) : List<EnemyObject> {
         currentTick++
 
-        // Loop over existing enemies and check for collisions
-        val newList = enemies.filter{ enemy ->
-            val collided = (enemy.position.second + enemy.height) >= windowSize.second
-            if (collided) {
-                hitStack ++
+        // Loop over existing enemies and check for wall collisions
+        enemies.forEach{ enemy ->
+            if (!enemy.isDestroyed){
+                val collided = (enemy.position.second + enemy.height) >= windowSize.second
+                if (collided) {
+                    hitStack ++
+                }
+                enemy.isDestroyed = collided
             }
-            !collided
-        }.toMutableList()
+        }
+
+        val newList = mutableListOf<EnemyObject>()
 
         // Loop over existing enemies and update their position
-        newList.forEach{ enemy -> enemy.updatePosition() }
+        enemies.forEach{ enemy -> newList.addAll(enemy.updateState()) }
 
         // Attempt to add new enemies
         if (currentTick > spawnRate) {
@@ -53,6 +57,8 @@ class EnemyService(
         return newList
     }
 
+    // Get the number of bullets that have hit the wall,
+    // so the game knows the number of lives to subtract
     fun popHitStack() : Int {
         val temp = hitStack
         hitStack = 0
