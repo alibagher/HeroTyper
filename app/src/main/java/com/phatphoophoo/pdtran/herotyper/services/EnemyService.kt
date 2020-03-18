@@ -11,14 +11,7 @@ class EnemyService(
     val windowSize: Pair<Float,Float>
 )
 {
-    // Const values
-    val SPAWN_RATE_MAP : Map<GAME_DIFFICULTY, Int> = mapOf(
-        GAME_DIFFICULTY.EASY to 200,
-        GAME_DIFFICULTY.MEDIUM to 160,
-        GAME_DIFFICULTY.HARD to 120
-    )
-
-    val SPAWN_STRATEGIES : Map<GAME_DIFFICULTY, () -> EnemyObject> = mapOf(
+    val SPAWN_STRATEGIES : Map<GAME_DIFFICULTY, () -> List<EnemyObject>> = mapOf(
         GAME_DIFFICULTY.EASY to this::addEnemyEasy,
         GAME_DIFFICULTY.MEDIUM to this::addEnemyMedium,
         GAME_DIFFICULTY.HARD to this::addEnemyHard
@@ -28,7 +21,6 @@ class EnemyService(
 
     private var currentTick = 150 // Reduce the initial wait
     private var hitStack = 0
-    private var spawnRate : Int = SPAWN_RATE_MAP.getValue(this.difficulty)
 
     private fun randomEnemyPosition(): Pair<Float,Float> {
         return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
@@ -53,34 +45,40 @@ class EnemyService(
         enemies.forEach{ enemy -> newList.addAll(enemy.updateState()) }
 
         // Attempt to add new enemies
-        if (currentTick > spawnRate) {
-            // Add a new enemy based off the current selected strategy
-            currentTick = 0
-            newList.add(SPAWN_STRATEGIES.getValue(difficulty).invoke())
-        }
+        newList.addAll(SPAWN_STRATEGIES.getValue(difficulty).invoke())
 
         return newList
     }
 
-
      // --- Strategies for adding enemies based off the game difficulty set ---
-    private fun addEnemyEasy() : EnemyObject {
+    private fun addEnemyEasy() : List<EnemyObject> {
+         if (currentTick < 200) return emptyList()
+         currentTick = 0
+
          // Random value between 0 and 100
          val rand = (Math.random() * 100).toInt()
 
-         return when (rand){
+         val newEnemy = when (rand){
              in 0..80 -> { BasicEnemy(randomEnemyPosition()) }
              in 81..90 -> { FastEnemy(randomEnemyPosition())}
              else -> SplittingEnemy(randomEnemyPosition())
          }
+
+         return listOf(newEnemy)
     }
 
-    private fun addEnemyMedium() : EnemyObject {
-        return BasicEnemy(randomEnemyPosition())
+    private fun addEnemyMedium() : List<EnemyObject> {
+        if (currentTick < 180) return emptyList()
+        currentTick = 0
+
+        return addEnemyEasy()
     }
 
-    private fun addEnemyHard() : EnemyObject {
-        return BasicEnemy(randomEnemyPosition())
+    private fun addEnemyHard() : List<EnemyObject> {
+        if (currentTick < 160) return emptyList()
+        currentTick = 0
+
+        return addEnemyEasy()
     }
 
     // Get the number of bullets that have hit the wall,
