@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import kotlinx.android.synthetic.main.activity_main_menu.*
 
 /**
@@ -32,15 +33,41 @@ class MainMenuActivity : Activity() {
 
         // Setup button behavior
         start_game.setOnClickListener {
-            val intent = Intent(this, GameActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
+            setMenuState(MENU_STATE.DIFFICULTY)
+        }
+
+        easy_button.setOnClickListener{
+            startGame(GAME_DIFFICULTY.EASY)
+        }
+
+        medium_button.setOnClickListener{
+            startGame(GAME_DIFFICULTY.MEDIUM)
+        }
+
+        hard_button.setOnClickListener{
+            startGame(GAME_DIFFICULTY.HARD)
+        }
+
+        cancel_button.setOnClickListener{
+            setMenuState(MENU_STATE.MAIN)
         }
 
         view_stats_button.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        overridePendingTransition(0, 0)
+    }
+
+    fun startGame(difficulty: GAME_DIFFICULTY){
+        val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra(GameActivity.PARAM_DIFFICULTY, difficulty.toString())
+        startActivity(intent)
+        setMenuState(MENU_STATE.LOADING)
     }
 
     // Swap the current view being shown to the provided state
@@ -52,27 +79,5 @@ class MainMenuActivity : Activity() {
 
         val currentLayout = findViewById<View>(MENU_LAYOUT_MAP.getValue(currentState))
         currentLayout.visibility = View.VISIBLE
-    }
-
-
-    companion object {
-
-        /**
-         * Schedules a call to hide() in [delayMillis], canceling any
-         * previously scheduled calls.
-         */
-
-        /**
-         * Whether or not the system UI should be auto-hidden after
-         * [AUTO_HIDE_DELAY_MILLIS] milliseconds.
-         */
-        private val AUTO_HIDE = true
-
-        /**
-         * If [AUTO_HIDE] is set, the number of milliseconds to wait after
-         * user interaction before hiding the system UI.
-         */
-        private val AUTO_HIDE_DELAY_MILLIS = 3000
-
     }
 }

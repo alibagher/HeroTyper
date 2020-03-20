@@ -8,6 +8,7 @@
     <string name="easy_text">Easy</string>
     <string name="medium_text">Medium</string>
     <string name="hard_text">Hard</string>
+    <string name="back_text">Back</string>
     <string name="background_desc">Space Background</string>
     <string name="view_leaderBoard">View Leaderboard</string>
     <string name="pause">pause</string>

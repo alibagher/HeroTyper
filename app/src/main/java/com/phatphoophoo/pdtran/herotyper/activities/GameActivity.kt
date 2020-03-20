@@ -19,12 +19,20 @@ class GameActivity : AppCompatActivity() {
     private var gameMenuFragment: Fragment? = null
     private var pauseMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
+    lateinit var gameDifficulty: GAME_DIFFICULTY
+
+    companion object {
+        const val PARAM_DIFFICULTY = "GAME_ACTIVITY_PARAM_DIFFICULTY"
+    }
 
     var gameOver = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        overridePendingTransition(0, 0)
+
+        gameDifficulty = GAME_DIFFICULTY.valueOf(intent.getStringExtra(PARAM_DIFFICULTY))
 
         // Calculate the game screen size
         val displayMetrics = DisplayMetrics()
@@ -39,7 +47,7 @@ class GameActivity : AppCompatActivity() {
 
     fun initGame() {
         keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
-        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, screenSize, GAME_DIFFICULTY.EASY)
+        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, screenSize, gameDifficulty)
     }
 
     fun showGameOverFragment() {
