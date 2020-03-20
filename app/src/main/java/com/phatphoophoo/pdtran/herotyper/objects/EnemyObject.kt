@@ -9,11 +9,15 @@ abstract class EnemyObject(
 
     override fun updateState() : List<EnemyObject> {
         if (isDestroyed) {
-            return emptyList()
+            return onObjectDestroyed()
         }
 
         this.position = Pair(position.first, position.second + velocity)
         return listOf(this)
+    }
+
+    open fun onObjectDestroyed() : List<EnemyObject> {
+        return emptyList()
     }
 }
 
@@ -65,43 +69,58 @@ class BasicEnemy (
 class FastEnemy(
     override var position: Pair<Float, Float>
 ) : EnemyObject(position) {
-    override val velocity = 5.8f
+    override var velocity = 2.1f
     override var bitmapResId: Int = R.drawable.meteor
     override val height: Float = (75 + Math.random() * 50).toFloat()
     override val width: Float = this.height / 0.8f
     override val scoreValue = 200
+
+    private val VELOCITY_CAP = 12f
+
+    // Move through the animation map
+    override fun updateState() : List<EnemyObject> {
+        if (velocity < VELOCITY_CAP){
+            velocity += 0.2f
+        }
+
+        return super.updateState()
+    }
 }
 
-// Moves slower, but spawns 3 basic enemies upon death
+// Moves slower, but spawns 2 basic enemies upon death
 class SplittingEnemy(
     override var position: Pair<Float, Float>
 ) : EnemyObject(position) {
-    override val velocity = 0.8f
+    override val velocity = 1.8f
     override var bitmapResId: Int = R.drawable.meteor
     override val height: Float = (400 + Math.random() * 100).toFloat()
     override val width: Float = this.height
     override val scoreValue = 100
+
+    override fun onObjectDestroyed() : List<EnemyObject> {
+        return listOf(
+            BasicEnemy(Pair(position.first - width/2, position.second)),
+            BasicEnemy(Pair(position.first + width/2, position.second))
+        )
+    }
 }
 
 // Moves side to side as well as up and down
 class StrafingEnemy (
     override var position: Pair<Float, Float>
 ) : EnemyObject(position) {
-    override val velocity = 2.0f
+    override val velocity = 3.6f
     override var bitmapResId: Int = R.drawable.meteor
-    override val height: Float = (300 + Math.random() * 100).toFloat()
+    override val height: Float = (120 + Math.random() * 80).toFloat()
     override val width: Float = this.height
     override val scoreValue = 300
 
     var movingLeft = true
 
-    val HORIZONTAL_LIMIT_LEFT = 200
-    val HORIZONTAL_LIMIT_RIGHT = 500
+    val HORIZONTAL_LIMIT_LEFT = 100
+    val HORIZONTAL_LIMIT_RIGHT = 600
 
     override fun updateState() : List<EnemyObject> {
-        if (isDestroyed) return emptyList()
-        super.updateState()
-
         // Check if the horizontal direction should swap
         if (position.first <= HORIZONTAL_LIMIT_LEFT){ movingLeft = false }
         if (position.first >= HORIZONTAL_LIMIT_RIGHT){ movingLeft = true }
@@ -109,7 +128,6 @@ class StrafingEnemy (
         this.position = Pair(position.first + velocity * if (movingLeft) -1 else 1,
             position.second)
 
-        return listOf(this)
+        return super.updateState()
     }
 }
-

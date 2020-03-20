@@ -1,10 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
-import com.phatphoophoo.pdtran.herotyper.objects.BasicEnemy
-import com.phatphoophoo.pdtran.herotyper.objects.EnemyObject
-import com.phatphoophoo.pdtran.herotyper.objects.FastEnemy
-import com.phatphoophoo.pdtran.herotyper.objects.SplittingEnemy
+import com.phatphoophoo.pdtran.herotyper.objects.*
 
 class EnemyService(
     private val difficulty: GAME_DIFFICULTY,
@@ -71,14 +68,34 @@ class EnemyService(
         if (currentTick < 180) return emptyList()
         currentTick = 0
 
-        return addEnemyEasy()
+        // Random value between 0 and 100
+        val rand = (Math.random() * 100).toInt()
+
+        val newEnemy = when (rand){
+            in 0..40 -> { BasicEnemy(randomEnemyPosition()) }
+            in 41..70 -> { FastEnemy(randomEnemyPosition())}
+            in 71..81 -> { SplittingEnemy(randomEnemyPosition())}
+            else -> StrafingEnemy(randomEnemyPosition())
+        }
+
+        return listOf(newEnemy)
     }
 
     private fun addEnemyHard() : List<EnemyObject> {
         if (currentTick < 160) return emptyList()
         currentTick = 0
 
-        return addEnemyEasy()
+        // Random value between 0 and 100
+        val rand = (Math.random() * 100).toInt()
+
+        val newEnemy = when (rand){
+            in 0..10 -> { BasicEnemy(randomEnemyPosition()) }
+            in 11..40 -> { FastEnemy(randomEnemyPosition())}
+            in 41..70 -> { SplittingEnemy(randomEnemyPosition())}
+            else -> StrafingEnemy(randomEnemyPosition())
+        }
+
+        return listOf(newEnemy)
     }
 
     // Get the number of bullets that have hit the wall,
