@@ -63,6 +63,11 @@ class MainMenuActivity : Activity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setMenuState(MENU_STATE.MAIN)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         overridePendingTransition(0, 0)
