@@ -1,16 +1,11 @@
 package com.phatphoophoo.pdtran.herotyper.views
 
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.text.Html
 import android.util.AttributeSet
-import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
-import com.phatphoophoo.pdtran.herotyper.presenters.CustomKeyboardPresenter
 
 
 class CustomKeyboardView:
