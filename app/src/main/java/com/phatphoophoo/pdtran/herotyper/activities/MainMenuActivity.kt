@@ -2,10 +2,11 @@ package com.phatphoophoo.pdtran.herotyper.activities
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
-import kotlinx.android.synthetic.main.activity_welcome.*
+import kotlinx.android.synthetic.main.activity_main_menu.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -13,25 +14,46 @@ import kotlinx.android.synthetic.main.activity_welcome.*
  */
 class MainMenuActivity : Activity() {
 
+    enum class MENU_STATE {
+        MAIN, DIFFICULTY, LOADING
+    }
+
+    val MENU_LAYOUT_MAP: Map<MENU_STATE, Int> = mapOf(
+        MENU_STATE.MAIN to R.id.menu_button_layout,
+        MENU_STATE.DIFFICULTY to R.id.difficulty_button_layout,
+        MENU_STATE.LOADING to R.id.loading_layout
+    )
+
+    var currentState : MENU_STATE = MENU_STATE.MAIN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
+        setContentView(R.layout.activity_main_menu)
 
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
+        // Setup button behavior
         start_game.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
         }
 
-        View_stats.setOnClickListener {
+        view_stats_button.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
         }
     }
+
+    // Swap the current view being shown to the provided state
+    fun setMenuState(state: MENU_STATE){
+        val previousLayout = findViewById<View>(MENU_LAYOUT_MAP.getValue(currentState))
+        previousLayout.visibility = View.GONE
+
+        currentState = state
+
+        val currentLayout = findViewById<View>(MENU_LAYOUT_MAP.getValue(currentState))
+        currentLayout.visibility = View.VISIBLE
+    }
+
 
     companion object {
 

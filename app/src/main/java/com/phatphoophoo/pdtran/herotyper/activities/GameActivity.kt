@@ -50,7 +50,6 @@ class GameActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    // TODO: show the pause fragment
     fun showPauseFragment() {
         //if (gameOver) return
         val fragmentTransaction = supportFragmentManager.beginTransaction()
