@@ -13,17 +13,16 @@ val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     GAME_DIFFICULTY.HARD to listOf("logorrhea", "pochemuchka", "gobbledegook", "sacrilegious")
 )
 
-class CustomKeyboardPresenter(activity: Activity, private val keyboardView: CustomKeyboardView) {
+class CustomKeyboardPresenter(activity: Activity, private val keyboardView: CustomKeyboardView, gameDifficulty: GAME_DIFFICULTY) {
 
     private var curLevelWords: List<String> = emptyList()
     private var curWord = ""
     private var curLetterIndex = 0
-    private val difficulty = GAME_DIFFICULTY.EASY
     private var hasWordCompleted = false
 
     init {
         setKeyboardEventListeners(activity)
-        curLevelWords = dictionary[difficulty]!!
+        curLevelWords = dictionary.getValue(gameDifficulty)
         setNewWord()
         keyboardView.renderWord(curWord, curLetterIndex)
     }

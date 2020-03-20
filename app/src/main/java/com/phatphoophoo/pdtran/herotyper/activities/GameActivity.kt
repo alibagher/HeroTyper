@@ -45,7 +45,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun initGame() {
-        keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view)
+        keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view, gameDifficulty)
         gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, screenSize, gameDifficulty)
     }
 
