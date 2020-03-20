@@ -18,6 +18,9 @@
         <activity android:name=".activities.StatsActivity"
                 android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".activities.SettingsActivity"
+                android:theme="@style/FullscreenTheme">
+        </activity>
         <activity
                 android:name=".activities.MainMenuActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
