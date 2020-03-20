@@ -26,8 +26,13 @@ class MainMenuActivity : Activity() {
             startActivity(intent)
         }
 
-        View_stats.setOnClickListener {
+        view_stats.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
+            startActivity(intent)
+        }
+
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
     }

@@ -26,60 +26,23 @@
                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
                app:layout_constraintVertical_bias="0.421"/>
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/hero_typer_title"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/start_game"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-            android:id="@+id/start_game"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
+    <TextView
+            android:id="@+id/settings_title"
+            android:layout_width="186dp"
+            android:layout_height="47dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
-            style="@style/DefaultButtonStyle"
-            android:text="@string/start_game" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
-            app:layout_constraintVertical_bias="0.521"/>
-
-    <Button
-            android:id="@+id/view_stats"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
-            android:text="@string/view_stats"
-            style="@style/DefaultButtonStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/start_game" app:layout_constraintVertical_bias="0.0"/>
-
-    <Button
-            android:id="@+id/settings"
-            style="@style/DefaultButtonStyle"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/settings"
+            android:textColor="@color/colorWhite"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.181"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_stats"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintVertical_bias="0.048" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
