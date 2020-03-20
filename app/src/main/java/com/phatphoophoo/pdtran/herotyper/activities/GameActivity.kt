@@ -17,7 +17,6 @@ class GameActivity : AppCompatActivity() {
     lateinit var keyboardPresenter: CustomKeyboardPresenter
     lateinit var gameScreenPresenter: GameScreenPresenter
     private var gameMenuFragment: Fragment? = null
-    private var pauseMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
     lateinit var gameDifficulty: GAME_DIFFICULTY
 

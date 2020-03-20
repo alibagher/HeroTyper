@@ -1,7 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.app.Activity
-import android.util.Log
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView

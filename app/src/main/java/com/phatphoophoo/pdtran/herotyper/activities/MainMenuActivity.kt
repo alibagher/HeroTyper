@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import kotlinx.android.synthetic.main.activity_main_menu.*
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -32,7 +32,7 @@ class MainMenuActivity : Activity() {
         setContentView(R.layout.activity_main_menu)
 
         // Setup button behavior
-        start_game.setOnClickListener {
+        start_game_button.setOnClickListener {
             setMenuState(MENU_STATE.DIFFICULTY)
         }
 
@@ -54,6 +54,11 @@ class MainMenuActivity : Activity() {
 
         view_stats_button.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
+            startActivity(intent)
+        }
+
+        settings_button.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
     }

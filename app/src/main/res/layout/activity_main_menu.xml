@@ -34,7 +34,7 @@
             >
 
         <Button
-                android:id="@+id/start_game"
+                android:id="@+id/start_game_button"
                 style="@style/DefaultButtonStyle"
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:text="@string/view_stats" />
 
         <Button
-                android:id="@+id/leaderboard_button"
+                android:id="@+id/settings_button"
                 style="@style/DefaultButtonStyle"
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/view_leaderBoard" />
+                android:text="@string/settings"/>
     </LinearLayout>
 
     <LinearLayout
