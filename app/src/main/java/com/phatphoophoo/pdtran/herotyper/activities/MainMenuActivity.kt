@@ -2,10 +2,9 @@ package com.phatphoophoo.pdtran.herotyper.activities
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.phatphoophoo.pdtran.herotyper.R
-import kotlinx.android.synthetic.main.activity_welcome.*
+import kotlinx.android.synthetic.main.activity_mainmenu.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,7 +15,7 @@ class MainMenuActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
+        setContentView(R.layout.activity_mainmenu)
 
 
         // Upon interacting with UI controls, delay any scheduled hide()
