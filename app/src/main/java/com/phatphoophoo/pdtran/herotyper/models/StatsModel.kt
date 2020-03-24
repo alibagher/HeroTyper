@@ -3,12 +3,12 @@ package com.phatphoophoo.pdtran.herotyper.models
 import android.content.SharedPreferences
 import android.util.Log
 
+class StatsModel(val sp: SharedPreferences?){
 
-class StatsModel(var sp: SharedPreferences?){
+    var currGameIndex : Int = 0
+    var wpm: Array<Int> = emptyArray()
+    var keysMap: Array<MutableMap<String, Pair<Int, Int>>> = emptyArray()
 
-    var maxWPM : Int = 0
-    var avgWPM : Int = 0
-    var numSesh : Int = 0
 
     // Visualize typing speed over time:
     //    Key: Incremental Index: Int

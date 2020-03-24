@@ -6,16 +6,19 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
+import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.Player
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 
 
 class GameScreenPresenter(
     val gameActivity: GameActivity,
+    val statsActivity: StatsActivity,
     val gameScreenView: GameScreenView,
     val customKeyboardPresenter: CustomKeyboardPresenter,
     val windowSize: Pair<Float,Float>,
@@ -30,6 +33,9 @@ class GameScreenPresenter(
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
+
+
+    val statsService: StatsService = StatsService(statsActivity)
 
     val gameHandler : Handler
     val gameLooper : Runnable

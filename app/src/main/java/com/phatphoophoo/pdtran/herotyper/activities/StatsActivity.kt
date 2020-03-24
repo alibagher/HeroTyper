@@ -9,15 +9,27 @@ import com.phatphoophoo.pdtran.herotyper.models.StatsModel
 
 class StatsActivity : AppCompatActivity() {
 
+    lateinit var sp: SharedPreferences
+    lateinit var model: StatsModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
 
-        val sp: SharedPreferences? = getSharedPreferences("my_prefs", Activity.MODE_PRIVATE)
-        val model: StatsModel = StatsModel(sp)
+        sp = getSharedPreferences("my_prefs", Activity.MODE_PRIVATE)
+        model = StatsModel(sp)
 
         //testing
         model.writeStats(1)
         model.readStats()
     }
+
+    fun getsp(): SharedPreferences{
+        return sp
+    }
+
+    fun getmodel(): StatsModel{
+        return model
+    }
+
 }
