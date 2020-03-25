@@ -18,7 +18,6 @@ import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 
 class GameScreenPresenter(
     val gameActivity: GameActivity,
-    val statsActivity: StatsActivity,
     val gameScreenView: GameScreenView,
     val customKeyboardPresenter: CustomKeyboardPresenter,
     val windowSize: Pair<Float,Float>,
@@ -33,9 +32,6 @@ class GameScreenPresenter(
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
-
-
-    val statsService: StatsService = StatsService(statsActivity)
 
     val gameHandler : Handler
     val gameLooper : Runnable
