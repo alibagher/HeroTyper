@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:background="#1A083A"
+        tools:context=".activities.MainMenuActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
 
 
-</LinearLayout>
+    <ImageView android:id="@+id/fullscreen_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/background_desc"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"
+            android:text="@string/game_title" android:textColor="#33b5e5"
+            android:textSize="50sp" android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421"/>
+
+    <TextView
+            android:id="@+id/stats_title"
+            android:layout_width="271dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/stats_text"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toTopOf="@id/scroll_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.181"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintVertical_bias="0.048"
+            style="@style/HeaderText"/>
+
+    <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="253dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stats_title">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="8dp">
+
+                <com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

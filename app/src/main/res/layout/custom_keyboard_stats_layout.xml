@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include layout="@layout/custom_keyboard_keys_medium" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            android:divider="@drawable/empty_tall_divider">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/key_value"
+                    style="@style/StatsTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Letter: A" />
+
+            <TextView
+                    android:id="@+id/key_status"
+                    style="@style/StatsTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Good" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/key_hit"
+                    style="@style/StatsTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hits: 22" />
+
+            <TextView
+                    android:id="@+id/key_miss"
+                    style="@style/StatsTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Misses: 34" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

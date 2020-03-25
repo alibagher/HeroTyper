@@ -1,7 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.views.stats_views
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.LinearLayout
@@ -17,8 +16,8 @@ class KeyboardStatsView:
     val ANALYSIS_THRESHOLD_COUNT = 30
 
     init {
-        inflate(context, R.layout.custom_keyboard_keys, this)
-        val mainLayout = findViewById<LinearLayout>(R.id.custom_keyboard_keys)
+        inflate(context, R.layout.custom_keyboard_stats_layout, this)
+        val mainLayout = findViewById<LinearLayout>(R.id.custom_keyboard_keys_medium)
         mainLayout.setBackgroundColor(ContextCompat.getColor(this.context, R.color.colorWhite))
     }
 

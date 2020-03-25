@@ -13,5 +13,5 @@
                 android:background="#FFFFFF"
                 android:text="" />
 
-        <include layout="@layout/custom_keyboard_keys"/>
+        <include layout="@layout/custom_keyboard_keys_large"/>
     </LinearLayout>
