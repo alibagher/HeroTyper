@@ -30,7 +30,7 @@
 
     <style name="DefaultButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/conthrax</item>
-        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:background">@drawable/button_shape_neutral</item>
         <item name="android:shadowColor">#000000</item>
         <item name="android:shadowDx">1.5</item>
         <item name="android:shadowDy">1.3</item>
