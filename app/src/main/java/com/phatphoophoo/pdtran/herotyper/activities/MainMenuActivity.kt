@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import kotlinx.android.synthetic.main.activity_main_menu.*
 
 
@@ -30,6 +31,7 @@ class MainMenuActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
+        StatsService.initService(this.applicationContext)
 
         // Setup button behavior
         start_game_button.setOnClickListener {
