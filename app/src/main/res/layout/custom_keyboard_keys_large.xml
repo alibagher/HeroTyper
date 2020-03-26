@@ -24,7 +24,7 @@
 
         <Button
                 android:id="@+id/button3"
-                android:layout_width="39dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:text="E" />
 
