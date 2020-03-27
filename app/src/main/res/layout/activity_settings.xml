@@ -42,6 +42,103 @@
             app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
             app:layout_constraintVertical_bias="0.048" />
 
+    <ScrollView
+            android:layout_width="355dp"
+            android:layout_height="490dp"
+            app:layout_constraintBottom_toTopOf="@+id/save_settings"
+            app:layout_constraintEnd_toEndOf="@+id/fullscreen_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_title">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/background_volume_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/background_volume_text"
+                    android:textColor="@color/colorWhite" />
+
+            <SeekBar
+                    android:id="@+id/background_volume_seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:max="100"
+                    android:progressTint="#D19898"
+                    android:thumbTint="#D19898"
+                    android:tickMarkTint="#D19898" />
+
+            <TextView
+                    android:id="@+id/sound_volume_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sound_volume_text"
+                    android:textColor="@color/colorWhite" />
+
+            <SeekBar
+                    android:id="@+id/sound_volume_seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:max="100"
+                    android:progressTint="#D19898"
+                    android:thumbTint="#D19898"
+                    android:tickMarkTint="#D19898" />
+
+            <TextView
+                    android:id="@+id/keyboard_setting_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/keyboard_style_text"
+                    android:textColor="@color/colorWhite" />
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                            <include
+                                android:id="@+id/default_keyboard"
+                                layout="@layout/custom_keyboard_keys_medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        <include
+                                android:id="@+id/colemak"
+                                layout="@layout/custom_keyboard_keys_medium_colemak"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        <include
+                                android:id="@+id/dvorak"
+                                layout="@layout/custom_keyboard_keys_medium_dvorak"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    </ScrollView>
+
     <Button
             android:id="@+id/save_settings"
             style="@style/DefaultButtonStyle"

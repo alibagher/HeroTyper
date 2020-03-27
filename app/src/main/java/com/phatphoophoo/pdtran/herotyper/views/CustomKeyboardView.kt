@@ -15,6 +15,7 @@ class CustomKeyboardView:
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
 
     init {
+        // TODO: Fetch settings from preferences and update keyboard layout
         inflate(context, R.layout.custom_keyboard_layout, this)
     }
 

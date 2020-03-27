@@ -11,6 +11,13 @@
     <string name="back_text">Back</string>
     <string name="background_desc">Space Background</string>
     <string name="settings">Settings</string>
+    <string name="settings_shprefs_key">hero_typer_settings</string>
+    <string name="background_volume_key">background_volume</string>
+    <string name="sound_volume_key">sound_volume</string>
+    <string name="keyboard_style_key">keyboard_style</string>
+    <string name="background_volume_text">Background Volume</string>
+    <string name="sound_volume_text">Sound Volume</string>
+    <string name="keyboard_style_text">Keyboard Style</string>
     <string name="save_settings">Save</string>
     <string name="template">Change Me</string>
     <string name="pause">Pause</string>
