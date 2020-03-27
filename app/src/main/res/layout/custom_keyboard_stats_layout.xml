@@ -23,14 +23,14 @@
                     style="@style/StatsTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Letter: A" />
+                    android:textColor="@color/colorWhite" />
 
             <TextView
                     android:id="@+id/key_status"
                     style="@style/StatsTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status: Good" />
+                    android:textColor="@color/colorWhite" />
         </LinearLayout>
 
         <LinearLayout
@@ -42,14 +42,14 @@
                     style="@style/StatsTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hits: 22" />
+                    android:textColor="@color/colorWhite" />
 
             <TextView
                     android:id="@+id/key_miss"
                     style="@style/StatsTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Misses: 34" />
+                    android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

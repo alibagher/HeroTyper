@@ -16,24 +16,36 @@ object StatsService {
         this.context = context
         this.sp = PreferenceManager.getDefaultSharedPreferences(context)
         this.statsModel = StatsModel(sp)
+
+//       read the data right at the beginning. !!
+        statsModel = StatsModel(sp)
+
+
+        //testing
+//        statsModel.currGameIndex = 1
+//        statsModel.wpm.add(1)
+//
+//        val map = mutableMapOf("a" to arrayListOf(1, 2))
+//        statsModel.keysMap.add(map)
+//
+//        statsModel.write()
+//        statsModel.read()
     }
 
 
-    fun updateGameIndex(n: Int) {
-        statsModel.currGameIndex = n
-    }
+
 
     fun updateWpm(n: Int) {
-//        statsModel.wpm.toMutableList()
-        statsModel.wpm[statsModel.currGameIndex - 1] = n
+        statsModel.wpm.add(n)
     }
 
-    fun updateKeysMap(s: String, hits: Int, misses: Int) {
-        var m : MutableMap<String, Pair<Int, Int>> = statsModel.keysMap[statsModel.currGameIndex - 1]
-        m[s] = Pair(hits,misses)
-
-        statsModel.keysMap[statsModel.currGameIndex - 1] = m
+    fun updateKeysMap(m : MutableMap<String, ArrayList<Int>>) {
+        statsModel.keysMap.add(m)
     }
 
+    // write data
+    fun write() {
+        statsModel.write()
+    }
 
 }

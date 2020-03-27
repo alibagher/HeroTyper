@@ -2,12 +2,18 @@ package com.phatphoophoo.pdtran.herotyper.models
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
+//import javax.swing.UIManager.put
+
 
 class StatsModel(val sp: SharedPreferences?){
 
     var currGameIndex : Int = 0
-    var wpm: Array<Int> = emptyArray()
-    var keysMap: Array<MutableMap<String, Pair<Int, Int>>> = emptyArray()
+    var wpm: ArrayList<Int> = ArrayList()
+    var keysMap: ArrayList<MutableMap<String, ArrayList<Int>>> = ArrayList()
+
 
 
     // Visualize typing speed over time:
@@ -25,19 +31,52 @@ class StatsModel(val sp: SharedPreferences?){
     // Map<String, Pair<Int, Int>>
 
 
-    fun readStats(){
-        val editor = sp!!.edit()
-        val myIntValue = sp!!.getInt("your_int_key", -1)
-        // TODO: Show error if return value is -1
-        if (myIntValue == -1)  true
 
-        Log.e("read data: ", myIntValue.toString())
+    fun read(){
+//        get the currGameIndex
+        currGameIndex = sp!!.getInt("currGameIndex", -1)
+        // TODO: Show corrupt data if return value is -1 ******
+//        if (currGameIndex == -1)  true
+
+
+//      get the wpm arrayList
+        var gson = Gson()
+        var json : String? = sp.getString("wpm", "[-1]")
+        var itemType = object : TypeToken<ArrayList<Int>>() {}.type
+        wpm = gson.fromJson(json, itemType)
+        // TODO: Show corrupt data if return value is -1 ******
+//        if (wpm[0] == -1)  true
+
+
+//        get the keysMap
+        json = sp.getString("keysMap", "[{\"a\":[-1]}]")
+        itemType = object : TypeToken<ArrayList<MutableMap<String, ArrayList<Int>>>>() {}.type
+        keysMap = gson.fromJson(json, itemType)
+        // TODO: Show corrupt data if return value is -1 ******
+//        if (keysMap[0] == -1)  true
+
+//        var a = keysMap[0]["a"]
+//        Log.e("read data: ", wpm[0].toString() + " " + currGameIndex.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
+
     }
 
-    fun writeStats(v: Int){
+    fun write(){
         val editor = sp!!.edit()
-        editor.putInt("your_int_key", v)
+
+        currGameIndex += 1
+
+        editor.putInt("currGameIndex", currGameIndex)
         editor.commit()
+
+        var gson : Gson = Gson()
+        var json : String = gson.toJson(wpm)
+        editor.putString("wpm", json)
+        editor.commit()
+
+        json = gson.toJson(keysMap)
+        editor.putString("keysMap", json)
+        editor.commit()
+
     }
 
 }
