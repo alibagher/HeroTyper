@@ -22,7 +22,8 @@
     <string name="template">Change Me</string>
     <string name="pause">Pause</string>
     <string name="stats_text">Statistics</string>
-    <string name="keyboard_stats_header">Hits/Misses</string>
+    <string name="keyboard_stats_header">Accuracy</string>
+    <string name="speed_stats_header">Speed</string>
 
     <string name="keyboard_stats_key_value">Letter: %s</string>
     <string name="keyboard_stats_key_status">Status: %s</string>
