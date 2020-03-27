@@ -22,4 +22,5 @@
     <string name="template">Change Me</string>
     <string name="pause">Pause</string>
     <string name="stats_text">Statistics</string>
+    <string name="keyboard_stats_header">Hits/Misses</string>
 </resources>
