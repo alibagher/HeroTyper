@@ -18,18 +18,30 @@ object StatsService {
         this.statsModel = StatsModel(sp)
 
 //       read the data right at the beginning. !!
-        statsModel.read()
+        statsModel = StatsModel(sp)
+
+
+        //testing
+//        statsModel.currGameIndex = 1
+//        statsModel.wpm.add(1)
+//
+//        val map = mutableMapOf("a" to arrayListOf(1, 2))
+//        statsModel.keysMap.add(map)
+//
+//        statsModel.write()
+//        statsModel.read()
     }
+
+
 
 
     fun updateWpm(n: Int) {
-//        statsModel.wpm.toMutableList()
-        statsModel.wpm[statsModel.currGameIndex] = n
+        statsModel.wpm.add(n)
     }
 
-//    fun updateKeysMap(m : MutableMap<String, ArrayList<Int>>) {
-//        statsModel.keysMap[statsModel.currGameIndex] = m
-//    }
+    fun updateKeysMap(m : MutableMap<String, ArrayList<Int>>) {
+        statsModel.keysMap.add(m)
+    }
 
     // write data
     fun write() {

@@ -12,7 +12,6 @@ class StatsModel(val sp: SharedPreferences?){
 
     var currGameIndex : Int = 0
     var wpm: ArrayList<Int> = ArrayList()
-//    var map = mutableMapOf<String, arrayListOf<Int>()>()
     var keysMap: ArrayList<MutableMap<String, ArrayList<Int>>> = ArrayList()
 
 
@@ -34,11 +33,6 @@ class StatsModel(val sp: SharedPreferences?){
 
 
     fun read(){
-//        val myIntValue = sp!!.getInt("your_int_key", -1)
-//
-//
-//        Log.e("read data: ", myIntValue.toString())
-
 //        get the currGameIndex
         currGameIndex = sp!!.getInt("currGameIndex", -1)
         // TODO: Show corrupt data if return value is -1 ******
@@ -61,7 +55,6 @@ class StatsModel(val sp: SharedPreferences?){
         // TODO: Show corrupt data if return value is -1 ******
 //        if (keysMap[0] == -1)  true
 
-
 //        var a = keysMap[0]["a"]
 //        Log.e("read data: ", wpm[0].toString() + " " + currGameIndex.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
 
@@ -70,17 +63,16 @@ class StatsModel(val sp: SharedPreferences?){
     fun write(){
         val editor = sp!!.edit()
 
-//        put the currGameIndex
+        currGameIndex += 1
+
         editor.putInt("currGameIndex", currGameIndex)
         editor.commit()
 
-//        put the wpm
         var gson : Gson = Gson()
         var json : String = gson.toJson(wpm)
         editor.putString("wpm", json)
         editor.commit()
 
-//        put the
         json = gson.toJson(keysMap)
         editor.putString("keysMap", json)
         editor.commit()
