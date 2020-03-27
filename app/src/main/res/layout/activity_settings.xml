@@ -94,9 +94,7 @@
                     android:text="@string/keyboard_style_text"
                     android:textColor="@color/colorWhite" />
 
-            <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+
 
                 <LinearLayout
                         android:layout_width="wrap_content"
@@ -106,35 +104,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical" >
-                            <include
-                                android:id="@+id/default_keyboard"
-                                layout="@layout/custom_keyboard_keys_medium"
+
+                        <Spinner
+                                android:id="@+id/keyboard_spinner"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorWhite"
+                                android:entries="@array/keyboard_arrays"
+                                android:spinnerMode="dropdown" />
+
+                        <ImageView
+                                android:id="@+id/keyboard_display"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:visibility="visible"
+                                android:src="@drawable/dvorak" />
+
                         <include
-                                android:id="@+id/colemak"
-                                layout="@layout/custom_keyboard_keys_medium_colemak"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-                        <include
-                                android:id="@+id/dvorak"
-                                layout="@layout/custom_keyboard_keys_medium_dvorak"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:id="@+id/keyboard_custom"
+                                android:visibility="invisible"
+                                layout="@layout/custom_keyboard_keys_medium"/>
+
                     </LinearLayout>
                 </LinearLayout>
 
-            </HorizontalScrollView>
 
         </LinearLayout>
     </ScrollView>
