@@ -23,4 +23,9 @@
     <string name="pause">Pause</string>
     <string name="stats_text">Statistics</string>
     <string name="keyboard_stats_header">Hits/Misses</string>
+
+    <string name="keyboard_stats_key_value">Letter: %s</string>
+    <string name="keyboard_stats_key_status">Status: %s</string>
+    <string name="keyboard_stats_key_hits">Hits: %d</string>
+    <string name="keyboard_stats_key_misses">Misses: %d</string>
 </resources>
