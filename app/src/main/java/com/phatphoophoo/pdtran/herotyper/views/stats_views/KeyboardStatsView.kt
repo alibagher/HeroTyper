@@ -1,10 +1,10 @@
 package com.phatphoophoo.pdtran.herotyper.views.stats_views
 
 import android.content.Context
+import android.graphics.LightingColorFilter
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.phatphoophoo.pdtran.herotyper.R
 import kotlin.random.Random
 
@@ -14,16 +14,25 @@ class KeyboardStatsView:
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
 
-    val ANALYSIS_THRESHOLD_COUNT = 30
-    val keyButtonIds: IntArray = intArrayOf(R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7,
+    private val ANALYSIS_THRESHOLD_COUNT = 30
+    private val keyButtonIds: IntArray = intArrayOf(R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7,
         R.id.button8, R.id.button9, R.id.button10, R.id.button11, R.id.button12, R.id.button13, R.id.button14, R.id.button15,
         R.id.button16, R.id.button17, R.id.button18, R.id.button19, R.id.button20, R.id.button21, R.id.button22,R.id.button23,
         R.id.button24, R.id.button25, R.id.button26)
 
+    //TODO: change later
+    //Colors
+    private val softGray = 0xBDB1B1
+    private val softGreen = 0x87F09C
+    private val softYellow = 0xEDF087
+    private val softRed = 0xF08787
+
     init {
         inflate(context, R.layout.custom_keyboard_stats_layout, this)
 
+        //TODO: Remove later
         //testing
+        Thread.sleep(1000) //To prevent app crash for now
         initWithFakeData()
     }
 
@@ -56,13 +65,13 @@ class KeyboardStatsView:
 
             if(total < ANALYSIS_THRESHOLD_COUNT) {
                 // if the key has not been pressed enough times for analysis
-                button.setBackgroundResource(R.drawable.button_shape_neutral)
+                button.background.colorFilter = LightingColorFilter(softGray, 0)
             } else if(ratio > 2) {
-                button.setBackgroundResource(R.drawable.button_shape_green)
+                button.background.colorFilter = LightingColorFilter(softGreen, 0)
             } else if(ratio > 1) {
-                button.setBackgroundResource(R.drawable.button_shape_yellow)
+                button.background.colorFilter = LightingColorFilter(softYellow, 0)
             } else {
-                button.setBackgroundResource(R.drawable.button_shape_red)
+                button.background.colorFilter = LightingColorFilter(softRed, 0)
             }
 
         }
