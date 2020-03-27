@@ -31,9 +31,14 @@ class StatsPresenter(
         fun initWithFakeData(){
 
             //Generate fake data
-            val keyStats = generateFakeData()
+            val fakeKeyStats = generateFakeData()
             //Initialize using fake data
-            keyboardStatsView.initKeyColors(keyStats)
+            keyboardStatsView.initKeyColors(fakeKeyStats)
+
+            //Initialize fake details
+            val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
+            keyboardStatsView.showDetailedKeyStats("A", fakeKeyStats["A"]!!, fakeKeyStatus)
+
         }
 
         fun generateFakeData(): Map<String, Pair<Int,Int>>{
