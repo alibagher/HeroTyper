@@ -41,12 +41,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.2.2'
     implementation 'androidx.cardview:cardview:1.0.0'// or remove -ktx if not using kotlin
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     implementation 'com.google.code.gson:gson:2.8.5' // GSON
 }
