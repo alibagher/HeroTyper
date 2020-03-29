@@ -7,13 +7,10 @@ import com.phatphoophoo.pdtran.herotyper.models.StatsModel
 
 
 object StatsService {
-
-    lateinit var context: Context
     lateinit var sp: SharedPreferences
     lateinit var statsModel: StatsModel
 
     fun initService(context: Context) {
-        this.context = context
         this.sp = PreferenceManager.getDefaultSharedPreferences(context)
         this.statsModel = StatsModel(sp)
 
@@ -31,9 +28,6 @@ object StatsService {
 //        statsModel.write()
 //        statsModel.read()
     }
-
-
-
 
     fun updateWpm(n: Int) {
         statsModel.wpm.add(n)
