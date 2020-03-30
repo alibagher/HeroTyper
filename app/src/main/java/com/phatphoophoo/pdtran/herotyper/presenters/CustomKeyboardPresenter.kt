@@ -9,9 +9,72 @@ import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
 const val PACKAGE_NAME = "com.phatphoophoo.pdtran.herotyper"
 
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
-    GAME_DIFFICULTY.EASY to listOf("wheat", "some", "trail", "food", "cool", "random", "jazz", "friend", "space", "ship"),
-    GAME_DIFFICULTY.MEDIUM to listOf("according", "against", "business"),
-    GAME_DIFFICULTY.HARD to listOf("logorrhea", "pochemuchka", "gobbledegook", "sacrilegious")
+    GAME_DIFFICULTY.EASY to listOf(
+        "glow",
+        "height",
+        "deal",
+        "waste",
+        "brown",
+        "leash",
+        "rule",
+        "home",
+        "pat",
+        "block",
+        "tune",
+        "cut",
+        "spread",
+        "weave",
+        "deer",
+        "cell",
+        "leaf",
+        "pluck",
+        "north",
+        "round"
+    ),
+    GAME_DIFFICULTY.MEDIUM to listOf(
+        "correction",
+        "exemption",
+        "formation",
+        "exclusive",
+        "candidate",
+        "difference",
+        "episode",
+        "organize",
+        "accurate",
+        "average",
+        "horizon",
+        "apathy",
+        "particle",
+        "bulletin",
+        "medieval",
+        "objective",
+        "analyst",
+        "shareholder",
+        "consciousness",
+        "permanent"
+    ),
+    GAME_DIFFICULTY.HARD to listOf(
+        "intermediate",
+        "decoration",
+        "unanimous",
+        "execution",
+        "variation",
+        "institution",
+        "acceptable",
+        "deteriorate",
+        "coincidence",
+        "notorious",
+        "qualification",
+        "electronics",
+        "resignation",
+        "continental",
+        "entertainment",
+        "initiative",
+        "economist",
+        "architecture",
+        "demonstrator",
+        "integrated"
+    )
 )
 
 class CustomKeyboardPresenter(activity: Activity, private val keyboardView: CustomKeyboardView, gameDifficulty: GAME_DIFFICULTY) {
