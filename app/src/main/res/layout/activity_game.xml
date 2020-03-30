@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.GameActivity"
+        android:background="@drawable/game_background"
         >
 
     <Button
@@ -19,20 +20,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
+            android:id="@+id/scrolling_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@string/background_desc"
             android:gravity="center"
             android:keepScreenOn="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.421" />
+            android:alpha="0.5"
+            />
 
     <FrameLayout
         android:id="@+id/game_screen_layout"

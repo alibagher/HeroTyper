@@ -12,14 +12,14 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <ImageView android:id="@+id/fullscreen_content"
+    <ImageView android:id="@+id/scrolling_content"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:contentDescription="@string/background_desc"
                android:gravity="center"
                android:keepScreenOn="true"
                android:scaleType="centerCrop"
-               android:src="@drawable/background"
+               android:src="@drawable/star_background"
                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
                app:layout_constraintVertical_bias="0.421"/>
@@ -39,14 +39,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.181"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintTop_toTopOf="@+id/scrolling_content"
             app:layout_constraintVertical_bias="0.048" />
 
     <ScrollView
             android:layout_width="355dp"
             android:layout_height="490dp"
             app:layout_constraintBottom_toTopOf="@+id/save_settings"
-            app:layout_constraintEnd_toEndOf="@+id/fullscreen_content"
+            app:layout_constraintEnd_toEndOf="@+id/scrolling_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_title">
 
@@ -147,7 +147,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintTop_toTopOf="@+id/scrolling_content"
             app:layout_constraintVertical_bias="0.942" />
 
     <!-- This FrameLayout insets its children based on system windows using

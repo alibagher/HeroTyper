@@ -38,7 +38,7 @@ class GameMenuFragment : Fragment() {
         super.onStart()
 
         resume_button.visibility = if (isGameOver) View.GONE else View.VISIBLE
-        menu_header_text.text = if (isGameOver) "Game Over" else "Game Paused"
+        menu_header_text.text = if (isGameOver) "Game Over" else "Paused"
     }
 
     companion object {

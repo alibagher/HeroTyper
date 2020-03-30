@@ -12,14 +12,14 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <ImageView android:id="@+id/fullscreen_content"
+    <ImageView android:id="@+id/scrolling_content"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:contentDescription="@string/background_desc"
                android:gravity="center"
                android:keepScreenOn="true"
                android:scaleType="centerCrop"
-               android:src="@drawable/background"
+               android:src="@drawable/star_background"
                android:text="@string/game_title" android:textColor="#33b5e5"
                android:textSize="50sp" android:textStyle="bold"
                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.181"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
+            app:layout_constraintTop_toTopOf="@+id/scrolling_content"
             app:layout_constraintVertical_bias="0.048" />
 
     <!-- This FrameLayout insets its children based on system windows using

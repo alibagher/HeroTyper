@@ -5,6 +5,7 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
@@ -14,6 +15,8 @@ import com.phatphoophoo.pdtran.herotyper.objects.Player
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
+import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
+import kotlinx.android.synthetic.main.activity_game.view.*
 
 
 class GameScreenPresenter(
@@ -33,22 +36,15 @@ class GameScreenPresenter(
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
 
-    val gameHandler : Handler
-    val gameLooper : Runnable
+    private val gameHandler : Handler = Handler(Looper.getMainLooper())
+    private val gameLooper : Runnable = Runnable { gameLoop() }
+    private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
-        gameHandler = Handler(Looper.getMainLooper())
         gameModel.player = Player(Pair(lastXPos, windowSize.second - 200))
-
-
-        gameLooper = object : Runnable {
-            override fun run() {
-                gameLoop()
-            }
-        }
         gameHandler.post(gameLooper)
 
-        gameScreenView.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+        gameScreenView.setOnTouchListener { _: View, motionEvent: MotionEvent ->
             // Update the position within screen constraints
             lastXPos = Math.max(Math.min(motionEvent.x, windowSize.first - 250), 50f)
             true
@@ -60,8 +56,8 @@ class GameScreenPresenter(
         btn.setOnClickListener{
             gameHandler.removeCallbacks(gameLooper)
             gameActivity.showPauseFragment()
+            scrollingBg.animator.pause()
         }
-
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -134,6 +130,7 @@ class GameScreenPresenter(
 
     fun resumeGame(){
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
+        scrollingBg.animator.resume()
     }
 
     fun endGame() {
