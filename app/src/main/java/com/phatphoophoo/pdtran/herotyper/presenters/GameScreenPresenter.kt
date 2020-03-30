@@ -38,6 +38,7 @@ class GameScreenPresenter(
     private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
+        scrollingBg.animator.start()
         gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
         gameHandler.post(gameLooper)
 

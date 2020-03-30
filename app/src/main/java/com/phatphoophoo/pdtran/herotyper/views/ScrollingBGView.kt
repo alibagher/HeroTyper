@@ -39,6 +39,5 @@ class ScrollingBGView: FrameLayout {
             backgroundOne.translationY = translationY
             backgroundTwo.translationY = translationY - height
         }
-        animator.start()
     }
 }
