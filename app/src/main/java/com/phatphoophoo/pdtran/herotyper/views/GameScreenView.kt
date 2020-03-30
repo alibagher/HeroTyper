@@ -7,10 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
-import com.phatphoophoo.pdtran.herotyper.objects.BulletObject
-import com.phatphoophoo.pdtran.herotyper.objects.EnemyObject
-import com.phatphoophoo.pdtran.herotyper.objects.GameObject
-import com.phatphoophoo.pdtran.herotyper.objects.Player
+import com.phatphoophoo.pdtran.herotyper.objects.*
 
 class GameScreenView : View {
     private var cnv: Canvas? = null
@@ -25,11 +22,7 @@ class GameScreenView : View {
     private val livesText = "Lives: "
     private val textPaint = TextPaint()
 
-    private val cachedBitmaps: Map<Int,Bitmap> = listOf(
-        R.drawable.rocket,
-        R.drawable.spaceship,
-        R.drawable.meteor
-    ).associateBy({it}, {BitmapFactory.decodeResource(resources, it)})
+    private val cachedBitmaps: Map<Int,Bitmap>
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -38,6 +31,20 @@ class GameScreenView : View {
     init {
         textPaint.textSize = 42f
         textPaint.color = Color.WHITE
+
+        // MUST pre-initialize bitmaps here, otherwise the game will LAG when loading them
+        val bitmapList = mutableListOf(
+            R.drawable.rocket,
+            R.drawable.spaceship,
+            R.drawable.meteor,
+            R.drawable.meteor_fast,
+            R.drawable.meteor_strafe,
+            R.drawable.meteor_split
+        )
+
+        bitmapList.addAll(0, DestroyedEnemy.BITMAP_RES_LIST)
+
+        cachedBitmaps = bitmapList.associateBy({it}, {BitmapFactory.decodeResource(resources, it)})
     }
 
     fun setModel(model: GameScreenModel) {
