@@ -5,6 +5,7 @@ import android.graphics.*
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.*
@@ -31,6 +32,7 @@ class GameScreenView : View {
     init {
         textPaint.textSize = 42f
         textPaint.color = Color.WHITE
+        textPaint.typeface = ResourcesCompat.getFont(context, R.font.conthrax)
 
         // MUST pre-initialize bitmaps here, otherwise the game will LAG when loading them
         val bitmapList = mutableListOf(

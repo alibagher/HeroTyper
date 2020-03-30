@@ -9,10 +9,13 @@
         >
 
     <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:id="@+id/pause"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/pause"
+            android:alpha="0.7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

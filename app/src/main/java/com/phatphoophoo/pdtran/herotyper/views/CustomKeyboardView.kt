@@ -3,9 +3,12 @@ package com.phatphoophoo.pdtran.herotyper.views
 import android.content.Context
 import android.text.Html
 import android.util.AttributeSet
+import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.presenters.PACKAGE_NAME
 
 
 class CustomKeyboardView:
@@ -17,6 +20,15 @@ class CustomKeyboardView:
     init {
         // TODO: Fetch settings from preferences and update keyboard layout
         inflate(context, R.layout.custom_keyboard_layout, this)
+
+        // Depending on the size, loop through the number of keys and wipe them
+        for(i in 1..30) {
+            val id = resources.getIdentifier("button$i", "id", PACKAGE_NAME)
+            val btn = findViewById<Button>(id)
+            if (btn.text.isBlank()){
+                btn.visibility = View.GONE
+            }
+        }
     }
 
     fun getColoredSpanned(text: String, color: String): String {

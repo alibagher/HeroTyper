@@ -1,6 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.app.Activity
+import android.view.View
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
@@ -31,6 +32,9 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         for(i in 1..26) {
             val id = activity.resources.getIdentifier("button$i", "id", PACKAGE_NAME)
             val btn = activity.findViewById(id) as Button
+            if (btn.text.isBlank()){
+                btn.visibility = View.GONE
+            }
             btn.setOnClickListener{
                 onKeyPress(btn)
             }
