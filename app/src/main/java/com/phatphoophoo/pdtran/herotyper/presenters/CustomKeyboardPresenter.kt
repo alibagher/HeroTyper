@@ -32,9 +32,6 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         for(i in 1..26) {
             val id = activity.resources.getIdentifier("button$i", "id", PACKAGE_NAME)
             val btn = activity.findViewById(id) as Button
-            if (btn.text.isBlank()){
-                btn.visibility = View.GONE
-            }
             btn.setOnClickListener{
                 onKeyPress(btn)
             }
