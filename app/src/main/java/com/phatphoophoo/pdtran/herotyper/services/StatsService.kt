@@ -17,7 +17,7 @@ object StatsService {
 //       read the data right at the beginning. !!
         statsModel = StatsModel(sp)
 
-
+        //Test
         //testing
 //        statsModel.currGameIndex = 1
 //        statsModel.wpm.add(1)
