@@ -58,7 +58,7 @@ class CustomKeyboardSettingsView :
     private var sharedPref: SharedPreferences
 
     init {
-        inflate(context, R.layout.custom_keyboard_keys_settings, this)
+        inflate(context, R.layout.custom_keyboard_keys_medium, this)
         sharedPref =
             context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
         setupKeyboard()
