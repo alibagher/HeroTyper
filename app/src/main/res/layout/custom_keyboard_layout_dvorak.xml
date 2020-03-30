@@ -13,5 +13,5 @@
                 android:background="#FFFFFF"
                 android:text="" />
 
-        <include layout="@layout/custom_keyboard_keys_medium_dvorak"/>
+        <include layout="@layout/custom_keyboard_keys_large_dvorak"/>
     </LinearLayout>
