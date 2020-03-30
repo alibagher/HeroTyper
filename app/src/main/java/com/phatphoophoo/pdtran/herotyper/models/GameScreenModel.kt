@@ -2,7 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.models
 
 import com.phatphoophoo.pdtran.herotyper.objects.BulletObject
 import com.phatphoophoo.pdtran.herotyper.objects.EnemyObject
-import com.phatphoophoo.pdtran.herotyper.objects.Player
+import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 
 data class GameScreenModel(val difficulty: GAME_DIFFICULTY = GAME_DIFFICULTY.EASY) {
     // Game properties
@@ -17,7 +17,7 @@ data class GameScreenModel(val difficulty: GAME_DIFFICULTY = GAME_DIFFICULTY.EAS
     var curTypedState : TypedState = TypedState.DEFAULT
 
     // Objects
-    var player : Player = Player(Pair(0f,0f))
+    var playerObject : PlayerObject = PlayerObject(Pair(0f,0f))
     var bullets : List<BulletObject> = emptyList()
     var enemies : List<EnemyObject> = emptyList()
 }

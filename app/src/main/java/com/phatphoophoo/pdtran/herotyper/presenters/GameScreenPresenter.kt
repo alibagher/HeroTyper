@@ -7,16 +7,13 @@ import android.view.View
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
-import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
-import com.phatphoophoo.pdtran.herotyper.objects.Player
+import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
-import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
-import kotlinx.android.synthetic.main.activity_game.view.*
 
 
 class GameScreenPresenter(
@@ -41,7 +38,7 @@ class GameScreenPresenter(
     private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
-        gameModel.player = Player(Pair(lastXPos, windowSize.second - 200))
+        gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
         gameHandler.post(gameLooper)
 
         gameScreenView.setOnTouchListener { _: View, motionEvent: MotionEvent ->
@@ -65,14 +62,14 @@ class GameScreenPresenter(
     // type in question
     fun gameLoop() {
         // Update the state of the game objects
-        gameModel.player!!.position = Pair(lastXPos, gameModel.player!!.position.second)
+        gameModel.playerObject!!.position = Pair(lastXPos, gameModel.playerObject!!.position.second)
 
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // Check for completed words to fire bullets
         if(customKeyboardPresenter.hasWordCompleted()) {
-            var bulletPos = Pair(gameModel.player!!.position.first + 50,
-                gameModel.player!!.position.second)
+            var bulletPos = Pair(gameModel.playerObject!!.position.first + 50,
+                gameModel.playerObject!!.position.second)
 
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets, bulletPos)
         } else {

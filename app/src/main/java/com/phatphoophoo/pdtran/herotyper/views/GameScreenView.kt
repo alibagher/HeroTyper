@@ -13,7 +13,7 @@ import com.phatphoophoo.pdtran.herotyper.objects.*
 class GameScreenView : View {
     private var cnv: Canvas? = null
 
-    private var player : Player = Player(Pair(0f,0f))
+    private var playerObject : PlayerObject = PlayerObject(Pair(0f,0f))
     private var enemies : List<EnemyObject> = emptyList()
     private var bullets : List<BulletObject> = emptyList()
 
@@ -52,7 +52,7 @@ class GameScreenView : View {
     fun setModel(model: GameScreenModel) {
         enemies = model.enemies.toMutableList()
         bullets = model.bullets.toMutableList()
-        player = model.player
+        playerObject = model.playerObject
         score = model.score
         lives = model.lives
 
@@ -65,7 +65,7 @@ class GameScreenView : View {
 
         bullets.forEach { c?.drawGameObject(it) }
         enemies.forEach { c?.drawGameObject(it) }
-        c?.drawGameObject(player)
+        c?.drawGameObject(playerObject)
 
         c?.drawText("$scoreText$score", 50f, 75f, textPaint)
         c?.drawText("$livesText$lives", 50f, 130f, textPaint)
