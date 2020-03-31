@@ -3,6 +3,8 @@ package com.phatphoophoo.pdtran.herotyper.services
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.phatphoophoo.pdtran.herotyper.activities.MainMenuActivity
+import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
 import com.phatphoophoo.pdtran.herotyper.models.StatsModel
 
 
@@ -10,8 +12,10 @@ object StatsService {
     lateinit var sp: SharedPreferences
     lateinit var statsModel: StatsModel
 
-    fun initService(context: Context) {
-        this.sp = PreferenceManager.getDefaultSharedPreferences(context)
+//    fun initService(context: Context): StatsService {
+    fun initService(mainMenuActivity: MainMenuActivity): StatsService {
+//        this.sp = PreferenceManager.getDefaultSharedPreferences(context)
+        this.sp = mainMenuActivity?.getPreferences(Context.MODE_PRIVATE)
         this.statsModel = StatsModel(sp)
 
 //       read the data right at the beginning. !!
@@ -26,7 +30,8 @@ object StatsService {
 //        statsModel.keysMap.add(map)
 //
 //        statsModel.write()
-//        statsModel.read()
+        statsModel.read()
+        return this
     }
 
     fun updateWpm(n: Int) {
@@ -41,5 +46,4 @@ object StatsService {
     fun write() {
         statsModel.write()
     }
-
 }

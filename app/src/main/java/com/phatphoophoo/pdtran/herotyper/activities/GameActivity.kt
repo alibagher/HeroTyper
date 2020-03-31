@@ -6,12 +6,17 @@ import kotlinx.android.synthetic.main.activity_game.*
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.presenters.CustomKeyboardPresenter
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.fragments.GameMenuFragment
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
+import java.lang.Math.ceil
 
+import java.util.concurrent.TimeUnit
+import kotlin.math.ceil
 
 class GameActivity : AppCompatActivity() {
     lateinit var keyboardPresenter: CustomKeyboardPresenter
@@ -58,6 +63,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun showPauseFragment() {
+//        stop the timer
+        gameScreenPresenter.totalTime += System.currentTimeMillis() - gameScreenPresenter.start
+
+
         //if (gameOver) return
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         gameMenuFragment = GameMenuFragment.newInstance(isGameOver = false)
@@ -68,6 +77,9 @@ class GameActivity : AppCompatActivity() {
     // Interactions from the fragment
     // TODO Look at a way to remove activity responsibilty for this
     fun onRetryPressed(view: View) {
+        // save data
+        saveWpm()
+
         supportFragmentManager.popBackStackImmediate()
         for (fragment in supportFragmentManager.fragments){
             supportFragmentManager.beginTransaction().remove(fragment).commit()
@@ -84,7 +96,21 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun onExitPressed(view: View) {
+        saveWpm()
+        // write to persistant memory
+        Log.e("calling write from GameActivity","")
+
+        StatsService.write()
         gameOver = true
         finish()
+    }
+
+    // call this function at the end of each game (retry, exit, gameover)
+    // here we assume we have the correct number of words
+    fun saveWpm(){
+        gameScreenPresenter.totalTime += System.currentTimeMillis() - gameScreenPresenter.start
+        val mins = TimeUnit.MILLISECONDS.toMinutes(gameScreenPresenter.totalTime)
+        // add data.
+        StatsService.updateWpm((gameScreenPresenter.words*60*1000/mins).toInt())
     }
 }

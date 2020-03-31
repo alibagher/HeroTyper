@@ -32,6 +32,10 @@ class GameScreenPresenter(
     var gameModel : GameScreenModel = GameScreenModel()
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
+    var words : Int = 0
+    var start : Long = 0
+    // the total time playing the game (not counting paused)
+    var totalTime : Long = 0
 
     private val gameHandler : Handler = Handler(Looper.getMainLooper())
     private val gameLooper : Runnable = Runnable { gameLoop() }
@@ -56,6 +60,12 @@ class GameScreenPresenter(
             gameActivity.showPauseFragment()
             scrollingBg.animator.pause()
         }
+
+//        set the start for measuring wpm.
+        start = System.currentTimeMillis()
+        words = 0
+        totalTime = 0
+
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -73,6 +83,10 @@ class GameScreenPresenter(
                 gameModel.playerObject!!.position.second)
 
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets, bulletPos)
+
+            // add to the number of words typed.
+            words += 1
+
         } else {
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
         }
@@ -127,14 +141,18 @@ class GameScreenPresenter(
     }
 
     fun resumeGame(){
+        // update the start time
+        start = System.currentTimeMillis()
+
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
         scrollingBg.animator.resume()
     }
 
     fun endGame() {
+        gameActivity.saveWpm()
+
         // Stop the game loop from posting so we pause
         gameHandler.removeCallbacks(gameLooper)
-
         gameActivity.showGameOverFragment()
     }
 

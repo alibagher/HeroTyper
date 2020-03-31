@@ -4,6 +4,7 @@ import android.app.Activity
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
 import kotlin.random.Random
 

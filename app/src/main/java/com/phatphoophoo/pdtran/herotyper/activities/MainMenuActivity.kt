@@ -31,7 +31,8 @@ class MainMenuActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
-        StatsService.initService(this.applicationContext)
+//        StatsService.initService(this.applicationContext)
+        StatsService.initService(this)
 
         // Setup button behavior
         start_game_button.setOnClickListener {

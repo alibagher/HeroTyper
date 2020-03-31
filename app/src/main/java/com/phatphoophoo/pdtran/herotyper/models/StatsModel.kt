@@ -33,8 +33,12 @@ class StatsModel(val sp: SharedPreferences?){
 
 
     fun read(){
+//        sp!!.edit().remove("currGameIndex").commit();
+//        sp!!.edit().remove("wpm").commit();
+//        sp!!.edit().remove("keysMap").commit();
+
 //        get the currGameIndex
-        currGameIndex = sp!!.getInt("currGameIndex", -1)
+        currGameIndex = sp!!.getInt("currGameIndex", 0)
         // TODO: Show corrupt data if return value is -1 ******
 //        if (currGameIndex == -1)  true
 
@@ -55,8 +59,10 @@ class StatsModel(val sp: SharedPreferences?){
         // TODO: Show corrupt data if return value is -1 ******
 //        if (keysMap[0] == -1)  true
 
-//        var a = keysMap[0]["a"]
-//        Log.e("read data: ", wpm[0].toString() + " " + currGameIndex.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
+        Log.e("got here ", "yes")
+
+        var a = keysMap[0]["a"]
+        Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
 
     }
 
@@ -76,6 +82,8 @@ class StatsModel(val sp: SharedPreferences?){
         json = gson.toJson(keysMap)
         editor.putString("keysMap", json)
         editor.commit()
+
+        Log.e("wrote into mem","")
 
     }
 
