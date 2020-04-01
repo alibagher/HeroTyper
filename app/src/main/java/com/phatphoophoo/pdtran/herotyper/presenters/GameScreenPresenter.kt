@@ -157,7 +157,7 @@ class GameScreenPresenter(
         this.gameTimer = null
 
         //Save stats info
-        StatsService.updateWpm(((words*60*1000)/totalTime).toInt())
+        StatsService.setWpm(((words*60*1000)/totalTime).toInt())
         StatsService.write()
 
         // Stop the game loop from posting so we pause

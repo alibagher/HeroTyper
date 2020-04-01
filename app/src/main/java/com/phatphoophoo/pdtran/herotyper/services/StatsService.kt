@@ -21,11 +21,11 @@ object StatsService {
         return this
     }
 
-    fun updateWpm(n: Int) {
+    fun setWpm(n: Int) {
         statsModel.wpm.add(n)
     }
 
-    fun updateKeysMap(m : MutableMap<String, Pair<Int, Int>>) {
+    fun setKeysMap(m : MutableMap<String, Pair<Int, Int>>) {
         var ret : MutableMap<String, ArrayList<Int>> = mutableMapOf()
 
         for ((k,v) in m ){
@@ -40,6 +40,8 @@ object StatsService {
 
     // write data
     fun write() {
+        // TODO safety check
+
         statsModel.write()
     }
 
