@@ -16,6 +16,7 @@ import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
+import java.lang.Error
 
 
 class GameScreenPresenter(
@@ -35,9 +36,8 @@ class GameScreenPresenter(
     val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     val bulletService: BulletService = BulletService()
     var words : Int = 0
-    var start : Long = 0
-    // the total time playing the game (not counting paused)
-    var totalTime : Long = 0
+
+    private var gameTimer: GameTimer?
 
     private val gameHandler : Handler = Handler(Looper.getMainLooper())
     private val gameLooper : Runnable = Runnable { gameLoop() }
@@ -46,7 +46,12 @@ class GameScreenPresenter(
     init {
         scrollingBg.animator.start()
         gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
+
+        //Initialize game
         gameHandler.post(gameLooper)
+
+        //Start game timer
+        gameTimer = GameTimer()
 
         gameScreenView.setOnTouchListener { _: View, motionEvent: MotionEvent ->
             // Update the position within screen constraints
@@ -58,15 +63,14 @@ class GameScreenPresenter(
         val id = gameActivity.resources.getIdentifier("pause", "id", PACKAGE_NAME)
         val btn = gameActivity.findViewById(id) as Button
         btn.setOnClickListener{
+            gameTimer!!.pauseTimer()
             gameHandler.removeCallbacks(gameLooper)
             gameActivity.showPauseFragment()
             scrollingBg.animator.pause()
         }
 
 //        set the start for measuring wpm.
-        start = System.currentTimeMillis()
         words = 0
-        totalTime = 0
 
     }
 
@@ -143,14 +147,19 @@ class GameScreenPresenter(
     }
 
     fun resumeGame(){
-        // update the start time
-        start = System.currentTimeMillis()
-
+        gameTimer!!.resumeTimer()
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
         scrollingBg.animator.resume()
     }
 
     fun endGame() {
+        val totalTime = gameTimer!!.endTimer()
+        this.gameTimer = null
+
+        //Save stats info
+        StatsService.updateWpm(((words*60*1000)/totalTime).toInt())
+        StatsService.write()
+
         // Stop the game loop from posting so we pause
         gameHandler.removeCallbacks(gameLooper)
         gameActivity.showGameOverFragment()
@@ -158,6 +167,46 @@ class GameScreenPresenter(
 
     // Call when the game ends
     fun dispose() {
+
+    }
+
+    // GameTimer is meant for single game use
+    class GameTimer() {
+        private var currFrameStartTime: Long? = 0
+        private var currTimeSoFar: Long = 0
+        private var timerCompleted: Boolean = false
+        private val invalidUseError = Error("Invalid use of timer")
+
+        init {
+            currFrameStartTime = System.currentTimeMillis()
+        }
+
+        fun pauseTimer(): Unit {
+            if(timerCompleted){
+                throw invalidUseError
+            }
+            currTimeSoFar += System.currentTimeMillis() - currFrameStartTime!!
+            currFrameStartTime = null
+        }
+
+        fun resumeTimer(): Unit {
+            if(timerCompleted){
+                throw invalidUseError
+            }
+            currFrameStartTime = System.currentTimeMillis()
+        }
+
+        //Only call this when game ends
+        fun endTimer(): Long {
+            if(timerCompleted){
+                throw invalidUseError
+            }
+            if(currFrameStartTime != null) {
+                currTimeSoFar += System.currentTimeMillis() - currFrameStartTime!!
+            }
+
+            return currTimeSoFar
+        }
 
     }
 }
