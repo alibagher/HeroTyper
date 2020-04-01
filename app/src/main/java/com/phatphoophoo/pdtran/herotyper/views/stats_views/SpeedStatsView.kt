@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.views.stats_views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -31,12 +32,15 @@ class SpeedStatsView: LinearLayout {
 
         data.axisXBottom = axisX
         data.axisYLeft = axisY
-
-        //TODO: Remove later
-        createGraph(listOf(20,32,43,56, 20,32,43,56))
     }
 
     fun createGraph(speedStats: List<Int>) {
+
+        if(speedStats.isEmpty()) {
+            Log.e("Speed Stats View", "Empty speedStats received")
+            return
+        }
+
         val points = speedStats.mapIndexed{idx, value -> PointValue(idx.toFloat() + 1, value.toFloat())}
 
         val line = Line(points)

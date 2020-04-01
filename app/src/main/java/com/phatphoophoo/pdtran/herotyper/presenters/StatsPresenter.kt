@@ -2,12 +2,15 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
+import com.phatphoophoo.pdtran.herotyper.views.stats_views.SpeedStatsView
 import kotlin.random.Random
 
 class StatsPresenter(
     activity: StatsActivity,
-    keyboardStatsView: KeyboardStatsView
+    keyboardStatsView: KeyboardStatsView,
+    speedStatsView: SpeedStatsView
 ) {
     private val keyboardStatsPresenter: KeyboardStatsPresenter = KeyboardStatsPresenter(activity, keyboardStatsView)
 
@@ -15,6 +18,10 @@ class StatsPresenter(
         //TODO: Load statsmodel and modify views here
         keyboardStatsPresenter.initKeyboardEventListeners()
         keyboardStatsPresenter.initWithFakeData()
+
+        //Initialize speed stats graph
+        val wpmList = StatsService.getWpm()
+        speedStatsView.createGraph(wpmList)
     }
 
 
