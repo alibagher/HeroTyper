@@ -13,7 +13,7 @@ class StatsPresenter(
 
     init {
         //TODO: Load statsmodel and modify views here
-        keyboardStatsPresenter.setKeyboardEventListeners(activity)
+        keyboardStatsPresenter.initKeyboardEventListeners()
         keyboardStatsPresenter.initWithFakeData()
     }
 
@@ -24,8 +24,13 @@ class StatsPresenter(
         private val keyButtonIds: IntArray = keyboardStatsView.keyButtonIds
         private val ANALYSIS_THRESHOLD_COUNT = 30
 
+        fun initKeyboardEventListeners() {
+           keyboardStatsView.setKeyboardEventListeners { btn -> onKeyPress(btn) }
+        }
+
         fun initWithFakeData(){
 
+            //TODO remove
             //Generate fake data
             val fakeKeyStats = generateFakeData()
 
@@ -49,16 +54,6 @@ class StatsPresenter(
                 keyStats[key] = Pair(hits, misses)
             }
             return keyStats
-        }
-
-        fun setKeyboardEventListeners(activity: StatsActivity) {
-            for(i in 1..26) {
-                val id = activity.resources.getIdentifier("button$i", "id", PACKAGE_NAME)
-                val btn = activity.findViewById<Button>(id)
-                btn.setOnClickListener{
-                    onKeyPress(btn)
-                }
-            }
         }
 
         private fun onKeyPress(btn: Button) {

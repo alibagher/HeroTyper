@@ -66,4 +66,13 @@ class KeyboardStatsView:
         }
     }
 
+    fun setKeyboardEventListeners(keyPressHandler: (btn: Button) -> Unit) {
+        for(keyButtonId in keyButtonIds) {
+            val btn = findViewById<Button>(keyButtonId)
+            btn.setOnClickListener {
+                keyPressHandler(btn)
+            }
+        }
+    }
+
 }
