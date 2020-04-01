@@ -22,15 +22,6 @@ object StatsService {
 //       read the data right at the beginning. !!
         statsModel = StatsModel(sp)
 
-        //Test
-        //testing
-//        statsModel.currGameIndex = 1
-//        statsModel.wpm.add(1)
-//
-//        val map = mutableMapOf("a" to arrayListOf(1, 2))
-//        statsModel.keysMap.add(map)
-//
-//        statsModel.write()
         statsModel.read()
         return this
     }
@@ -40,12 +31,42 @@ object StatsService {
         statsModel.wpm.add(n)
     }
 
-    fun updateKeysMap(m : MutableMap<String, ArrayList<Int>>) {
-        statsModel.keysMap.add(m)
+    fun updateKeysMap(m : MutableMap<String, Pair<Int, Int>>) {
+        var ret : MutableMap<String, ArrayList<Int>> = mutableMapOf()
+
+        for ((k,v) in m ){
+            var a : ArrayList<Int> = ArrayList()
+            a.add(v.first)
+            a.add(v.second)
+            ret.put(k,a)
+        }
+
+        statsModel.keysMap.add(ret)
     }
 
     // write data
     fun write() {
         statsModel.write()
     }
+
+    fun getWpm() : ArrayList<Int> {
+        return statsModel.wpm
+    }
+
+    fun getKeysMap() : ArrayList<MutableMap<String, Pair<Int, Int>>>{
+        var arr = statsModel.keysMap
+        var ret : ArrayList<MutableMap<String, Pair<Int, Int>>> = ArrayList()
+
+        for (m in arr ){
+            var a : MutableMap<String, Pair<Int,Int>> = mutableMapOf()
+            for ((k,v) in m){
+                a.put(k,Pair(v[0],v[1]))
+            }
+            ret.add(a)
+        }
+
+        return ret
+    }
+
+
 }
