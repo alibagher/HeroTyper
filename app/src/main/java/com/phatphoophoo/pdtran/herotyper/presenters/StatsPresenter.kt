@@ -1,10 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
-import android.app.Activity
 import android.widget.Button
-import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
-import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
 import kotlin.random.Random
 
@@ -24,17 +21,16 @@ class StatsPresenter(
 
     private class KeyboardStatsPresenter(val activity: StatsActivity, val keyboardStatsView: KeyboardStatsView) {
 
-        private val keyButtonIds: IntArray = intArrayOf(R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7,
-            R.id.button8, R.id.button9, R.id.button10, R.id.button11, R.id.button12, R.id.button13, R.id.button14, R.id.button15,
-            R.id.button16, R.id.button17, R.id.button18, R.id.button19, R.id.button20, R.id.button21, R.id.button22, R.id.button23,
-            R.id.button24, R.id.button25, R.id.button26)
+        private val keyButtonIds: IntArray = keyboardStatsView.keyButtonIds
+        private val ANALYSIS_THRESHOLD_COUNT = 30
 
         fun initWithFakeData(){
 
             //Generate fake data
             val fakeKeyStats = generateFakeData()
+
             //Initialize using fake data
-            keyboardStatsView.initKeyColors(fakeKeyStats)
+            this.initKeyColors(fakeKeyStats)
 
             //Initialize fake details
             val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
@@ -71,6 +67,26 @@ class StatsPresenter(
             val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
 
             keyboardStatsView.showDetailedKeyStats(btn.text.toString(), fakeKeyStats[btn.text.toString()]!!, fakeKeyStatus)
+        }
+
+        private fun initKeyColors(keyStats: Map<String, Pair<Int, Int>>) {
+            val keyColors = keyStats.mapValues { (key, hitMissPair) ->
+                val total = hitMissPair!!.first + hitMissPair!!.second
+                val ratio = hitMissPair!!.first / hitMissPair!!.second
+
+                if(total < ANALYSIS_THRESHOLD_COUNT) {
+                    // if the key has not been pressed enough times for analysis
+                    KeyboardStatsView.KeyColor.softGray
+                } else if (ratio > 2) {
+                    KeyboardStatsView.KeyColor.softGreen
+                }else if(ratio > 1) {
+                    KeyboardStatsView.KeyColor.softYellow
+                } else {
+                    KeyboardStatsView.KeyColor.softRed
+                }
+            }
+
+            keyboardStatsView.setKeyColors(keyColors)
         }
     }
 }
