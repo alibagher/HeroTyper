@@ -23,6 +23,7 @@ class StatsPresenter(
 
         private val keyButtonIds: IntArray = keyboardStatsView.keyButtonIds
         private val ANALYSIS_THRESHOLD_COUNT = 30
+        lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
 
         fun initKeyboardEventListeners() {
            keyboardStatsView.setKeyboardEventListeners { btn -> onKeyPress(btn) }
@@ -32,7 +33,7 @@ class StatsPresenter(
 
             //TODO remove
             //Generate fake data
-            val fakeKeyStats = generateFakeData()
+            fakeKeyStats = generateFakeData()
 
             //Initialize using fake data
             this.initKeyColors(fakeKeyStats)
@@ -58,23 +59,20 @@ class StatsPresenter(
 
         private fun onKeyPress(btn: Button) {
             //TODO Remove
-            val fakeKeyStats = generateFakeData()
-            val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
-
+            val fakeKeyStatus = getKeyStatus(fakeKeyStats[btn.text.toString()]!!)
             keyboardStatsView.showDetailedKeyStats(btn.text.toString(), fakeKeyStats[btn.text.toString()]!!, fakeKeyStatus)
         }
 
         private fun initKeyColors(keyStats: Map<String, Pair<Int, Int>>) {
             val keyColors = keyStats.mapValues { (key, hitMissPair) ->
-                val total = hitMissPair!!.first + hitMissPair!!.second
-                val ratio = hitMissPair!!.first / hitMissPair!!.second
+                val keyStatus = getKeyStatus(hitMissPair)
 
-                if(total < ANALYSIS_THRESHOLD_COUNT) {
+                if(keyStatus == KeyboardStatsView.KeyStatus.UNKNOWN) {
                     // if the key has not been pressed enough times for analysis
                     KeyboardStatsView.KeyColor.softGray
-                } else if (ratio > 2) {
+                } else if (keyStatus == KeyboardStatsView.KeyStatus.GOOD) {
                     KeyboardStatsView.KeyColor.softGreen
-                }else if(ratio > 1) {
+                }else if(keyStatus == KeyboardStatsView.KeyStatus.WARN) {
                     KeyboardStatsView.KeyColor.softYellow
                 } else {
                     KeyboardStatsView.KeyColor.softRed
@@ -82,6 +80,21 @@ class StatsPresenter(
             }
 
             keyboardStatsView.setKeyColors(keyColors)
+        }
+
+        private fun getKeyStatus(keyHitMissPair: Pair<Int, Int>): KeyboardStatsView.KeyStatus {
+            val total = keyHitMissPair!!.first + keyHitMissPair!!.second
+            val ratio = keyHitMissPair!!.first / keyHitMissPair!!.second
+
+            if(total < ANALYSIS_THRESHOLD_COUNT) {
+                return KeyboardStatsView.KeyStatus.UNKNOWN
+            } else if (ratio > 2) {
+                return KeyboardStatsView.KeyStatus.GOOD
+            }else if(ratio > 1) {
+                return KeyboardStatsView.KeyStatus.WARN
+            } else {
+                return KeyboardStatsView.KeyStatus.BAD
+            }
         }
     }
 }
