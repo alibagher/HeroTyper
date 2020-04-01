@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -12,6 +13,7 @@ import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
 
@@ -149,8 +151,6 @@ class GameScreenPresenter(
     }
 
     fun endGame() {
-        gameActivity.saveWpm()
-
         // Stop the game loop from posting so we pause
         gameHandler.removeCallbacks(gameLooper)
         gameActivity.showGameOverFragment()

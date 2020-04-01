@@ -3,6 +3,7 @@ package com.phatphoophoo.pdtran.herotyper.services
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import com.phatphoophoo.pdtran.herotyper.activities.MainMenuActivity
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
 import com.phatphoophoo.pdtran.herotyper.models.StatsModel
@@ -35,6 +36,7 @@ object StatsService {
     }
 
     fun updateWpm(n: Int) {
+        Log.e("updating wpm", n.toString())
         statsModel.wpm.add(n)
     }
 

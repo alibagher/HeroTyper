@@ -98,7 +98,6 @@ class GameActivity : AppCompatActivity() {
     fun onExitPressed(view: View) {
         saveWpm()
         // write to persistant memory
-        Log.e("calling write from GameActivity","")
 
         StatsService.write()
         gameOver = true
@@ -108,9 +107,11 @@ class GameActivity : AppCompatActivity() {
     // call this function at the end of each game (retry, exit, gameover)
     // here we assume we have the correct number of words
     fun saveWpm(){
+
         gameScreenPresenter.totalTime += System.currentTimeMillis() - gameScreenPresenter.start
-        val mins = TimeUnit.MILLISECONDS.toMinutes(gameScreenPresenter.totalTime)
+        Log.e("in saveWPM",gameScreenPresenter.totalTime.toString())
+        //val mins = TimeUnit.MILLISECONDS.toMinutes(gameScreenPresenter.totalTime)
         // add data.
-        StatsService.updateWpm((gameScreenPresenter.words*60*1000/mins).toInt())
+        StatsService.updateWpm(((gameScreenPresenter.words*60*1000)/gameScreenPresenter.totalTime).toInt())
     }
 }
