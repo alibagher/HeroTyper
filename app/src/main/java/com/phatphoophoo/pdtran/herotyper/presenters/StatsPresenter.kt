@@ -91,7 +91,7 @@ class StatsPresenter(
 
         private fun getKeyStatus(keyHitMissPair: Pair<Int, Int>): KeyboardStatsView.KeyStatus {
             val total = keyHitMissPair!!.first + keyHitMissPair!!.second
-            val ratio = keyHitMissPair!!.first / keyHitMissPair!!.second
+            val ratio = if(keyHitMissPair!!.second > 0) (keyHitMissPair!!.first / keyHitMissPair!!.second) else 0
 
             if(total < ANALYSIS_THRESHOLD_COUNT) {
                 return KeyboardStatsView.KeyStatus.UNKNOWN
