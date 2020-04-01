@@ -29,7 +29,7 @@ class StatsPresenter(
     private class KeyboardStatsPresenter(val activity: StatsActivity, val keyboardStatsView: KeyboardStatsView) {
 
         private val keyButtonIds: IntArray = keyboardStatsView.keyButtonIds
-        private val ANALYSIS_THRESHOLD_COUNT = 30
+        private val ANALYSIS_THRESHOLD_COUNT = 10
         lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
 
         fun initKeyboardEventListeners() {
