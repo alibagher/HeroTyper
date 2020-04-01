@@ -30,6 +30,7 @@
     <string name="stats_text">Statistics</string>
     <string name="keyboard_stats_header">Accuracy</string>
     <string name="speed_stats_header">Speed</string>
+    <string name="speed_stats_no_data">Not Enough Data Available</string>
 
     <string name="keyboard_stats_key_value">Letter: %s</string>
     <string name="keyboard_stats_key_status">Status: %s</string>

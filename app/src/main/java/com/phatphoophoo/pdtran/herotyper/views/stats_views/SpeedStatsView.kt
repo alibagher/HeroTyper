@@ -2,9 +2,10 @@ package com.phatphoophoo.pdtran.herotyper.views.stats_views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
-import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter
 import lecho.lib.hellocharts.model.Axis
 import lecho.lib.hellocharts.model.Line
 import lecho.lib.hellocharts.model.LineChartData
@@ -26,7 +27,7 @@ class SpeedStatsView: LinearLayout {
         val axisX = Axis()
         val axisY = Axis().setHasLines(true)
         axisX.name = "Game Number"
-        axisY.name = "WPM"
+        axisY.name = "Average WPM"
 
         data.axisXBottom = axisX
         data.axisYLeft = axisY
@@ -46,6 +47,13 @@ class SpeedStatsView: LinearLayout {
 
         val chart = findViewById<LineChartView>(R.id.chart)
         chart.lineChartData = data
+
+        //Remove no data view
+        val noDataView = findViewById<TextView>(R.id.no_data_view)
+        noDataView.visibility = View.GONE
+
+        //Make chart visible
+        chart.visibility = View.VISIBLE
 
     }
 
