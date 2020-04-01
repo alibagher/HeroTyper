@@ -8,12 +8,14 @@
             android:id="@+id/background_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:src="@drawable/star_background"/>
 
     <ImageView
             android:id="@+id/background_two"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:src="@drawable/star_background"/>
 
 </FrameLayout>

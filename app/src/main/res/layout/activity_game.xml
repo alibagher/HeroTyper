@@ -6,8 +6,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.GameActivity"
+        android:keepScreenOn="true"
         android:background="@drawable/game_background"
         >
+
+    <com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
+            android:id="@+id/scrolling_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1"
+            android:alpha="0.5"
+            />
 
     <Button
             android:layout_marginTop="10dp"
@@ -19,21 +32,6 @@
             android:alpha="0.7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    <com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
-            android:id="@+id/scrolling_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/background_desc"
-            android:gravity="center"
-            android:keepScreenOn="true"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:alpha="0.5"
-            />
 
     <FrameLayout
         android:id="@+id/game_screen_layout"
