@@ -5,38 +5,13 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-//import javax.swing.UIManager.put
-
-
 class StatsModel(val sp: SharedPreferences?){
 
     var currGameIndex : Int = 0
     var wpm: ArrayList<Int> = ArrayList()
     var keysMap: ArrayList<MutableMap<String, ArrayList<Int>>> = ArrayList()
 
-
-
-    // Visualize typing speed over time:
-    //    Key: Incremental Index: Int
-    //    Value: Avg WPM (for corresponding game)
-    //var typeSpeed: MutableList<Pair<Int, Int>> = mutableListOf()
-
-    //Visualize accuracy typing speed over time:
-    //    Key: Incremental Index: Int
-    //    Values:
-    //        Hits: Int
-    //        Misses: Int
-    // var : MutableList<Pair<Int, Pair<Int, Int>>> = mutableListOf()
-
-    // Map<String, Pair<Int, Int>>
-
-
-
     fun read(){
-//        sp!!.edit().remove("currGameIndex").commit();
-//        sp!!.edit().remove("wpm").commit();
-//        sp!!.edit().remove("keysMap").commit();
-
 //        get the currGameIndex
         currGameIndex = sp!!.getInt("currGameIndex", 0)
         // TODO: Show corrupt data if return value is -1 ******
@@ -59,10 +34,12 @@ class StatsModel(val sp: SharedPreferences?){
         // TODO: Show corrupt data if return value is -1 ******
 //        if (keysMap[0] == -1)  true
 
-        Log.e("got here ", "yes")
+
+
         if (wpm.size != 0){
             Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString())
         }
+
 //        var a = keysMap[0]["a"]
 //        Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
 
@@ -84,9 +61,6 @@ class StatsModel(val sp: SharedPreferences?){
         json = gson.toJson(keysMap)
         editor.putString("keysMap", json)
         editor.commit()
-
-        Log.e("wrote into mem","")
-
     }
 
 }
