@@ -3,6 +3,7 @@ package com.phatphoophoo.pdtran.herotyper.views.stats_views
 import android.content.Context
 import android.graphics.LightingColorFilter
 import android.util.AttributeSet
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -34,6 +35,25 @@ class KeyboardStatsView:
         inflate(context, R.layout.custom_keyboard_stats_layout, this)
     }
 
+    fun renderKeyboard(
+        layout: Map<Int, String>,
+        onKeyPress: (b: Button) -> Unit,
+        custom: Boolean? = false
+    ) {
+        for (bid in BUTTONS.values()) {
+            val btn = findViewById<Button>(bid.id)
+            btn.visibility = View.VISIBLE
+            btn.text = layout[btn.id]
+            if (btn.text.isBlank() && !custom!!) {
+                btn.visibility = View.GONE
+                continue
+            }
+            btn.setOnClickListener {
+                onKeyPress(btn)
+            }
+        }
+    }
+
     fun showDetailedKeyStats(key: String, hitMissPair: Pair<Int, Int>, keyStatus: KeyStatus) {
 
         val keyTextView = findViewById<TextView>(R.id.key_value)
@@ -58,16 +78,6 @@ class KeyboardStatsView:
 
             if (keyColor != null) {
                 btn.background.colorFilter = LightingColorFilter(keyColor.value, 0)
-            }
-        }
-    }
-
-    fun setKeyboardEventListeners(keyPressHandler: (btn: Button) -> Unit) {
-        for(button in BUTTONS.values()) {
-            val btn = findViewById<Button>(button.id)
-
-            btn.setOnClickListener {
-                keyPressHandler(btn)
             }
         }
     }

@@ -18,9 +18,9 @@ class KeyboardSettingsPresenter(
     private val settingsActivity: SettingsActivity1,
     private val keyboardSettingsView: KeyboardSettingsView
 ) {
-    var kbStyles: Array<String> = settingsActivity.resources.getStringArray(R.array.keyboard_arrays)
-    var curKbIdx: Int = 0
-    var btnIdLetterMap: MutableMap<Int, String> = mutableMapOf()
+    private var kbStyles: Array<String> = settingsActivity.resources.getStringArray(R.array.keyboard_arrays)
+    private var curKbIdx: Int = 0
+    private var btnIdLetterMap: MutableMap<Int, String> = mutableMapOf()
     private var sharedPref: SharedPreferences =
         settingsActivity.getSharedPreferences(
             settingsActivity.packageName + "_preferences",
@@ -56,7 +56,7 @@ class KeyboardSettingsPresenter(
         var savedKey: String?
         for (bid in BUTTONS.values()) {
             savedKey = sharedPref?.getString(bid.id.toString(), null)
-            res[bid.id] = savedKey?: ""
+            res[bid.id] = savedKey ?: ""
         }
         return res
     }
@@ -67,8 +67,8 @@ class KeyboardSettingsPresenter(
         var input = EditText(settingsActivity)
         input.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
         input.filters += InputFilter.LengthFilter(1)
-        input.filters += InputFilter {
-                source, _, _, _, _, _ -> source.toString().filterNot { it.isWhitespace() }
+        input.filters += InputFilter { source, _, _, _, _, _ ->
+            source.toString().filterNot { it.isWhitespace() }
         }
 
         dialogBuilder

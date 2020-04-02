@@ -81,7 +81,7 @@ val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
 )
 
 class KeyboardGamePresenter(
-    activity: Activity,
+    private val activity: Activity,
     private val keyboardGameView: KeyboardGameView,
     gameDifficulty: GAME_DIFFICULTY
 ) {
@@ -91,7 +91,7 @@ class KeyboardGamePresenter(
     private var curLetterIndex = 0
     private var hasWordCompleted = false
     private val keysMap: MutableMap<String, Pair<Int, Int>> = generateKeysMap()
-    var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
+    private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
     private var sharedPref: SharedPreferences =
         activity.getSharedPreferences(
             activity.packageName + "_preferences",
@@ -99,13 +99,13 @@ class KeyboardGamePresenter(
         )
 
     init {
-        setup(activity)
+        setup()
         curLevelWords = dictionary.getValue(gameDifficulty)
         setNewWord()
         keyboardGameView.renderWord(curWord, curLetterIndex)
     }
 
-    fun setup(activity: Activity) {
+    private fun setup() {
         val curKbIdx = sharedPref?.getInt(activity.getString(R.string.keyboard_style_key), 0)
         when (kbStyles[curKbIdx]) {
             activity.getString(R.string.keyboard_style_qwerty) -> {
