@@ -12,37 +12,28 @@ class StatsModel(val sp: SharedPreferences?){
     var keysMap: ArrayList<MutableMap<String, ArrayList<Int>>> = ArrayList()
 
     fun read(){
-//        get the currGameIndex
-        currGameIndex = sp!!.getInt("currGameIndex", 0)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (currGameIndex == -1)  true
 
+//        get the currGameIndex
+        currGameIndex = sp!!.getInt("currGameIndex", 1)
 
 //      get the wpm arrayList
         var gson = Gson()
         var json : String? = sp.getString("wpm", "[]")
         var itemType = object : TypeToken<ArrayList<Int>>() {}.type
         wpm = gson.fromJson(json, itemType)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (wpm[0] == -1)  true
-
 
 //        get the keysMap
-        json = sp.getString("keysMap", "[{\"\":[]}]")
+        json = sp.getString("keysMap", "[]")
         itemType = object : TypeToken<ArrayList<MutableMap<String, ArrayList<Int>>>>() {}.type
         keysMap = gson.fromJson(json, itemType)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (keysMap[0] == -1)  true
 
-
-
-        if (wpm.size != 0){
-            Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString())
-        }
-
-//        var a = keysMap[0]["a"]
-//        Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString() + " " + (keysMap).toString() + " " + a!![0].toString() )
-
+//        if (keysMap.size != 0) {
+//            var a = keysMap[0]["a"]
+//            Log.e(
+//                "read data: ",
+//                currGameIndex.toString() + " " + wpm.toString() + " " + (keysMap).toString() //+ " " + a!![0].toString()
+//            )
+//        }
     }
 
     fun write(){

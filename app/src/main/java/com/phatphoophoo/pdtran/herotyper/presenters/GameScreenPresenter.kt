@@ -154,6 +154,7 @@ class GameScreenPresenter(
     fun endGame() {
         val totalTime = gameTimer!!.endTimer()
         this.gameTimer = null
+        scrollingBg.animator.pause()
 
         //Get Hit/Miss data
         val keysHitMissMap = keyboardGamePresenter.getKeysHitMissMap()

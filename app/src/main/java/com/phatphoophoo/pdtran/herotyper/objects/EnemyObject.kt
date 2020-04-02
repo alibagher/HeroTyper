@@ -2,9 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.objects
 
 import com.phatphoophoo.pdtran.herotyper.R
 
-abstract class EnemyObject(
-    override var position: Pair<Float, Float>
-) : GameObject() {
+abstract class EnemyObject: GameObject() {
     abstract val scoreValue: Int
 
     override fun updateState() : List<EnemyObject> {
@@ -29,7 +27,7 @@ class DestroyedEnemy (
     override var height: Float,
     override var width: Float,
     override var position: Pair<Float, Float>
-) : EnemyObject(position) {
+) : EnemyObject() {
     override val velocity = 0f
     override val scoreValue = 0
     override var bitmapResId: Int = R.drawable.explosion_1
@@ -76,24 +74,31 @@ class DestroyedEnemy (
 
 // Moves slowly towards the bottom of the screen
 class BasicEnemy (
-    override var position: Pair<Float, Float>
-) : EnemyObject(position) {
+    startingXPos: Float
+) : EnemyObject() {
     override val velocity = 2.8f
     override var bitmapResId: Int = R.drawable.meteor
     override val height: Float = (200 + Math.random() * 100).toFloat()
     override val width: Float = this.height
+    override var position: Pair<Float, Float> = Pair(startingXPos, -height)
     override val scoreValue = 100
+
+    // Option to explicitly specify the entire position
+    constructor(position: Pair<Float, Float>) : this(position.first) {
+        this.position = position
+    }
 }
 
 // Moves much faster than the traditional enemy,
 // smaller in size
 class FastEnemy(
-    override var position: Pair<Float, Float>
-) : EnemyObject(position) {
+    startingXPos: Float
+) : EnemyObject() {
     override var velocity = 2.1f
     override var bitmapResId: Int = R.drawable.meteor_fast
     override val height: Float = (75 + Math.random() * 50).toFloat()
     override val width: Float = this.height / 0.8f
+    override var position: Pair<Float, Float> = Pair(startingXPos, -height)
     override val scoreValue = 200
 
     private val VELOCITY_CAP = 12f
@@ -110,30 +115,32 @@ class FastEnemy(
 
 // Moves slower, but spawns 2 basic enemies upon death
 class SplittingEnemy(
-    override var position: Pair<Float, Float>
-) : EnemyObject(position) {
+    startingXPos: Float
+) : EnemyObject() {
     override val velocity = 1.8f
     override var bitmapResId: Int = R.drawable.meteor_split
     override val height: Float = (400 + Math.random() * 100).toFloat()
     override val width: Float = this.height
+    override var position: Pair<Float, Float> = Pair(startingXPos, -height)
     override val scoreValue = 100
 
     override fun onObjectDestroyed() : List<EnemyObject> {
         return listOf(
-            BasicEnemy(Pair(position.first - width/2, position.second)),
-            BasicEnemy(Pair(position.first + width/2, position.second))
+            BasicEnemy(Pair(position.first - width/4, position.second)),
+            BasicEnemy(Pair(position.first + width/4, position.second))
         )
     }
 }
 
 // Moves side to side as well as up and down
 class StrafingEnemy (
-    override var position: Pair<Float, Float>
-) : EnemyObject(position) {
+    startingXPos: Float
+) : EnemyObject() {
     override val velocity = 3.6f
     override var bitmapResId: Int = R.drawable.meteor_strafe
     override val height: Float = (120 + Math.random() * 80).toFloat()
     override val width: Float = this.height
+    override var position: Pair<Float, Float> = Pair(startingXPos, -height)
     override val scoreValue = 300
 
     var movingLeft = true
@@ -146,8 +153,9 @@ class StrafingEnemy (
         if (position.first <= HORIZONTAL_LIMIT_LEFT){ movingLeft = false }
         if (position.first >= HORIZONTAL_LIMIT_RIGHT){ movingLeft = true }
 
-        this.position = Pair(position.first + velocity * if (movingLeft) -1 else 1,
-            position.second)
+        // Change position depending on direction being moved in
+        val xChange = velocity * if (movingLeft) -2 else 2
+        this.position = Pair(position.first + xChange, position.second)
 
         return super.updateState()
     }
