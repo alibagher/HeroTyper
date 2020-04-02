@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.phatphoophoo.pdtran.herotyper.services.StatsService
 
 class StatsModel(val sp: SharedPreferences?){
 
@@ -13,45 +12,28 @@ class StatsModel(val sp: SharedPreferences?){
     var keysMap: ArrayList<MutableMap<String, ArrayList<Int>>> = ArrayList()
 
     fun read(){
-//        StatsService.sp!!.edit().remove("currGameIndex").commit();
-//        StatsService.sp!!.edit().remove("wpm").commit();
-//        StatsService.sp!!.edit().remove("keysMap").commit();
 
 //        get the currGameIndex
         currGameIndex = sp!!.getInt("currGameIndex", 1)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (currGameIndex == -1)  true
-
 
 //      get the wpm arrayList
         var gson = Gson()
         var json : String? = sp.getString("wpm", "[]")
         var itemType = object : TypeToken<ArrayList<Int>>() {}.type
         wpm = gson.fromJson(json, itemType)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (wpm[0] == -1)  true
-
 
 //        get the keysMap
         json = sp.getString("keysMap", "[]")
         itemType = object : TypeToken<ArrayList<MutableMap<String, ArrayList<Int>>>>() {}.type
         keysMap = gson.fromJson(json, itemType)
-        // TODO: Show corrupt data if return value is -1 ******
-//        if (keysMap[0] == -1)  true
 
-
-
-        if (wpm.size != 0){
-            Log.e("read data: ", currGameIndex.toString()  + " " + wpm.toString())
-        }
-
-        if (keysMap.size != 0) {
-            var a = keysMap[0]["a"]
-            Log.e(
-                "read data: ",
-                currGameIndex.toString() + " " + wpm.toString() + " " + (keysMap).toString() //+ " " + a!![0].toString()
-            )
-        }
+//        if (keysMap.size != 0) {
+//            var a = keysMap[0]["a"]
+//            Log.e(
+//                "read data: ",
+//                currGameIndex.toString() + " " + wpm.toString() + " " + (keysMap).toString() //+ " " + a!![0].toString()
+//            )
+//        }
     }
 
     fun write(){

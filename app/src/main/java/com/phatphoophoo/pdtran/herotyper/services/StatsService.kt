@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.services
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.phatphoophoo.pdtran.herotyper.activities.MainMenuActivity
 import com.phatphoophoo.pdtran.herotyper.models.StatsModel
 
@@ -41,7 +42,10 @@ object StatsService {
     // write data
     fun write() {
         // TODO safety check
-
+        if(statsModel.wpm.size != statsModel.keysMap.size){
+            Log.e("Alert: ", "the two lists are not the same size, fix the sizes")
+            return
+        }
         statsModel.write()
     }
 
@@ -53,12 +57,14 @@ object StatsService {
         var arr = statsModel.keysMap
         var ret : ArrayList<MutableMap<String, Pair<Int, Int>>> = ArrayList()
 
-        for (m in arr ){
-            var a : MutableMap<String, Pair<Int,Int>> = mutableMapOf()
-            for ((k,v) in m){
-                a.put(k,Pair(v[0],v[1]))
+        if (arr.size != 0) {
+            for (m in arr) {
+                var a: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
+                for ((k, v) in m) {
+                    a.put(k, Pair(v[0], v[1]))
+                }
+                ret.add(a)
             }
-            ret.add(a)
         }
         return ret
     }
