@@ -1,6 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.views
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.text.Html
 import android.util.AttributeSet
 import android.view.View
@@ -8,7 +9,10 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
-import com.phatphoophoo.pdtran.herotyper.presenters.PACKAGE_NAME
+import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
+import com.phatphoophoo.pdtran.herotyper.models.colemak
+import com.phatphoophoo.pdtran.herotyper.models.dvorak
+import com.phatphoophoo.pdtran.herotyper.models.qwerty
 
 
 class CustomKeyboardView:
@@ -17,18 +21,53 @@ class CustomKeyboardView:
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
 
-    init {
-        // TODO: Fetch settings from preferences and update keyboard layout
-        inflate(context, R.layout.custom_keyboard_layout, this)
+    private var sharedPref: SharedPreferences
+    private var curKbIdx: Int = 0
+    private var keymaps: MutableMap<Int, String> = mutableMapOf()
+    var kbStyles: Array<String>
 
-        // Depending on the size, loop through the number of keys and wipe them
-        for(i in 1..30) {
-            val id = resources.getIdentifier("button$i", "id", PACKAGE_NAME)
-            val btn = findViewById<Button>(id)
+    init {
+        inflate(context, R.layout.custom_keyboard_layout, this)
+        sharedPref =
+            context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
+
+        kbStyles = resources.getStringArray(R.array.keyboard_arrays)
+        curKbIdx = sharedPref?.getInt(context.getString(R.string.keyboard_style_key), 0)
+        when (kbStyles[curKbIdx]) {
+            context.getString(R.string.keyboard_style_qwerty) -> {
+                keymaps.putAll(qwerty)
+            }
+            context.getString(R.string.keyboard_style_colemak) -> {
+                keymaps.putAll(colemak)
+            }
+            context.getString(R.string.keyboard_style_dvorak) -> {
+                keymaps.putAll(dvorak)
+            }
+            context.getString(R.string.keyboard_style_custom) -> {
+                inflate(context, R.layout.custom_keyboard_layout, this)
+            }
+            else -> println("Please add new keyboard style in strings.xml")
+        }
+
+        for (bid in BUTTONS.values()) {
+            val btn = findViewById<Button>(bid.id)
+            var savedKey: String?
+            if (kbStyles[curKbIdx] == context.getString(R.string.keyboard_style_custom)) {
+                savedKey = sharedPref?.getString(bid.id.toString(), null)
+            } else {
+                savedKey = keymaps[bid.id]
+            }
+            if (savedKey != null) {
+                btn.text = savedKey
+            }
             if (btn.text.isBlank()){
                 btn.visibility = View.GONE
             }
         }
+    }
+
+    fun setupQwerty() {
+
     }
 
     fun getColoredSpanned(text: String, color: String): String {

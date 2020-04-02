@@ -7,8 +7,6 @@ import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
 
-const val PACKAGE_NAME = "com.phatphoophoo.pdtran.herotyper"
-
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     GAME_DIFFICULTY.EASY to listOf(
         "glow",
@@ -104,9 +102,13 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
     }
 
     private fun setKeyboardEventListeners(activity: Activity) {
-        for(i in 1..26) {
-            val id = activity.resources.getIdentifier("button$i", "id", PACKAGE_NAME)
+        for(i in 1..30) {
+            val id = activity.resources.getIdentifier("button$i", "id", activity.packageName)
             val btn = activity.findViewById(id) as Button
+            // Ignore blank keys
+            if (btn.text.isBlank()) {
+                continue
+            }
             btn.setOnClickListener{
                 onKeyPress(btn)
             }

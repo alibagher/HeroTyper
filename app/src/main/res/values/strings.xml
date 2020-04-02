@@ -18,11 +18,15 @@
     <string name="background_volume_text">Background Volume</string>
     <string name="sound_volume_text">Sound Volume</string>
     <string name="keyboard_style_text">Keyboard Style</string>
+    <string name="keyboard_style_qwerty">Qwerty</string>
+    <string name="keyboard_style_colemak">Colemak</string>
+    <string name="keyboard_style_dvorak">Dvorak</string>
+    <string name="keyboard_style_custom">Custom</string>
     <string-array name="keyboard_arrays">
-        <item>Default</item>
-        <item>Colemak</item>
-        <item>Dvorak</item>
-        <item>Custom</item>
+        <item>@string/keyboard_style_qwerty</item>
+        <item>@string/keyboard_style_colemak</item>
+        <item>@string/keyboard_style_dvorak</item>
+        <item>@string/keyboard_style_custom</item>
     </string-array>
     <string name="save_settings">Save</string>
     <string name="template">Change Me</string>

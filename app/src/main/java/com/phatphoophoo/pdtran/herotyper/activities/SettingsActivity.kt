@@ -15,7 +15,6 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var background_volume_seekbar: SeekBar
     lateinit var sound_volume_seekbar: SeekBar
     var curKb: Int = 0
-    lateinit var keyboard_display: ImageView
     lateinit var keyboard_spinner: Spinner
     lateinit var kbStyles: Array<String>
 
@@ -24,7 +23,6 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
         background_volume_seekbar = findViewById(R.id.background_volume_seekbar)
         sound_volume_seekbar = findViewById(R.id.sound_volume_seekbar)
-        keyboard_display = findViewById(R.id.keyboard_display)
         keyboard_spinner = findViewById(R.id.keyboard_spinner)
         kbStyles = resources.getStringArray(R.array.keyboard_arrays)
         val adapter = ArrayAdapter(
@@ -39,25 +37,21 @@ class SettingsActivity : AppCompatActivity() {
                 position: Int, id: Long
             ) {
                 when (kbStyles[position]) {
-                    "Default" -> {
-                        keyboard_display.setImageResource(R.drawable.default_keyboard)
+                    getString(R.string.keyboard_style_qwerty) -> {
+
                     }
-                    "Colemak" -> {
-                        keyboard_display.setImageResource(R.drawable.colemak)
+                    getString(R.string.keyboard_style_colemak) -> {
+
                     }
-                    "Dvorak" -> {
-                        keyboard_display.setImageResource(R.drawable.dvorak)
+                    getString(R.string.keyboard_style_dvorak) -> {
+
+                    }
+                    getString(R.string.keyboard_style_custom) -> {
+
                     }
                     else -> println("Please add new keyboard style in strings.xml")
                 }
                 curKb = position
-                if (curKb == 3) {
-                    keyboard_display.visibility = View.GONE
-                    keyboard_custom.visibility = View.VISIBLE
-                } else {
-                    keyboard_display.visibility = View.VISIBLE
-                    keyboard_custom.visibility = View.GONE
-                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -66,7 +60,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         sharedPref = getDefaultSharedPreferences(this)
 
-//        Restore previous settings
+        // Restore previous settings
         background_volume_seekbar.progress = sharedPref.getInt(getString(R.string.background_volume_key), 0)
         sound_volume_seekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
         keyboard_spinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
