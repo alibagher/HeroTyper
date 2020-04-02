@@ -156,7 +156,11 @@ class GameScreenPresenter(
         val totalTime = gameTimer!!.endTimer()
         this.gameTimer = null
 
+        //Get Hit/Miss data
+        val keysHitMissMap = customKeyboardPresenter.getKeysHitMissMap()
+
         //Save stats info
+        StatsService.setKeysMap(keysHitMissMap)
         StatsService.setWpm(((words*60*1000)/totalTime).toInt())
         StatsService.write()
 

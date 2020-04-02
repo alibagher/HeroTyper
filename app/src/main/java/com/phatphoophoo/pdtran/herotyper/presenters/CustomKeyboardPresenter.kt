@@ -85,7 +85,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
     private var curLetterIndex = 0
     private var hasWordCompleted = false
 
-    private var keysMap : MutableMap<String, Pair<Int, Int>> = mutableMapOf()
+    private val keysMap : MutableMap<String, Pair<Int, Int>> = generateKeysMap()
 
     init {
         setKeyboardEventListeners(activity)
@@ -94,12 +94,17 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         keyboardView.renderWord(curWord, curLetterIndex)
     }
 
+    private fun generateKeysMap(): MutableMap<String, Pair<Int, Int>>{
+        val map = mutableMapOf<String, Pair<Int, Int>>()
+        for(i in 1..26) {
+            //Lowercase letters
+            map.put((96+i).toChar().toString() ,Pair(0,0))
+        }
+        return map
+    }
+
     private fun setKeyboardEventListeners(activity: Activity) {
         for(i in 1..26) {
-            // set map. lower case!
-            Log.e("the letter: ", (96+i).toChar().toString() )
-            keysMap.put((96+i).toChar().toString() ,Pair(0,0))
-
             val id = activity.resources.getIdentifier("button$i", "id", PACKAGE_NAME)
             val btn = activity.findViewById(id) as Button
             btn.setOnClickListener{
@@ -112,7 +117,6 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         val btnText = btn.text.toString().toLowerCase()
         val curLetter = curWord[curLetterIndex].toString().toLowerCase()
 
-        Log.e("keysMap at currLetter", keysMap.get(curLetter).toString() + " and currLetter: " + curLetter)
         var hitMiss = keysMap.get(curLetter)
 
         if(btnText == curLetter) {
@@ -148,7 +152,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         }
     }
 
-    fun getkeysMap() : MutableMap<String, Pair<Int, Int>> {
+    fun getKeysHitMissMap() : MutableMap<String, Pair<Int, Int>> {
         return keysMap
     }
 
