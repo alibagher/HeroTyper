@@ -65,7 +65,7 @@ class EnemyService(
     }
 
     private fun addEnemyMedium() : List<EnemyObject> {
-        if (currentTick < 180) return emptyList()
+        if (currentTick < 160) return emptyList()
         currentTick = 0
 
         // Random value between 0 and 100
@@ -82,7 +82,7 @@ class EnemyService(
     }
 
     private fun addEnemyHard() : List<EnemyObject> {
-        if (currentTick < 160) return emptyList()
+        if (currentTick < 140) return emptyList()
         currentTick = 0
 
         // Random value between 0 and 100

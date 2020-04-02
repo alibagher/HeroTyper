@@ -126,8 +126,8 @@ class SplittingEnemy(
 
     override fun onObjectDestroyed() : List<EnemyObject> {
         return listOf(
-            BasicEnemy(Pair(position.first - width/2, position.second)),
-            BasicEnemy(Pair(position.first + width/2, position.second))
+            BasicEnemy(Pair(position.first - width/4, position.second)),
+            BasicEnemy(Pair(position.first + width/4, position.second))
         )
     }
 }
@@ -153,8 +153,9 @@ class StrafingEnemy (
         if (position.first <= HORIZONTAL_LIMIT_LEFT){ movingLeft = false }
         if (position.first >= HORIZONTAL_LIMIT_RIGHT){ movingLeft = true }
 
-        this.position = Pair(position.first + velocity * if (movingLeft) -1 else 1,
-            position.second)
+        // Change position depending on direction being moved in
+        val xChange = velocity * if (movingLeft) -2 else 2
+        this.position = Pair(position.first + xChange, position.second)
 
         return super.updateState()
     }
