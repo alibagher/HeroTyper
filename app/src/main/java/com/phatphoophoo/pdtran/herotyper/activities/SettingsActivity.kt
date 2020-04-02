@@ -57,15 +57,17 @@ class SettingsActivity : AppCompatActivity() {
 
         save_settings.setOnClickListener {
             if (kbStyles[curKbIdx] == getString(R.string.keyboard_style_custom)
-                && !keyboardSettingsPresenter.isCustomKeyboardValid()) {
+                && !keyboardSettingsPresenter.saveCustomLayoutIfValid()) {
+                val missingChars = keyboardSettingsPresenter.missingChars()
+                val toastTxt = "Invalid keyboard layout. You're missing ${ missingChars }!"
                 Toast.makeText(
                     this,
-                    "Invalid keyboard layout. Please check your layout again!",
+                    toastTxt,
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
             }
-            keyboardSettingsPresenter.saveLayout()
+            keyboardSettingsPresenter.saveSelection()
             with(sharedPref.edit()) {
                 putInt(
                     getString(R.string.background_volume_key),

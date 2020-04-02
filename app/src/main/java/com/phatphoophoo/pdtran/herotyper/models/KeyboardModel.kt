@@ -132,3 +132,31 @@ val dvorak: Map<Int, String> = mapOf(
     BUTTONS.BUTTON30.id to "Z"
 )
 
+val alphabets: MutableCollection<String> = mutableListOf(
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+)
+
