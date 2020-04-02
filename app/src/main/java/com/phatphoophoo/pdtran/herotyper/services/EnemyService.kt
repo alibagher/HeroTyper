@@ -14,13 +14,13 @@ class EnemyService(
         GAME_DIFFICULTY.HARD to this::addEnemyHard
     )
 
-    val SPAWN_OFFSET : Int = 200 // To make sure no enemies are offscreen
+    val SPAWN_OFFSET : Float = 200f // To make sure no enemies are offscreen
 
     private var currentTick = 150 // Reduce the initial wait
     private var hitStack = 0
 
-    private fun randomEnemyPosition(): Pair<Float,Float> {
-        return Pair((Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat(), 0f)
+    private fun randomEnemyXPosition(): Float {
+        return (Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat()
     }
 
     fun updateEnemies(enemies: List<EnemyObject>) : List<EnemyObject> {
@@ -56,9 +56,9 @@ class EnemyService(
          val rand = (Math.random() * 100).toInt()
 
          val newEnemy = when (rand){
-             in 0..80 -> { BasicEnemy(randomEnemyPosition()) }
-             in 81..90 -> { FastEnemy(randomEnemyPosition())}
-             else -> SplittingEnemy(randomEnemyPosition())
+             in 0..80 -> { BasicEnemy(randomEnemyXPosition()) }
+             in 81..90 -> { FastEnemy(randomEnemyXPosition())}
+             else -> SplittingEnemy(randomEnemyXPosition())
          }
 
          return listOf(newEnemy)
@@ -72,10 +72,10 @@ class EnemyService(
         val rand = (Math.random() * 100).toInt()
 
         val newEnemy = when (rand){
-            in 0..40 -> { BasicEnemy(randomEnemyPosition()) }
-            in 41..70 -> { FastEnemy(randomEnemyPosition())}
-            in 71..81 -> { SplittingEnemy(randomEnemyPosition())}
-            else -> StrafingEnemy(randomEnemyPosition())
+            in 0..40 -> { BasicEnemy(randomEnemyXPosition()) }
+            in 41..70 -> { FastEnemy(randomEnemyXPosition())}
+            in 71..81 -> { SplittingEnemy(randomEnemyXPosition())}
+            else -> StrafingEnemy(randomEnemyXPosition())
         }
 
         return listOf(newEnemy)
@@ -89,10 +89,10 @@ class EnemyService(
         val rand = (Math.random() * 100).toInt()
 
         val newEnemy = when (rand){
-            in 0..10 -> { BasicEnemy(randomEnemyPosition()) }
-            in 11..40 -> { FastEnemy(randomEnemyPosition())}
-            in 41..70 -> { SplittingEnemy(randomEnemyPosition())}
-            else -> StrafingEnemy(randomEnemyPosition())
+            in 0..10 -> { BasicEnemy(randomEnemyXPosition()) }
+            in 11..40 -> { FastEnemy(randomEnemyXPosition())}
+            in 41..70 -> { SplittingEnemy(randomEnemyXPosition())}
+            else -> StrafingEnemy(randomEnemyXPosition())
         }
 
         return listOf(newEnemy)
