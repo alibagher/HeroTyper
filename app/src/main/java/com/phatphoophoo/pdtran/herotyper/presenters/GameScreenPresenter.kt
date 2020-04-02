@@ -12,6 +12,7 @@ import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
+import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
 import java.lang.Error
@@ -20,7 +21,7 @@ import java.lang.Error
 class GameScreenPresenter(
     val gameActivity: GameActivity,
     val gameScreenView: GameScreenView,
-    val customKeyboardPresenter: CustomKeyboardPresenter,
+    val keyboardGamePresenter: KeyboardGamePresenter,
     val windowSize: Pair<Float,Float>,
     val difficulty: GAME_DIFFICULTY
 ) {
@@ -82,7 +83,7 @@ class GameScreenPresenter(
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // Check for completed words to fire bullets
-        if(customKeyboardPresenter.hasWordCompleted()) {
+        if(keyboardGamePresenter.hasWordCompleted()) {
             var bulletPos = Pair(gameModel.playerObject!!.position.first + 50,
                 gameModel.playerObject!!.position.second)
 
@@ -155,7 +156,7 @@ class GameScreenPresenter(
         this.gameTimer = null
 
         //Get Hit/Miss data
-        val keysHitMissMap = customKeyboardPresenter.getKeysHitMissMap()
+        val keysHitMissMap = keyboardGamePresenter.getKeysHitMissMap()
 
         //Save stats info
         StatsService.setKeysMap(keysHitMissMap)

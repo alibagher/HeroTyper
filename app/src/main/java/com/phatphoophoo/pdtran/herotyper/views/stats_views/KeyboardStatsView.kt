@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
 import java.util.*
 
 class KeyboardStatsView:
@@ -14,11 +15,6 @@ class KeyboardStatsView:
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, attributeSetId: Int) : super(context, attrs, attributeSetId)
-
-    val keyButtonIds: IntArray = intArrayOf(R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7,
-        R.id.button8, R.id.button9, R.id.button10, R.id.button11, R.id.button12, R.id.button13, R.id.button14, R.id.button15,
-        R.id.button16, R.id.button17, R.id.button18, R.id.button19, R.id.button20, R.id.button21, R.id.button22,R.id.button23,
-        R.id.button24, R.id.button25, R.id.button26)
 
     enum class KeyColor(val value: Int) {
         softGray(0xBDB1B1),
@@ -55,20 +51,21 @@ class KeyboardStatsView:
     }
 
     fun setKeyColors(keyColors: Map<String, KeyColor>) {
-        for(keyButtonId in keyButtonIds) {
-            val button = findViewById<Button>(keyButtonId)
-            val key = button.text.toString()
+        for(button in BUTTONS.values()) {
+            val btn = findViewById<Button>(button.id)
+            val key = btn.text.toString()
             val keyColor = keyColors[key]
 
             if (keyColor != null) {
-                button.background.colorFilter = LightingColorFilter(keyColor.value, 0)
+                btn.background.colorFilter = LightingColorFilter(keyColor.value, 0)
             }
         }
     }
 
     fun setKeyboardEventListeners(keyPressHandler: (btn: Button) -> Unit) {
-        for(keyButtonId in keyButtonIds) {
-            val btn = findViewById<Button>(keyButtonId)
+        for(button in BUTTONS.values()) {
+            val btn = findViewById<Button>(button.id)
+
             btn.setOnClickListener {
                 keyPressHandler(btn)
             }

@@ -8,13 +8,15 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.presenters.KeyboardSettingsPresenter
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
+    lateinit var keyboardSettingsPresenter: KeyboardSettingsPresenter
     lateinit var sharedPref: SharedPreferences
     lateinit var background_volume_seekbar: SeekBar
     lateinit var sound_volume_seekbar: SeekBar
-    var curKb: Int = 0
+    var curKbIdx: Int = 0
     lateinit var keyboard_spinner: Spinner
     lateinit var kbStyles: Array<String>
 
@@ -24,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         background_volume_seekbar = findViewById(R.id.background_volume_seekbar)
         sound_volume_seekbar = findViewById(R.id.sound_volume_seekbar)
         keyboard_spinner = findViewById(R.id.keyboard_spinner)
+        keyboardSettingsPresenter = KeyboardSettingsPresenter(this, keyboard_settings_view)
         kbStyles = resources.getStringArray(R.array.keyboard_arrays)
         val adapter = ArrayAdapter(
             this,
@@ -36,22 +39,8 @@ class SettingsActivity : AppCompatActivity() {
                 parent: AdapterView<*>, view: View,
                 position: Int, id: Long
             ) {
-                when (kbStyles[position]) {
-                    getString(R.string.keyboard_style_qwerty) -> {
-
-                    }
-                    getString(R.string.keyboard_style_colemak) -> {
-
-                    }
-                    getString(R.string.keyboard_style_dvorak) -> {
-
-                    }
-                    getString(R.string.keyboard_style_custom) -> {
-
-                    }
-                    else -> println("Please add new keyboard style in strings.xml")
-                }
-                curKb = position
+                keyboardSettingsPresenter.setup(position)
+                curKbIdx = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -61,12 +50,14 @@ class SettingsActivity : AppCompatActivity() {
         sharedPref = getDefaultSharedPreferences(this)
 
         // Restore previous settings
-        background_volume_seekbar.progress = sharedPref.getInt(getString(R.string.background_volume_key), 0)
+        background_volume_seekbar.progress =
+            sharedPref.getInt(getString(R.string.background_volume_key), 0)
         sound_volume_seekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
         keyboard_spinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
 
         save_settings.setOnClickListener {
-            if (curKb == 3 && !keyboard_custom.isValid()) {
+            if (kbStyles[curKbIdx] == getString(R.string.keyboard_style_custom)
+                && !keyboardSettingsPresenter.isCustomKeyboardValid()) {
                 Toast.makeText(
                     this,
                     "Invalid keyboard layout. Please check your layout again!",
@@ -74,11 +65,13 @@ class SettingsActivity : AppCompatActivity() {
                 ).show()
                 return@setOnClickListener
             }
-
+            keyboardSettingsPresenter.saveLayout()
             with(sharedPref.edit()) {
-                putInt(getString(R.string.background_volume_key), background_volume_seekbar.progress)
+                putInt(
+                    getString(R.string.background_volume_key),
+                    background_volume_seekbar.progress
+                )
                 putInt(getString(R.string.sound_volume_key), sound_volume_seekbar.progress)
-                putInt(getString(R.string.keyboard_style_key), curKb)
                 apply()
             }
 

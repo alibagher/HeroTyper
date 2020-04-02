@@ -15,7 +15,7 @@ import com.phatphoophoo.pdtran.herotyper.models.dvorak
 import com.phatphoophoo.pdtran.herotyper.models.qwerty
 
 
-class CustomKeyboardView:
+class KeyboardGameView:
     LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -64,10 +64,6 @@ class CustomKeyboardView:
                 btn.visibility = View.GONE
             }
         }
-    }
-
-    fun setupQwerty() {
-
     }
 
     fun getColoredSpanned(text: String, color: String): String {

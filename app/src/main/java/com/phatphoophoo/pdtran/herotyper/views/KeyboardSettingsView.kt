@@ -1,5 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.views
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -7,6 +8,7 @@ import android.content.SharedPreferences
 import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -14,7 +16,7 @@ import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
 
 
-class CustomKeyboardSettingsView :
+class KeyboardSettingsView :
     LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -24,29 +26,21 @@ class CustomKeyboardSettingsView :
         attributeSetId
     )
 
-    private var sharedPref: SharedPreferences
-    private var keymaps: MutableMap<Int, String> = mutableMapOf()
-    private var curKbIdx: Int = 0
-    var kbStyles: Array<String>
-
     init {
         inflate(context, R.layout.custom_keyboard_keys_medium, this)
-        sharedPref =
-            context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
-        kbStyles = resources.getStringArray(R.array.keyboard_arrays)
-        curKbIdx = sharedPref?.getInt(context.getString(R.string.keyboard_style_key), 0)
-        setupKeyboard()
     }
 
-    private fun setupKeyboard() {
+    fun renderKeyboard(layout: Map<Int, String>, custom: Boolean? = false) {
         for (bid in BUTTONS.values()) {
             val btn = findViewById<Button>(bid.id)
+            btn.visibility = View.VISIBLE
+            btn.text = layout[btn.id]
+            if (btn.text.isBlank() && !custom!!) {
+                btn.visibility = View.GONE
+                continue
+            }
             btn.setOnClickListener {
                 onKeyPress(btn)
-            }
-            val savedKey = sharedPref?.getString(bid.id.toString(), null)
-            if (savedKey != null) {
-                btn.text = savedKey
             }
         }
     }
@@ -82,14 +76,23 @@ class CustomKeyboardSettingsView :
 
     fun isValid(): Boolean {
 //        TODO: Validate if keyboard layout is valid
+        return true
+    }
+
+    fun saveKeyLayout(activity: Activity): Boolean {
+        val sharedPref = activity.getSharedPreferences(
+            activity.packageName + "_preferences",
+            Context.MODE_PRIVATE
+        )
         with(sharedPref.edit()) {
             for (bid in BUTTONS.values()) {
-                val btn = findViewById<Button>(bid.id)
+                val btn = activity.findViewById<Button>(bid.id)
                 putString(bid.toString(), btn.text.toString())
                 apply()
             }
+            return true
         }
-        return true
+        return false
     }
 
 }

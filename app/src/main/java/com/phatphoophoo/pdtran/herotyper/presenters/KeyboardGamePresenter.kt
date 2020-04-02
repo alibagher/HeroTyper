@@ -1,11 +1,9 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.app.Activity
-import android.util.Log
-import android.view.View
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
-import com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
+import com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
 
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     GAME_DIFFICULTY.EASY to listOf(
@@ -76,7 +74,7 @@ val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     )
 )
 
-class CustomKeyboardPresenter(activity: Activity, private val keyboardView: CustomKeyboardView, gameDifficulty: GAME_DIFFICULTY) {
+class KeyboardGamePresenter(activity: Activity, private val keyboardGameView: KeyboardGameView, gameDifficulty: GAME_DIFFICULTY) {
 
     private var curLevelWords: List<String> = emptyList()
     private var curWord = ""
@@ -89,7 +87,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
         setKeyboardEventListeners(activity)
         curLevelWords = dictionary.getValue(gameDifficulty)
         setNewWord()
-        keyboardView.renderWord(curWord, curLetterIndex)
+        keyboardGameView.renderWord(curWord, curLetterIndex)
     }
 
     private fun generateKeysMap(): MutableMap<String, Pair<Int, Int>>{
@@ -132,7 +130,7 @@ class CustomKeyboardPresenter(activity: Activity, private val keyboardView: Cust
             keysMap.put(curLetter, Pair(hitMiss!!.first, hitMiss!!.second+1))
         }
 
-        keyboardView.renderWord(curWord, curLetterIndex)
+        keyboardGameView.renderWord(curWord, curLetterIndex)
     }
 
     private fun setNewWord() {

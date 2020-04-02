@@ -4,16 +4,17 @@ import android.os.Bundle
 import com.phatphoophoo.pdtran.herotyper.presenters.GameScreenPresenter
 import kotlinx.android.synthetic.main.activity_game.*
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
-import com.phatphoophoo.pdtran.herotyper.presenters.CustomKeyboardPresenter
+import com.phatphoophoo.pdtran.herotyper.presenters.KeyboardSettingsPresenter
 import android.util.DisplayMetrics
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.fragments.GameMenuFragment
+import com.phatphoophoo.pdtran.herotyper.presenters.KeyboardGamePresenter
 
 class GameActivity : AppCompatActivity() {
-    lateinit var keyboardPresenter: CustomKeyboardPresenter
+    lateinit var keyboardGamePresenter: KeyboardGamePresenter
     lateinit var gameScreenPresenter: GameScreenPresenter
     private var gameMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
@@ -44,8 +45,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun initGame() {
-        keyboardPresenter = CustomKeyboardPresenter(this, custom_keyboard_view, gameDifficulty)
-        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardPresenter, screenSize, gameDifficulty)
+        keyboardGamePresenter = KeyboardGamePresenter(this, keyboard_game_view, gameDifficulty)
+        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardGamePresenter, screenSize, gameDifficulty)
     }
 
     fun showGameOverFragment() {

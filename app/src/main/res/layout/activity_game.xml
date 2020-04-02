@@ -50,14 +50,14 @@
 
     </FrameLayout>
 
-    <com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView
-            android:id="@+id/custom_keyboard_view"
+    <com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
+            android:id="@+id/keyboard_game_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" >
 
-    </com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardView>
+    </com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

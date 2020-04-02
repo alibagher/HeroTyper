@@ -1,14 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.models
 
-import android.content.res.Resources
 import com.phatphoophoo.pdtran.herotyper.R
-
-class KeyboardModel(resources: Resources) {
-    val kbStyles: Array<String> = resources.getStringArray(R.array.keyboard_arrays)
-    var curKb: Int = 0
-
-
-}
 
 enum class BUTTONS(val id: Int) {
     BUTTON1(R.id.button1),

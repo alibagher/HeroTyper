@@ -107,11 +107,11 @@
                         android:entries="@array/keyboard_arrays"
                         android:spinnerMode="dropdown" />
 
-                <com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardSettingsView
-                        android:id="@+id/keyboard_custom"
+                <com.phatphoophoo.pdtran.herotyper.views.KeyboardSettingsView
+                        android:id="@+id/keyboard_settings_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                </com.phatphoophoo.pdtran.herotyper.views.CustomKeyboardSettingsView>
+                </com.phatphoophoo.pdtran.herotyper.views.KeyboardSettingsView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

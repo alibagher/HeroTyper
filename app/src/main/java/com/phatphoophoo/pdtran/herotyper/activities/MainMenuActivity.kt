@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_main_menu.*
  * status bar and navigation/system bar) with user interaction.
  */
 class MainMenuActivity : Activity() {
-
     enum class MENU_STATE {
         MAIN, DIFFICULTY, LOADING
     }
@@ -26,12 +25,11 @@ class MainMenuActivity : Activity() {
         MENU_STATE.LOADING to R.id.loading_layout
     )
 
-    var currentState : MENU_STATE = MENU_STATE.MAIN
+    var currentState: MENU_STATE = MENU_STATE.MAIN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
-//        StatsService.initService(this.applicationContext)
         StatsService.initService(this)
 
         // Setup button behavior

@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.presenters
 
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
+import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.SpeedStatsView
@@ -27,8 +28,6 @@ class StatsPresenter(
 
 
     private class KeyboardStatsPresenter(val activity: StatsActivity, val keyboardStatsView: KeyboardStatsView) {
-
-        private val keyButtonIds: IntArray = keyboardStatsView.keyButtonIds
         private val ANALYSIS_THRESHOLD_COUNT = 10
         lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
 
@@ -53,8 +52,8 @@ class StatsPresenter(
 
         fun generateFakeData(): Map<String, Pair<Int,Int>>{
             val keyStats =  mutableMapOf<String, Pair<Int, Int>>()
-            for(keyButtonId in keyButtonIds) {
-                val button = activity.findViewById<Button>(keyButtonId)
+            for(btn in BUTTONS.values()) {
+                val button = activity.findViewById<Button>(btn.id)
                 val key = button.text.toString()
                 val hits = Random.nextInt(0, 100)
                 val misses = Random.nextInt(0, 100)
