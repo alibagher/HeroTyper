@@ -146,7 +146,7 @@ class StrafingEnemy (
     var movingLeft = true
 
     val HORIZONTAL_LIMIT_LEFT = 100
-    val HORIZONTAL_LIMIT_RIGHT = 600
+    val HORIZONTAL_LIMIT_RIGHT = 900
 
     override fun updateState() : List<EnemyObject> {
         // Check if the horizontal direction should swap
