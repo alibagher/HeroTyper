@@ -25,7 +25,7 @@ class KeyboardSettingsView :
 
     fun renderKeyboard(
         layout: Map<Int, String>,
-        onKeyPress: (b: Button) -> Unit,
+        onKeyPress: (b: Button) -> Unit? = {_: Button -> Unit},
         custom: Boolean? = false
     ) {
         for (bid in BUTTONS.values()) {

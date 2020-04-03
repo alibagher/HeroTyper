@@ -44,7 +44,8 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented")
+                // This will not have any effect as we
+                // retrieve selection/set default selection
             }
         }
         sharedPref = getDefaultSharedPreferences(this)
