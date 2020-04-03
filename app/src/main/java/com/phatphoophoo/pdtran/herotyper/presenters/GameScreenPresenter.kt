@@ -19,22 +19,22 @@ import java.lang.Error
 
 
 class GameScreenPresenter(
-    val gameActivity: GameActivity,
-    val gameScreenView: GameScreenView,
-    val keyboardGamePresenter: KeyboardGamePresenter,
-    val windowSize: Pair<Float,Float>,
-    val difficulty: GAME_DIFFICULTY
+    private val gameActivity: GameActivity,
+    private val gameScreenView: GameScreenView,
+    private val keyboardGamePresenter: KeyboardGamePresenter,
+    private val windowSize: Pair<Float,Float>,
+    difficulty: GAME_DIFFICULTY
 ) {
     companion object {
         // Const values
         const val REFRESH_RATE : Long = 50 // In MS
     }
 
-    var lastXPos: Float = windowSize.first/2
-    var gameModel : GameScreenModel = GameScreenModel()
-    val enemyService: EnemyService = EnemyService(difficulty, windowSize)
-    val bulletService: BulletService = BulletService()
-    var words : Int = 0
+    private var lastXPos: Float = windowSize.first/2
+    private var gameModel : GameScreenModel = GameScreenModel()
+    private val enemyService: EnemyService = EnemyService(difficulty, windowSize)
+    private val bulletService: BulletService = BulletService()
+    private var words : Int = 0
 
     private var gameTimer: GameTimer?
 
@@ -76,16 +76,18 @@ class GameScreenPresenter(
     // Where the Game tells various helper classes to update the state of the game,
     // while the Game itself handles logic not able to be handled solely by the object
     // type in question
-    fun gameLoop() {
+    private fun gameLoop() {
         // Update the state of the game objects
-        gameModel.playerObject!!.position = Pair(lastXPos, gameModel.playerObject!!.position.second)
+        gameModel.playerObject.position = Pair(lastXPos, gameModel.playerObject.position.second)
 
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
         // Check for completed words to fire bullets
         if(keyboardGamePresenter.hasWordCompleted()) {
-            var bulletPos = Pair(gameModel.playerObject!!.position.first + 50,
-                gameModel.playerObject!!.position.second)
+            val bulletPos = Pair(
+                gameModel.playerObject.position.first + 50,
+                gameModel.playerObject.position.second
+            )
 
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets, bulletPos)
 
@@ -118,11 +120,11 @@ class GameScreenPresenter(
 
     // Marks all objects as destroyed; they can-self handle this
     // in the next game loop
-    fun handleEnemyHit(gameModel: GameScreenModel) {
+    private fun handleEnemyHit(gameModel: GameScreenModel) {
         val newEnemyList = gameModel.enemies.filter{ !it.isDestroyed }
 
-        val newBulletList = gameModel.bullets.forEach { bullet ->
-            var collided = false
+        gameModel.bullets.forEach { bullet ->
+            var collided: Boolean
             var curIndex = 0
 
             for(enemy in newEnemyList) {
@@ -169,13 +171,8 @@ class GameScreenPresenter(
         gameActivity.showGameOverFragment()
     }
 
-    // Call when the game ends
-    fun dispose() {
-
-    }
-
     // GameTimer is meant for single game use
-    class GameTimer() {
+    class GameTimer {
         private var currFrameStartTime: Long? = 0
         private var currTimeSoFar: Long = 0
         private var timerCompleted: Boolean = false
@@ -185,7 +182,7 @@ class GameScreenPresenter(
             currFrameStartTime = System.currentTimeMillis()
         }
 
-        fun pauseTimer(): Unit {
+        fun pauseTimer() {
             if(timerCompleted){
                 throw invalidUseError
             }
@@ -193,7 +190,7 @@ class GameScreenPresenter(
             currFrameStartTime = null
         }
 
-        fun resumeTimer(): Unit {
+        fun resumeTimer() {
             if(timerCompleted){
                 throw invalidUseError
             }
