@@ -71,14 +71,14 @@ class GameScreenView : View {
         c?.drawText("$livesText$lives", 50f, 130f, textPaint)
     }
 
-    fun Canvas.drawGameObject(gameObject: GameObject) {
+    private fun Canvas.drawGameObject(gameObject: GameObject) {
         // Create the bitmap if it hasn't yet
         if (gameObject.bitmap == null){
-            val baseBitmap = cachedBitmaps[gameObject.bitmapResId]
+            val baseBitmap = cachedBitmaps[gameObject.bitmapResId] as Bitmap
             val scaledBitmap = Bitmap.createScaledBitmap(baseBitmap, gameObject.width.toInt(), gameObject.height.toInt(), false)
             gameObject.bitmap = scaledBitmap
         }
 
-        this.drawBitmap(gameObject.bitmap, gameObject.position.first, gameObject.position.second, null)
+        this.drawBitmap(gameObject.bitmap as Bitmap, gameObject.position.first, gameObject.position.second, null)
     }
 }
