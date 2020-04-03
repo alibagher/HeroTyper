@@ -2,4 +2,5 @@
 <resources>
     <dimen name="keyboard_med_btn_sz">35dp</dimen>
     <dimen name="keyboard_med_txt_sz">11sp</dimen>
+    <dimen name="keyboard_lg_btn_sz">40dp</dimen>
 </resources>
