@@ -51,6 +51,7 @@ class GameScreenPresenter(
     private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
+
         scrollingBg.animator.start()
         gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
 
@@ -84,6 +85,8 @@ class GameScreenPresenter(
 
         // set the start for measuring wpm.
         words = 0
+        // resume at the start game, in case it was paused due to a retry.
+        gameActivity.playSound("resumeBattleLoop")
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -107,6 +110,7 @@ class GameScreenPresenter(
             // add to the number of words typed.
             words += 1
 
+            gameActivity.playSound("shotFired")
         } else {
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
         }
@@ -114,6 +118,11 @@ class GameScreenPresenter(
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
         val livesLeft = gameModel.lives - livesLost
+
+        // play sound for the number of enemies hit the base.
+        if (livesLost > 0){
+            gameActivity.playSound("baseExplosion")
+        }
 
         gameModel.lives = livesLeft
 
@@ -153,6 +162,7 @@ class GameScreenPresenter(
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
                     bullet.isDestroyed = true
+                    gameActivity.playSound("asteroidExplosion")
                     break
                 }
                 curIndex++
