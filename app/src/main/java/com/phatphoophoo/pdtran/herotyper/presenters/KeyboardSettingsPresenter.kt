@@ -1,6 +1,5 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -12,13 +11,15 @@ import android.widget.EditText
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.*
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardSettingsView
+import java.util.*
 import com.phatphoophoo.pdtran.herotyper.activities.SettingsActivity as SettingsActivity1
 
 class KeyboardSettingsPresenter(
     private val settingsActivity: SettingsActivity1,
     private val keyboardSettingsView: KeyboardSettingsView
 ) {
-    private var kbStyles: Array<String> = settingsActivity.resources.getStringArray(R.array.keyboard_arrays)
+    private var kbStyles: Array<String> =
+        settingsActivity.resources.getStringArray(R.array.keyboard_arrays)
     private var curKbIdx: Int = 0
     private var btnIdLetterMap: MutableMap<Int, String> = mutableMapOf()
     private var sharedPref: SharedPreferences =
@@ -42,7 +43,7 @@ class KeyboardSettingsPresenter(
                 btnIdLetterMap = dvorak as MutableMap<Int, String>
             }
             settingsActivity.getString(R.string.keyboard_style_custom) -> {
-                val layout = fetchLayout()
+                val layout = fetchSavedOrDefaultLayout()
                 keyboardSettingsView.renderKeyboard(layout, ::onKeyPress, true)
                 btnIdLetterMap = layout
             }
@@ -51,20 +52,22 @@ class KeyboardSettingsPresenter(
         curKbIdx = pos
     }
 
-    private fun fetchLayout(): MutableMap<Int, String> {
-        var res: MutableMap<Int, String> = mutableMapOf()
+    private fun fetchSavedOrDefaultLayout(): MutableMap<Int, String> {
+        // fetch saved layout or use qwerty layout on first use
+        // so users don't have to set all 26 characters manually
+        val res: MutableMap<Int, String> = mutableMapOf()
         var savedKey: String?
         for (bid in BUTTONS.values()) {
-            savedKey = sharedPref?.getString(bid.id.toString(), null)
+            savedKey = sharedPref.getString(bid.id.toString(), null)
             res[bid.id] = savedKey ?: ""
         }
-        return res
+        return if (res.values.all { s -> s == "" }) qwerty as MutableMap<Int, String> else res
     }
 
     private fun onKeyPress(btn: Button) {
         val btnText = btn.text.toString()
         val dialogBuilder = AlertDialog.Builder(settingsActivity)
-        var input = EditText(settingsActivity)
+        val input = EditText(settingsActivity)
         input.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
         input.filters += InputFilter.LengthFilter(1)
         input.filters += InputFilter { source, _, _, _, _, _ ->
@@ -77,12 +80,12 @@ class KeyboardSettingsPresenter(
             .setView(input)
             .setPositiveButton("Accept", DialogInterface.OnClickListener { dialog, _ ->
                 run {
-                    btn.text = input.text.toString().toUpperCase()
+                    btn.text = input.text.toString().toUpperCase(Locale.ROOT)
                     btnIdLetterMap[btn.id] = btn.text.toString()
                     dialog.dismiss()
                 }
             })
-            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, _ ->
                 dialog.cancel()
             })
 
@@ -112,9 +115,8 @@ class KeyboardSettingsPresenter(
                 putString(btn.id.toString(), btn.text.toString())
                 apply()
             }
-            return true
+            return@saveKeyLayout true
         }
-        return false
     }
 
     fun saveSelection() {

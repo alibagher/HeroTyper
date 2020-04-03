@@ -14,62 +14,72 @@
 
         <Button
                 android:id="@+id/button1"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="Q" />
 
         <Button
                 android:id="@+id/button2"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="W" />
 
         <Button
                 android:id="@+id/button3"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="E" />
 
         <Button
                 android:id="@+id/button4"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="R" />
 
         <Button
                 android:id="@+id/button5"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="T" />
 
         <Button
                 android:id="@+id/button6"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="Y" />
 
         <Button
                 android:id="@+id/button7"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="U" />
 
         <Button
                 android:id="@+id/button8"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="I" />
 
         <Button
                 android:id="@+id/button9"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="O" />
 
         <Button
                 android:id="@+id/button10"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="P" />
 
     </LinearLayout>
@@ -82,62 +92,72 @@
 
         <Button
                 android:id="@+id/button27"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="" />
 
         <Button
                 android:id="@+id/button11"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="A" />
 
         <Button
                 android:id="@+id/button12"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="S" />
 
         <Button
                 android:id="@+id/button13"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="D" />
 
         <Button
                 android:id="@+id/button14"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="F" />
 
         <Button
                 android:id="@+id/button15"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="G" />
 
         <Button
                 android:id="@+id/button16"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="H" />
 
         <Button
                 android:id="@+id/button17"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="J" />
 
         <Button
                 android:id="@+id/button18"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="K" />
 
         <Button
                 android:id="@+id/button19"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="L" />
     </LinearLayout>
 
@@ -149,62 +169,71 @@
 
         <Button
                 android:id="@+id/button28"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="" />
 
         <Button
                 android:id="@+id/button29"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="" />
 
         <Button
                 android:id="@+id/button20"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="Z" />
 
         <Button
                 android:id="@+id/button21"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="X" />
 
         <Button
                 android:id="@+id/button22"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
                 android:text="C" />
 
         <Button
                 android:id="@+id/button23"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="V" />
 
         <Button
                 android:id="@+id/button24"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="B" />
 
         <Button
                 android:id="@+id/button25"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="N" />
 
         <Button
                 android:id="@+id/button26"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="M" />
 
         <Button
                 android:id="@+id/button30"
-                android:layout_width="35dp"
+                android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="" />
     </LinearLayout>
 </LinearLayout>

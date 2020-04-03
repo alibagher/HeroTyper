@@ -50,7 +50,7 @@ class StatsPresenter(
         }
 
         fun setup() {
-            val curKbIdx = sharedPref?.getInt(activity.getString(R.string.keyboard_style_key), 0)
+            val curKbIdx = sharedPref.getInt(activity.getString(R.string.keyboard_style_key), 0)
             when (kbStyles[curKbIdx]) {
                 activity.getString(R.string.keyboard_style_qwerty) -> {
                     keyboardStatsView.renderKeyboard(qwerty, ::onKeyPress)
@@ -73,7 +73,7 @@ class StatsPresenter(
             var res: MutableMap<Int, String> = mutableMapOf()
             var savedKey: String?
             for (bid in BUTTONS.values()) {
-                savedKey = sharedPref?.getString(bid.id.toString(), null)
+                savedKey = sharedPref.getString(bid.id.toString(), null)
                 res[bid.id] = savedKey ?: ""
             }
             return res
@@ -118,7 +118,7 @@ class StatsPresenter(
         }
 
         private fun initKeyColors(keyStats: Map<String, Pair<Int, Int>>) {
-            val keyColors = keyStats.mapValues { (key, hitMissPair) ->
+            val keyColors = keyStats.mapValues { (_, hitMissPair) ->
                 val keyStatus = getKeyStatus(hitMissPair)
 
                 if (keyStatus == KeyboardStatsView.KeyStatus.UNKNOWN) {
@@ -137,9 +137,11 @@ class StatsPresenter(
         }
 
         private fun getKeyStatus(keyHitMissPair: Pair<Int, Int>): KeyboardStatsView.KeyStatus {
-            val total = keyHitMissPair!!.first + keyHitMissPair!!.second
+            val total = keyHitMissPair.first + keyHitMissPair.second
             val ratio =
-                if (keyHitMissPair!!.second > 0) (keyHitMissPair!!.first / keyHitMissPair!!.second) else 0
+                if (keyHitMissPair.second > 0) {
+                    (keyHitMissPair.first / keyHitMissPair.second)
+                } else 0
 
             if (total < ANALYSIS_THRESHOLD_COUNT) {
                 return KeyboardStatsView.KeyStatus.UNKNOWN

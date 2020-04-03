@@ -106,7 +106,7 @@ class KeyboardGamePresenter(
     }
 
     private fun setup() {
-        val curKbIdx = sharedPref?.getInt(activity.getString(R.string.keyboard_style_key), 0)
+        val curKbIdx = sharedPref.getInt(activity.getString(R.string.keyboard_style_key), 0)
         when (kbStyles[curKbIdx]) {
             activity.getString(R.string.keyboard_style_qwerty) -> {
                 keyboardGameView.renderKeyboard(qwerty, ::onKeyPress)
@@ -128,7 +128,7 @@ class KeyboardGamePresenter(
         var res: MutableMap<Int, String> = mutableMapOf()
         var savedKey: String?
         for (bid in BUTTONS.values()) {
-            savedKey = sharedPref?.getString(bid.id.toString(), null)
+            savedKey = sharedPref.getString(bid.id.toString(), null)
             res[bid.id] = savedKey ?: ""
         }
         return res
@@ -150,14 +150,14 @@ class KeyboardGamePresenter(
         var hitMiss = keysMap.get(curLetter)
 
         if (btnText == curLetter) {
-            keysMap.put(curLetter, Pair(hitMiss!!.first + 1, hitMiss!!.second))
+            keysMap.put(curLetter, Pair(hitMiss!!.first + 1, hitMiss.second))
             curLetterIndex += 1
             if (curLetterIndex == curWord.length) {
                 setNewWord()
                 hasWordCompleted = true
             }
         } else {
-            keysMap.put(curLetter, Pair(hitMiss!!.first, hitMiss!!.second + 1))
+            keysMap.put(curLetter, Pair(hitMiss!!.first, hitMiss.second + 1))
         }
 
         keyboardGameView.renderWord(curWord, curLetterIndex)
