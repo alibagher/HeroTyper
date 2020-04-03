@@ -40,8 +40,14 @@ class GameScreenPresenter(
 
     var gamePaused: Boolean = false
     set(newVal) {
-        if (newVal) scrollingBg.animator.pause()
-        else scrollingBg.animator.resume()
+        if (newVal) {
+            scrollingBg.animator.pause()
+            gameActivity.pauseSound()
+        }
+        else {
+            scrollingBg.animator.resume()
+            gameActivity.resumeSound()
+        }
         field = newVal
     }
 
@@ -51,7 +57,6 @@ class GameScreenPresenter(
     private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
-
         scrollingBg.animator.start()
         gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
 
@@ -86,7 +91,7 @@ class GameScreenPresenter(
         // set the start for measuring wpm.
         words = 0
         // resume at the start game, in case it was paused due to a retry.
-        gameActivity.playSound("resumeBattleLoop")
+        gameActivity.resumeSound()
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -231,6 +236,5 @@ class GameScreenPresenter(
 
             return currTimeSoFar
         }
-
     }
 }

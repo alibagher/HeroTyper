@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
+import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.models.*
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
 import kotlin.contracts.contract
@@ -81,7 +82,7 @@ val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
 )
 
 class KeyboardGamePresenter(
-    private val activity: Activity,
+    private val activity: GameActivity,
     private val keyboardGameView: KeyboardGameView,
     gameDifficulty: GAME_DIFFICULTY
 ) {

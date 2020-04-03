@@ -2,9 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.activities
 
 import android.content.SharedPreferences
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.SoundPool
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
@@ -25,15 +23,10 @@ class GameActivity : AppCompatActivity() {
     private var gameMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
     lateinit var gameDifficulty: GAME_DIFFICULTY
-
+    private var soundVolume : Int = 0
     lateinit var soundPool : SoundPool
     lateinit var sharedPref: SharedPreferences
-    var battleLoop : Int = 0
-    var shotFired : Int = 0
-    var baseExplosion : Int = 0
-    var asteroidExplosion : Int = 0
-    var startLevel : Int = 0
-    var soundVolume : Int = 0
+    private val soundMap: MutableMap<String, Int> = mutableMapOf()
 
     companion object {
         const val PARAM_DIFFICULTY = "GAME_ACTIVITY_PARAM_DIFFICULTY"
@@ -48,29 +41,25 @@ class GameActivity : AppCompatActivity() {
 
         gameDifficulty = GAME_DIFFICULTY.valueOf(intent.getStringExtra(PARAM_DIFFICULTY))
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-            soundPool = SoundPool.Builder()
-                .setMaxStreams(6)
-                .setAudioAttributes(audioAttributes)
-                .build()
-        } else {
-            soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
-        }
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(6)
+            .setAudioAttributes(audioAttributes)
+            .build()
 
-        battleLoop = soundPool.load(this, R.raw.battle_loop, 1)
-        shotFired = soundPool.load(this, R.raw.shot_fired, 1)
-        baseExplosion = soundPool.load(this, R.raw.base_explosion, 1)
-        asteroidExplosion = soundPool.load(this, R.raw.asteroid_explosion, 1)
-        startLevel = soundPool.load(this, R.raw.start_level, 1)
+        soundMap["battleLoop"] = soundPool.load(this, R.raw.battle_loop, 2)
+        soundMap["shotFired"] = soundPool.load(this, R.raw.shot_fired, 1)
+        soundMap["baseExplosion"] = soundPool.load(this, R.raw.base_explosion, 1)
+        soundMap["asteroidExplosion"] = soundPool.load(this, R.raw.asteroid_explosion, 1)
+        soundMap["startLevel"] = soundPool.load(this, R.raw.start_level, 1)
+        soundMap["buttonConfirm"] = soundPool.load(this, R.raw.button_confirm, 1)
+        soundMap["buttonCancel"] = soundPool.load(this, R.raw.button_cancel, 1)
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         soundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 0)
-
-
 
         // Calculate the game screen size
         val displayMetrics = DisplayMetrics()
@@ -99,8 +88,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun showPauseFragment() {
-        soundPool.pause(battleLoop)
-        //if (gameOver) return
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         gameMenuFragment = GameMenuFragment.newInstance(isGameOver = false)
         fragmentTransaction.add(R.id.game_screen_layout, gameMenuFragment!!)
@@ -116,14 +103,11 @@ class GameActivity : AppCompatActivity() {
     // Interactions from the fragment
     // TODO Look at a way to remove activity responsibilty for this
     fun onRetryPressed(view: View) {
-//        soundPool.resume(battleLoop)
-        playSound("startLevel")
-
         supportFragmentManager.popBackStackImmediate()
         for (fragment in supportFragmentManager.fragments){
             supportFragmentManager.beginTransaction().remove(fragment).commit()
         }
-        startLevel
+
         initGame()
     }
 
@@ -132,63 +116,30 @@ class GameActivity : AppCompatActivity() {
         for (fragment in supportFragmentManager.fragments){
             supportFragmentManager.beginTransaction().remove(fragment).commit()
         }
-        soundPool.resume(battleLoop)
         gameScreenPresenter.resumeGame()
     }
 
     fun onExitPressed(view: View) {
         gameOver = true
-        soundPool.stop(battleLoop)
         finish()
     }
 
     fun playSound(s : String){
-        when (s) {
-            "resumeBattleLoop" -> {
-                soundPool.resume(battleLoop)
+        val soundToPlay = soundMap[s]!!
+        val loop = if (s == "battleLoop") -1 else 0
+
+        Thread(Runnable {
+            while (soundPool.play(soundToPlay, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, loop, 1.toFloat()) == 0){
+                //do nothing
             }
-            "battleLoop" -> {
-                Thread(Runnable {
-                    while (soundPool.play(battleLoop, ((soundVolume*.85).toFloat()/100), (soundVolume.toFloat()/100), 0, -1, 1.toFloat()) == 0){
-                        //do nothing
-                    }
-                }).start()
-            }
-            "shotFired" -> {
-                Thread(Runnable {
-                    while (soundPool.play(shotFired, ((soundVolume*.9).toFloat()/100), (soundVolume.toFloat()/100), 0, 0, 1.toFloat()) == 0){
-                        //do nothing
-                    }
-                }).start()
-            }
-            "baseExplosion" -> {
-                Thread(Runnable {
-                    while (soundPool.play(baseExplosion, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 0, 0, 1.toFloat()) == 0){
-                        //do nothing
-                    }
-                }).start()
-            }
-            "asteroidExplosion" -> {
-                Thread(Runnable {
-                    while (soundPool.play(asteroidExplosion, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, 0, 1.toFloat()) == 0){
-                        //do nothing
-                    }
-                }).start()
-            }
-            "startLevel"->{
-                Thread(Runnable {
-                    while (soundPool.play(startLevel, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, 0, 1.toFloat()) == 0){
-                        //do nothing
-                    }
-                }).start()
-            }
-            "pause" -> soundPool.autoPause()
-        }
+        }).start()
     }
+
+    fun pauseSound() = soundPool.autoPause()
+    fun resumeSound() = soundPool.autoResume()
 
     override fun onDestroy() {
         super.onDestroy()
         soundPool.release()
-        soundPool
     }
 }

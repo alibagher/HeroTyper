@@ -36,7 +36,7 @@ class StatsPresenter(
         val activity: StatsActivity,
         val keyboardStatsView: KeyboardStatsView
     ) {
-        private val ANALYSIS_THRESHOLD_COUNT = 1
+        private val ANALYSIS_THRESHOLD_COUNT = 5
         lateinit var keyStats : Map<String, Pair<Int, Int>>
         private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
         private var sharedPref: SharedPreferences =

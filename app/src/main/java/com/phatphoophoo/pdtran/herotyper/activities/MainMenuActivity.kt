@@ -79,9 +79,6 @@ class MainMenuActivity : Activity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
-
-//        loadSound()
-//        playSound()
     }
 
     override fun onResume() {
@@ -129,20 +126,14 @@ class MainMenuActivity : Activity() {
             soundPool!!.release()
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-            soundPool = SoundPool.Builder()
-                .setMaxStreams(6)
-                .setAudioAttributes(audioAttributes)
-                .build()
-        } else {
-            soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
-        }
-
-
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(6)
+            .setAudioAttributes(audioAttributes)
+            .build()
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         soundKeyVolume = sharedPref.getInt(getString(R.string.background_volume_key), 0)
