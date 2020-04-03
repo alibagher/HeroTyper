@@ -52,8 +52,8 @@ class SettingsActivity : AppCompatActivity() {
 
         // Restore previous settings
         background_volume_seekbar.progress =
-            sharedPref.getInt(getString(R.string.background_volume_key), 0)
-        sound_volume_seekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
+            sharedPref.getInt(getString(R.string.background_volume_key), 80)
+        sound_volume_seekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 100)
         keyboard_spinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
 
         save_settings.setOnClickListener {

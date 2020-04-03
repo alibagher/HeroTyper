@@ -151,6 +151,7 @@ class KeyboardGamePresenter(
         var hitMiss = keysMap.get(curLetter)
 
         if (btnText == curLetter) {
+            activity.playSound("buttonConfirm")
             keysMap.put(curLetter, Pair(hitMiss!!.first + 1, hitMiss.second))
             curLetterIndex += 1
             if (curLetterIndex == curWord.length) {
@@ -158,6 +159,7 @@ class KeyboardGamePresenter(
                 hasWordCompleted = true
             }
         } else {
+            activity.playSound("buttonCancel")
             keysMap.put(curLetter, Pair(hitMiss!!.first, hitMiss.second + 1))
         }
 
@@ -186,5 +188,4 @@ class KeyboardGamePresenter(
     fun getKeysHitMissMap(): MutableMap<String, Pair<Int, Int>> {
         return keysMap
     }
-
 }
