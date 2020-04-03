@@ -65,6 +65,12 @@ class GameActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    fun hidePauseFragment(){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.remove(gameMenuFragment as GameMenuFragment)
+        fragmentTransaction.commit()
+    }
+
     // Interactions from the fragment
     // TODO Look at a way to remove activity responsibilty for this
     fun onRetryPressed(view: View) {

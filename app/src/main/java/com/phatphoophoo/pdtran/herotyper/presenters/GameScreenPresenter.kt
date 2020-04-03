@@ -38,6 +38,14 @@ class GameScreenPresenter(
 
     private var gameTimer: GameTimer?
 
+    var gamePaused: Boolean = false
+    set(newVal) {
+        if (newVal) scrollingBg.animator.pause()
+        else scrollingBg.animator.resume()
+        field = newVal
+    }
+
+
     private val gameHandler : Handler = Handler(Looper.getMainLooper())
     private val gameLooper : Runnable = Runnable { gameLoop() }
     private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
@@ -62,15 +70,20 @@ class GameScreenPresenter(
         val id = gameActivity.resources.getIdentifier("pause", "id", gameActivity.packageName)
         val btn = gameActivity.findViewById(id) as Button
         btn.setOnClickListener{
-            gameTimer!!.pauseTimer()
-            gameHandler.removeCallbacks(gameLooper)
-            gameActivity.showPauseFragment()
-            scrollingBg.animator.pause()
+            gamePaused = !gamePaused
+            if (gamePaused){
+                gameTimer!!.pauseTimer()
+                gameHandler.removeCallbacks(gameLooper)
+                gameActivity.showPauseFragment()
+            }
+            else {
+                gameActivity.hidePauseFragment()
+                resumeGame()
+            }
         }
 
-//        set the start for measuring wpm.
+        // set the start for measuring wpm.
         words = 0
-
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -150,13 +163,13 @@ class GameScreenPresenter(
     fun resumeGame(){
         gameTimer!!.resumeTimer()
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
-        scrollingBg.animator.resume()
+        gamePaused = false
     }
 
     fun endGame() {
         val totalTime = gameTimer!!.endTimer()
         this.gameTimer = null
-        scrollingBg.animator.pause()
+        gamePaused = true
 
         //Get Hit/Miss data
         val keysHitMissMap = keyboardGamePresenter.getKeysHitMissMap()
