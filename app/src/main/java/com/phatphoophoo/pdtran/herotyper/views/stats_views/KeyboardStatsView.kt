@@ -73,7 +73,7 @@ class KeyboardStatsView:
     fun setKeyColors(keyColors: Map<String, KeyColor>) {
         for(button in BUTTONS.values()) {
             val btn = findViewById<Button>(button.id)
-            val key = btn.text.toString()
+            val key = btn.text.toString().toLowerCase()
             val keyColor = keyColors[key]
 
             if (keyColor != null) {

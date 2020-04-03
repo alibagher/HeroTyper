@@ -24,7 +24,7 @@ class StatsPresenter(
 
     init {
         //TODO: Load statsmodel and modify views here
-        keyboardStatsPresenter.initWithFakeData()
+        keyboardStatsPresenter.initData()
 
         //Initialize speed stats graph
         val wpmList = StatsService.getWpm()
@@ -37,7 +37,6 @@ class StatsPresenter(
         val keyboardStatsView: KeyboardStatsView
     ) {
         private val ANALYSIS_THRESHOLD_COUNT = 10
-//        lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
         lateinit var keyStats : Map<String, Pair<Int, Int>>
         private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
         private var sharedPref: SharedPreferences =
@@ -80,42 +79,24 @@ class StatsPresenter(
             return res
         }
 
-        fun initWithFakeData() {
-
-            //TODO remove
-            //Generate fake data
-//            fakeKeyStats = generateFakeData()
+        fun initData() {
             keyStats = StatsService.getKeysMap()
 
-            //Initialize using fake data
+            //Initialize using  data
             this.initKeyColors(keyStats)
 
-            //Initialize fake details
-            val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
-            keyboardStatsView.showDetailedKeyStats("a", keyStats["a"]!!, fakeKeyStatus)
+            //Initialize details
+            val KeyStatus = KeyboardStatsView.KeyStatus.GOOD
+            keyboardStatsView.showDetailedKeyStats("a", keyStats["a"]!!, KeyStatus)
 
-        }
-
-        fun generateFakeData(): Map<String, Pair<Int, Int>> {
-            val keyStats = mutableMapOf<String, Pair<Int, Int>>()
-            for (btn in BUTTONS.values()) {
-                val button = activity.findViewById<Button>(btn.id)
-                val key = button.text.toString()
-                val hits = Random.nextInt(0, 100)
-                val misses = Random.nextInt(0, 100)
-
-                keyStats[key] = Pair(hits, misses)
-            }
-            return keyStats
         }
 
         private fun onKeyPress(btn: Button) {
-            //TODO Remove
-            val fakeKeyStatus = getKeyStatus(keyStats[btn.text.toString().toLowerCase()]!!)
+            val KeyStatus = getKeyStatus(keyStats[btn.text.toString().toLowerCase()]!!)
             keyboardStatsView.showDetailedKeyStats(
                 btn.text.toString(),
                 keyStats[btn.text.toString().toLowerCase()]!!,
-                fakeKeyStatus
+                KeyStatus
             )
         }
 
