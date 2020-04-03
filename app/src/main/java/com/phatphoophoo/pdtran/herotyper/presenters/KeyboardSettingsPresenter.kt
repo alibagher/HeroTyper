@@ -30,15 +30,15 @@ class KeyboardSettingsPresenter(
     fun setup(pos: Int) {
         when (kbStyles[pos]) {
             settingsActivity.getString(R.string.keyboard_style_qwerty) -> {
-                keyboardSettingsView.renderKeyboard(qwerty, ::onKeyPress)
+                keyboardSettingsView.renderKeyboard(qwerty)
                 btnIdLetterMap = qwerty as MutableMap<Int, String>
             }
             settingsActivity.getString(R.string.keyboard_style_colemak) -> {
-                keyboardSettingsView.renderKeyboard(colemak, ::onKeyPress)
+                keyboardSettingsView.renderKeyboard(colemak)
                 btnIdLetterMap = colemak as MutableMap<Int, String>
             }
             settingsActivity.getString(R.string.keyboard_style_dvorak) -> {
-                keyboardSettingsView.renderKeyboard(dvorak, ::onKeyPress)
+                keyboardSettingsView.renderKeyboard(dvorak)
                 btnIdLetterMap = dvorak as MutableMap<Int, String>
             }
             settingsActivity.getString(R.string.keyboard_style_custom) -> {
