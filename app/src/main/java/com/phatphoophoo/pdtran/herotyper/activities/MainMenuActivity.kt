@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.SoundPool
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
@@ -37,7 +35,7 @@ class MainMenuActivity : Activity() {
     var soundPool : SoundPool? = null
     lateinit var sharedPref : SharedPreferences
     var menuLoop : Int = 0
-    var soundKeyVolume : Int = 0
+    var backgroundVolume : Int = 0
     var streamID : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,16 +110,16 @@ class MainMenuActivity : Activity() {
         currentLayout.visibility = View.VISIBLE
     }
 
-    fun playSound(){
+    private fun playSound(){
         Thread(Runnable {
-            streamID = soundPool!!.play(menuLoop, (soundKeyVolume.toFloat()/100), (soundKeyVolume.toFloat()/100), 1, -1, 1.toFloat())
+            streamID = soundPool!!.play(menuLoop, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 1, -1, 1.toFloat())
             while (streamID == 0){
-                streamID = soundPool!!.play(menuLoop, (soundKeyVolume.toFloat()/100), (soundKeyVolume.toFloat()/100), 1, -1, 1.toFloat())
+                streamID = soundPool!!.play(menuLoop, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 1, -1, 1.toFloat())
             }
         }).start()
     }
 
-    fun loadSound(){
+    private fun loadSound(){
         if (soundPool != null){
             soundPool!!.release()
         }
@@ -136,7 +134,7 @@ class MainMenuActivity : Activity() {
             .build()
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        soundKeyVolume = sharedPref.getInt(getString(R.string.background_volume_key), 0)
+        backgroundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 80)
         menuLoop = soundPool!!.load(this, R.raw.menu_loop, 1)
     }
 }

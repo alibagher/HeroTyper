@@ -66,8 +66,6 @@ class KeyboardStatsView:
         statusTextView.text = String.format(resources.getString(R.string.keyboard_stats_key_status), keyStatus.value)
         hitsTextView.text = String.format(resources.getString(R.string.keyboard_stats_key_hits), hitMissPair.first)
         missesTextView.text = String.format(resources.getString(R.string.keyboard_stats_key_misses, hitMissPair.second))
-
-
     }
 
     fun setKeyColors(keyColors: Map<String, KeyColor>) {

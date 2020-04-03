@@ -23,6 +23,7 @@ class GameActivity : AppCompatActivity() {
     private var gameMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
     lateinit var gameDifficulty: GAME_DIFFICULTY
+    private var backgroundVolume : Int = 0
     private var soundVolume : Int = 0
     lateinit var soundPool : SoundPool
     lateinit var sharedPref: SharedPreferences
@@ -46,11 +47,11 @@ class GameActivity : AppCompatActivity() {
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build()
         soundPool = SoundPool.Builder()
-            .setMaxStreams(6)
+            .setMaxStreams(20)
             .setAudioAttributes(audioAttributes)
             .build()
 
-        soundMap["battleLoop"] = soundPool.load(this, R.raw.battle_loop, 2)
+        soundMap["battleLoop"] = soundPool.load(this, R.raw.battle_loop, 10)
         soundMap["shotFired"] = soundPool.load(this, R.raw.shot_fired, 1)
         soundMap["baseExplosion"] = soundPool.load(this, R.raw.base_explosion, 1)
         soundMap["asteroidExplosion"] = soundPool.load(this, R.raw.asteroid_explosion, 1)
@@ -59,7 +60,8 @@ class GameActivity : AppCompatActivity() {
         soundMap["buttonCancel"] = soundPool.load(this, R.raw.button_cancel, 1)
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        soundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 0)
+        backgroundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 80)
+        soundVolume = sharedPref.getInt(getString(R.string.sound_volume_key), 100)
 
         // Calculate the game screen size
         val displayMetrics = DisplayMetrics()
@@ -126,13 +128,19 @@ class GameActivity : AppCompatActivity() {
 
     fun playSound(s : String){
         val soundToPlay = soundMap[s]!!
-        val loop = if (s == "battleLoop") -1 else 0
-
-        Thread(Runnable {
-            while (soundPool.play(soundToPlay, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, loop, 1.toFloat()) == 0){
-                //do nothing
-            }
-        }).start()
+        if (s == "battleLoop"){
+            Thread(Runnable {
+                while (soundPool.play(soundToPlay, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 10, -1, 1.toFloat()) == 0){
+                    //do nothing
+                }
+            }).start()
+        }else {
+            Thread(Runnable {
+                while (soundPool.play(soundToPlay, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, 0, 1.toFloat()) == 0){
+                    //do nothing
+                }
+            }).start()
+        }
     }
 
     fun pauseSound() = soundPool.autoPause()
