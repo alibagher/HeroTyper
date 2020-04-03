@@ -37,7 +37,8 @@ class StatsPresenter(
         val keyboardStatsView: KeyboardStatsView
     ) {
         private val ANALYSIS_THRESHOLD_COUNT = 10
-        lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
+//        lateinit var fakeKeyStats: Map<String, Pair<Int, Int>>
+        lateinit var keyStats : Map<String, Pair<Int, Int>>
         private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
         private var sharedPref: SharedPreferences =
             activity.getSharedPreferences(
@@ -83,14 +84,15 @@ class StatsPresenter(
 
             //TODO remove
             //Generate fake data
-            fakeKeyStats = generateFakeData()
+//            fakeKeyStats = generateFakeData()
+            keyStats = StatsService.getKeysMap()
 
             //Initialize using fake data
-            this.initKeyColors(fakeKeyStats)
+            this.initKeyColors(keyStats)
 
             //Initialize fake details
             val fakeKeyStatus = KeyboardStatsView.KeyStatus.GOOD
-            keyboardStatsView.showDetailedKeyStats("A", fakeKeyStats["A"]!!, fakeKeyStatus)
+            keyboardStatsView.showDetailedKeyStats("a", keyStats["a"]!!, fakeKeyStatus)
 
         }
 
@@ -109,10 +111,10 @@ class StatsPresenter(
 
         private fun onKeyPress(btn: Button) {
             //TODO Remove
-            val fakeKeyStatus = getKeyStatus(fakeKeyStats[btn.text.toString()]!!)
+            val fakeKeyStatus = getKeyStatus(keyStats[btn.text.toString().toLowerCase()]!!)
             keyboardStatsView.showDetailedKeyStats(
                 btn.text.toString(),
-                fakeKeyStats[btn.text.toString()]!!,
+                keyStats[btn.text.toString().toLowerCase()]!!,
                 fakeKeyStatus
             )
         }

@@ -26,14 +26,6 @@ class StatsModel(val sp: SharedPreferences?){
         json = sp.getString("keysMap", "[]")
         itemType = object : TypeToken<ArrayList<MutableMap<String, ArrayList<Int>>>>() {}.type
         keysMap = gson.fromJson(json, itemType)
-
-//        if (keysMap.size != 0) {
-//            var a = keysMap[0]["a"]
-//            Log.e(
-//                "read data: ",
-//                currGameIndex.toString() + " " + wpm.toString() + " " + (keysMap).toString() //+ " " + a!![0].toString()
-//            )
-//        }
     }
 
     fun write(){

@@ -53,20 +53,23 @@ object StatsService {
         return statsModel.wpm
     }
 
-    fun getKeysMap() : ArrayList<MutableMap<String, Pair<Int, Int>>>{
+    // will return the map combining all of the games' hti/miss together..
+    fun getKeysMap() : MutableMap<String, Pair<Int, Int>>{
         var arr = statsModel.keysMap
-        var ret : ArrayList<MutableMap<String, Pair<Int, Int>>> = ArrayList()
-
+        var sumMap : MutableMap<String, Pair<Int, Int>> = mutableMapOf()
         if (arr.size != 0) {
+            //set up an empty map
+            for(i in 1..26){
+                sumMap.put((96+i).toChar().toString() ,Pair(0,0))
+            }
+
             for (m in arr) {
-                var a: MutableMap<String, Pair<Int, Int>> = mutableMapOf()
                 for ((k, v) in m) {
-                    a.put(k, Pair(v[0], v[1]))
+                    sumMap.put(k, Pair(sumMap[k]!!.first + v[0], sumMap[k]!!.second + v[1]))
                 }
-                ret.add(a)
             }
         }
-        return ret
+        return sumMap
     }
 
     fun cleanMemory(){
