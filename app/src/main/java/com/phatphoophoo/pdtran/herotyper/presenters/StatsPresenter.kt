@@ -86,8 +86,9 @@ class StatsPresenter(
             this.initKeyColors(keyStats)
 
             //Initialize details
-            val KeyStatus = KeyboardStatsView.KeyStatus.GOOD
-            keyboardStatsView.showDetailedKeyStats("a", keyStats["a"]!!, KeyStatus)
+            val defaultLetter = "a"
+            val keyStatus = getKeyStatus(keyStats[defaultLetter]!!)
+            keyboardStatsView.showDetailedKeyStats(defaultLetter, keyStats[defaultLetter]!!, keyStatus)
 
         }
 
