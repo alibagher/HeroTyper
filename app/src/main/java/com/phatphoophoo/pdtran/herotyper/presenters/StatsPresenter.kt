@@ -87,8 +87,8 @@ class StatsPresenter(
 
             //Initialize details
             val defaultLetter = "a"
-            val KeyStatus = getKeyStatus(keyStats[defaultLetter]!!)
-            keyboardStatsView.showDetailedKeyStats(defaultLetter, keyStats[defaultLetter]!!, KeyStatus)
+            val keyStatus = getKeyStatus(keyStats[defaultLetter]!!)
+            keyboardStatsView.showDetailedKeyStats(defaultLetter, keyStats[defaultLetter]!!, keyStatus)
 
         }
 
