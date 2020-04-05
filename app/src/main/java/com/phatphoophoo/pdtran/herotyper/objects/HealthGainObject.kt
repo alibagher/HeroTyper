@@ -65,13 +65,40 @@ class DestroyedHealthGainObject(
 ): HealthGainObject() {
     override val velocity = 0f
     override val scoreValue = 0
-    override var bitmapResId: Int = R.drawable.explosion_1
+    override var bitmapResId: Int = R.drawable.magic_sprite_1
     override var isDestroyed = true
     override var isRewarded = false
 
-    override fun updateState(): List<HealthGainObject> {
-        //TODO update the animations for this object
-        return emptyList()
+    companion object {
+        val BITMAP_RES_LIST: List<Int> = listOf(
+            R.drawable.magic_sprite_1,
+            R.drawable.magic_sprite_2,
+            R.drawable.magic_sprite_3,
+            R.drawable.magic_sprite_4,
+            R.drawable.magic_sprite_5
+        )
+    }
+
+    val ANIMATION_RATE = 2  // Needed to slow down the animation cycle
+    var curAnimationFrame = 1
+    var curAnimationWait = 0
+
+    // Move through the animation map
+    override fun updateState() : List<HealthGainObject> {
+        if (curAnimationFrame >= BITMAP_RES_LIST.size) return emptyList()
+
+        if (curAnimationWait >= ANIMATION_RATE){
+            curAnimationWait = 0
+
+            // Advance through animation frames
+            bitmapResId = BITMAP_RES_LIST[curAnimationFrame]
+            bitmap = null // Reset cache it so it gets redrawn
+            curAnimationFrame++
+        }
+
+        curAnimationWait++
+
+        return listOf(this)
     }
 }
 
@@ -83,12 +110,39 @@ class RewardHealthGainObject(
 ): HealthGainObject() {
     override val velocity = 0f
     override val scoreValue = 0
-    override var bitmapResId: Int = R.drawable.explosion_4
+    override var bitmapResId: Int = R.drawable.magic_sprite_1
     override var isDestroyed = true
     override var isRewarded = true
 
-    override fun updateState(): List<HealthGainObject> {
-        //TODO update the animations for this object
-        return emptyList()
+    companion object {
+        val BITMAP_RES_LIST: List<Int> = listOf(
+            R.drawable.magic_sprite_1,
+            R.drawable.magic_sprite_2,
+            R.drawable.magic_sprite_3,
+            R.drawable.magic_sprite_4,
+            R.drawable.magic_sprite_5
+        )
+    }
+
+    val ANIMATION_RATE = 2  // Needed to slow down the animation cycle
+    var curAnimationFrame = 1
+    var curAnimationWait = 0
+
+    // Move through the animation map
+    override fun updateState() : List<HealthGainObject> {
+        if (curAnimationFrame >= BITMAP_RES_LIST.size) return emptyList()
+
+        if (curAnimationWait >= ANIMATION_RATE){
+            curAnimationWait = 0
+
+            // Advance through animation frames
+            bitmapResId = BITMAP_RES_LIST[curAnimationFrame]
+            bitmap = null // Reset cache it so it gets redrawn
+            curAnimationFrame++
+        }
+
+        curAnimationWait++
+
+        return listOf(this)
     }
 }
