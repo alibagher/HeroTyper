@@ -82,7 +82,7 @@ val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
 )
 
 class KeyboardGamePresenter(
-    private val activity: GameActivity,
+    private val gameActivity: GameActivity,
     private val keyboardGameView: KeyboardGameView,
     gameDifficulty: GAME_DIFFICULTY
 ) {
@@ -92,10 +92,10 @@ class KeyboardGamePresenter(
     private var curLetterIndex = 0
     private var hasWordCompleted = false
     private val keysMap: MutableMap<String, Pair<Int, Int>> = generateKeysMap()
-    private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
+    private var kbStyles: Array<String> = gameActivity.resources.getStringArray(R.array.keyboard_arrays)
     private var sharedPref: SharedPreferences =
-        activity.getSharedPreferences(
-            activity.packageName + "_preferences",
+        gameActivity.getSharedPreferences(
+            gameActivity.packageName + "_preferences",
             Context.MODE_PRIVATE
         )
 
@@ -107,18 +107,18 @@ class KeyboardGamePresenter(
     }
 
     private fun setup() {
-        val curKbIdx = sharedPref.getInt(activity.getString(R.string.keyboard_style_key), 0)
+        val curKbIdx = sharedPref.getInt(gameActivity.getString(R.string.keyboard_style_key), 0)
         when (kbStyles[curKbIdx]) {
-            activity.getString(R.string.keyboard_style_qwerty) -> {
+            gameActivity.getString(R.string.keyboard_style_qwerty) -> {
                 keyboardGameView.renderKeyboard(qwerty, ::onKeyPress)
             }
-            activity.getString(R.string.keyboard_style_colemak) -> {
+            gameActivity.getString(R.string.keyboard_style_colemak) -> {
                 keyboardGameView.renderKeyboard(colemak, ::onKeyPress)
             }
-            activity.getString(R.string.keyboard_style_dvorak) -> {
+            gameActivity.getString(R.string.keyboard_style_dvorak) -> {
                 keyboardGameView.renderKeyboard(dvorak, ::onKeyPress)
             }
-            activity.getString(R.string.keyboard_style_custom) -> {
+            gameActivity.getString(R.string.keyboard_style_custom) -> {
                 keyboardGameView.renderKeyboard(fetchLayout(), ::onKeyPress, true)
             }
             else -> println("Please add new keyboard style in strings.xml")
@@ -151,7 +151,7 @@ class KeyboardGamePresenter(
         var hitMiss = keysMap.get(curLetter)
 
         if (btnText == curLetter) {
-            activity.playSound("buttonConfirm")
+            gameActivity.soundService.playSound(R.raw.button_confirm)
             keysMap.put(curLetter, Pair(hitMiss!!.first + 1, hitMiss.second))
             curLetterIndex += 1
             if (curLetterIndex == curWord.length) {
@@ -159,7 +159,7 @@ class KeyboardGamePresenter(
                 hasWordCompleted = true
             }
         } else {
-            activity.playSound("buttonCancel")
+            gameActivity.soundService.playSound(R.raw.button_cancel)
             keysMap.put(curLetter, Pair(hitMiss!!.first, hitMiss.second + 1))
         }
 

@@ -21,7 +21,6 @@ import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
 
-
 class GameScreenPresenter(
     private val gameActivity: GameActivity,
     private val gameScreenView: GameScreenView,
@@ -50,10 +49,10 @@ class GameScreenPresenter(
         set(newVal) {
             if (newVal) {
                 scrollingBg.animator.pause()
-                gameActivity.pauseSound()
+                gameActivity.soundService.pauseSound()
             } else {
                 scrollingBg.animator.resume()
-                gameActivity.resumeSound()
+                gameActivity.soundService.resumeSound()
             }
             field = newVal
         }
@@ -105,7 +104,7 @@ class GameScreenPresenter(
                 for (enemy in gameModel.enemies) {
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
-                    gameActivity.playSound("asteroidExplosion")
+                    gameActivity.soundService.playSound(R.raw.asteroid_explosion)
                 }
                 gameModel.numMissiles -= 1
             }
@@ -117,8 +116,9 @@ class GameScreenPresenter(
 
         // set the start for measuring wpm.
         words = 0
-        // resume at the start game, in case it was paused due to a retry.
-        gameActivity.resumeSound()
+
+        gameActivity.soundService.stopSound(R.raw.battle_loop) // Stop potential layering of bgm
+        gameActivity.soundService.playBackgroundMusic(R.raw.battle_loop)
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -145,7 +145,7 @@ class GameScreenPresenter(
             // add to the number of words typed.
             words += 1
 
-            gameActivity.playSound("shotFired")
+            gameActivity.soundService.playSound(R.raw.shot_fired)
         } else {
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
         }
@@ -157,7 +157,7 @@ class GameScreenPresenter(
 
         // play sound for the number of enemies hit the base.
         if (livesLost > 0) {
-            gameActivity.playSound("baseExplosion")
+            gameActivity.soundService.playSound(R.raw.base_explosion)
         }
 
         //TODO add sound for gaining a life
@@ -195,7 +195,7 @@ class GameScreenPresenter(
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
                     bullet.isDestroyed = true
-                    gameActivity.playSound("asteroidExplosion")
+                    gameActivity.soundService.playSound(R.raw.asteroid_explosion)
                     // Generate a random power-up
                     // see PowerupService for probability of each power-up
                     val powerupPos = Pair(enemy.position.first, enemy.position.second)

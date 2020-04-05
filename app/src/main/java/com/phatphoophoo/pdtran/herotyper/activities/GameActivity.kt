@@ -1,10 +1,6 @@
 package com.phatphoophoo.pdtran.herotyper.activities
 
-import android.content.SharedPreferences
-import android.media.AudioAttributes
-import android.media.SoundPool
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.DisplayMetrics
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +10,8 @@ import com.phatphoophoo.pdtran.herotyper.fragments.GameMenuFragment
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.presenters.GameScreenPresenter
 import com.phatphoophoo.pdtran.herotyper.presenters.KeyboardGamePresenter
+import com.phatphoophoo.pdtran.herotyper.services.SoundService
 import kotlinx.android.synthetic.main.activity_game.*
-
 
 class GameActivity : AppCompatActivity() {
     lateinit var keyboardGamePresenter: KeyboardGamePresenter
@@ -23,11 +19,8 @@ class GameActivity : AppCompatActivity() {
     private var gameMenuFragment: Fragment? = null
     lateinit var screenSize: Pair<Float,Float>
     lateinit var gameDifficulty: GAME_DIFFICULTY
-    private var backgroundVolume : Int = 0
-    private var soundVolume : Int = 0
-    lateinit var soundPool : SoundPool
-    lateinit var sharedPref: SharedPreferences
-    private val soundMap: MutableMap<String, Int> = mutableMapOf()
+
+    lateinit var soundService : SoundService
 
     companion object {
         const val PARAM_DIFFICULTY = "GAME_ACTIVITY_PARAM_DIFFICULTY"
@@ -42,26 +35,7 @@ class GameActivity : AppCompatActivity() {
 
         gameDifficulty = GAME_DIFFICULTY.valueOf(intent.getStringExtra(PARAM_DIFFICULTY))
 
-        val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_GAME)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        soundPool = SoundPool.Builder()
-            .setMaxStreams(20)
-            .setAudioAttributes(audioAttributes)
-            .build()
-
-        soundMap["battleLoop"] = soundPool.load(this, R.raw.battle_loop, 10)
-        soundMap["shotFired"] = soundPool.load(this, R.raw.shot_fired, 1)
-        soundMap["baseExplosion"] = soundPool.load(this, R.raw.base_explosion, 1)
-        soundMap["asteroidExplosion"] = soundPool.load(this, R.raw.asteroid_explosion, 1)
-        soundMap["startLevel"] = soundPool.load(this, R.raw.start_level, 1)
-        soundMap["buttonConfirm"] = soundPool.load(this, R.raw.button_confirm, 1)
-        soundMap["buttonCancel"] = soundPool.load(this, R.raw.button_cancel, 1)
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        backgroundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 80)
-        soundVolume = sharedPref.getInt(getString(R.string.sound_volume_key), 100)
+        soundService = SoundService(applicationContext)
 
         // Calculate the game screen size
         val displayMetrics = DisplayMetrics()
@@ -70,8 +44,6 @@ class GameActivity : AppCompatActivity() {
         val height = (displayMetrics.heightPixels - 200*scale)
         val width = (displayMetrics.widthPixels).toFloat()
         screenSize = Pair(width, height)
-
-        playSound("battleLoop")
 
         initGame()
     }
@@ -124,30 +96,5 @@ class GameActivity : AppCompatActivity() {
     fun onExitPressed(view: View) {
         gameOver = true
         finish()
-    }
-
-    fun playSound(s : String){
-        val soundToPlay = soundMap[s]!!
-        if (s == "battleLoop"){
-            Thread(Runnable {
-                while (soundPool.play(soundToPlay, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 10, -1, 1.toFloat()) == 0){
-                    //do nothing
-                }
-            }).start()
-        }else {
-            Thread(Runnable {
-                while (soundPool.play(soundToPlay, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, 0, 1.toFloat()) == 0){
-                    //do nothing
-                }
-            }).start()
-        }
-    }
-
-    fun pauseSound() = soundPool.autoPause()
-    fun resumeSound() = soundPool.autoResume()
-
-    override fun onDestroy() {
-        super.onDestroy()
-        soundPool.release()
     }
 }

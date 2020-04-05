@@ -7,14 +7,14 @@ import android.os.DeadObjectException
 import android.os.Handler
 import com.phatphoophoo.pdtran.herotyper.R
 
-class SoundManager(context: Context) {
+class SoundService(context: Context) {
     private var backgroundVolume : Int = 60
     private var soundVolume : Int = 100
     private var globalSoundVolume : Float = 1f // TODO Pull from device, utilize in calculations
 
     private val retryDelay : Long = 5 // in MS
 
-    var soundPool : SoundPool
+    private var soundPool : SoundPool
     private val soundMap: MutableMap<Int, Int> = mutableMapOf()
     private val handler: Handler = Handler()
 
@@ -29,6 +29,7 @@ class SoundManager(context: Context) {
             .build()
 
         soundMap[R.raw.battle_loop] = soundPool.load(context, R.raw.battle_loop, 10)
+        soundMap[R.raw.menu_loop] = soundPool.load(context, R.raw.menu_loop, 10)
         soundMap[R.raw.shot_fired] = soundPool.load(context, R.raw.shot_fired, 1)
         soundMap[R.raw.base_explosion] = soundPool.load(context, R.raw.base_explosion, 1)
         soundMap[R.raw.asteroid_explosion] = soundPool.load(context, R.raw.asteroid_explosion, 1)
@@ -44,8 +45,7 @@ class SoundManager(context: Context) {
 
     fun playBackgroundMusic(resourceId : Int){
         val soundToPlay = soundMap[resourceId]!!
-        var retry = false
-        retry = try {
+        var retry = try {
             soundPool.play(soundToPlay, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 10, -1, 1.toFloat()) == 0
         } catch(e: DeadObjectException){
             true
@@ -56,8 +56,7 @@ class SoundManager(context: Context) {
 
     fun playSound(resourceId : Int){
         val soundToPlay = soundMap[resourceId]!!
-        var retry = false
-        retry = try {
+        var retry = try {
             soundPool.play(soundToPlay, (soundVolume.toFloat()/100), (soundVolume.toFloat()/100), 1, 0, 1.toFloat()) == 0
         } catch(e: DeadObjectException){
             true
@@ -68,4 +67,5 @@ class SoundManager(context: Context) {
 
     fun pauseSound() = soundPool.autoPause()
     fun resumeSound() = soundPool.autoResume()
+    fun stopSound(resourceId: Int) = soundPool.stop(resourceId)
 }

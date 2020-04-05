@@ -10,10 +10,9 @@ import android.preference.PreferenceManager
 import android.view.View
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
+import com.phatphoophoo.pdtran.herotyper.services.SoundService
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import kotlinx.android.synthetic.main.activity_main_menu.*
-//import sun.jvm.hotspot.utilities.IntArray
-
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -32,16 +31,16 @@ class MainMenuActivity : Activity() {
 
     var currentState: MENU_STATE = MENU_STATE.MAIN
 
-    var soundPool : SoundPool? = null
+    lateinit var soundService: SoundService
     lateinit var sharedPref : SharedPreferences
-    var menuLoop : Int = 0
-    var backgroundVolume : Int = 0
-    var streamID : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
         StatsService.initService(this)
+
+        soundService = SoundService(applicationContext)
+        soundService.playBackgroundMusic(R.raw.menu_loop)
 
         // Setup button behavior
         start_game_button.setOnClickListener {
@@ -49,17 +48,14 @@ class MainMenuActivity : Activity() {
         }
 
         easy_button.setOnClickListener{
-            soundPool!!.stop(streamID)
             startGame(GAME_DIFFICULTY.EASY)
         }
 
         medium_button.setOnClickListener{
-            soundPool!!.stop(streamID)
             startGame(GAME_DIFFICULTY.MEDIUM)
         }
 
         hard_button.setOnClickListener{
-            soundPool!!.stop(streamID)
             startGame(GAME_DIFFICULTY.HARD)
         }
 
@@ -73,22 +69,23 @@ class MainMenuActivity : Activity() {
         }
 
         settings_button.setOnClickListener {
-            soundPool!!.release()
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        soundService.pauseSound()
+    }
+
     override fun onResume() {
         super.onResume()
-        loadSound()
-        playSound()
         setMenuState(MENU_STATE.MAIN)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        soundPool!!.release()
         overridePendingTransition(0, 0)
     }
 
@@ -108,33 +105,5 @@ class MainMenuActivity : Activity() {
 
         val currentLayout = findViewById<View>(MENU_LAYOUT_MAP.getValue(currentState))
         currentLayout.visibility = View.VISIBLE
-    }
-
-    private fun playSound(){
-        Thread(Runnable {
-            streamID = soundPool!!.play(menuLoop, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 1, -1, 1.toFloat())
-            while (streamID == 0){
-                streamID = soundPool!!.play(menuLoop, (backgroundVolume.toFloat()/100), (backgroundVolume.toFloat()/100), 1, -1, 1.toFloat())
-            }
-        }).start()
-    }
-
-    private fun loadSound(){
-        if (soundPool != null){
-            soundPool!!.release()
-        }
-
-        val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        soundPool = SoundPool.Builder()
-            .setMaxStreams(6)
-            .setAudioAttributes(audioAttributes)
-            .build()
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        backgroundVolume = sharedPref.getInt(getString(R.string.background_volume_key), 80)
-        menuLoop = soundPool!!.load(this, R.raw.menu_loop, 1)
     }
 }

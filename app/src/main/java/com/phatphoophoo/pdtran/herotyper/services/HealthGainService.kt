@@ -44,8 +44,5 @@ class HealthGainService(
         } else {
             emptyList()
         }
-
     }
-
-
 }
