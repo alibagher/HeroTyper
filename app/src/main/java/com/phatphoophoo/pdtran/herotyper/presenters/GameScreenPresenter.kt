@@ -9,6 +9,7 @@ import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
+import com.phatphoophoo.pdtran.herotyper.objects.GameObject
 import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
@@ -126,12 +127,15 @@ class GameScreenPresenter(
 
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
-        val livesLeft = gameModel.lives - livesLost
+        val livesGained = handleHealthGainObjectHit(gameModel)
+        val livesLeft = gameModel.lives - livesLost + livesGained
 
         // play sound for the number of enemies hit the base.
         if (livesLost > 0){
             gameActivity.playSound("baseExplosion")
         }
+
+        //TODO add sound for gaining a life
 
         gameModel.lives = livesLeft
 
@@ -159,13 +163,7 @@ class GameScreenPresenter(
             var curIndex = 0
 
             for(enemy in newEnemyList) {
-                collided =
-                    // X collision
-                    (bullet.position.first <= enemy.position.first + enemy.width &&
-                            bullet.position.first + bullet.width >= enemy.position.first) &&
-                    // Y collision
-                    (bullet.position.second <= enemy.position.second + enemy.height &&
-                            bullet.position.second >= enemy.position.second)
+                collided = checkCollision(bullet, enemy)
 
                 if (collided) {
                     gameModel.score += enemy.scoreValue
@@ -177,6 +175,40 @@ class GameScreenPresenter(
                 curIndex++
             }
         }
+    }
+
+    //Returns lives gained
+    private fun handleHealthGainObjectHit(gameModel: GameScreenModel): Int {
+        val liveHealthGainObjects = gameModel.healthGainObjects.filter { healthGainObject -> !healthGainObject.isDestroyed && !healthGainObject.isRewarded }
+
+        var rewardCount = 0
+        liveHealthGainObjects.forEach{ healthGainObject ->
+            val liveBullets = gameModel.bullets.filter { bullet -> !bullet.isDestroyed }
+            val collidedWithBullet = liveBullets.foldRight(false) { bullet, alreadyCollided ->
+                val collided = checkCollision(bullet, healthGainObject)
+                bullet.isDestroyed = collided
+                alreadyCollided ||  collided
+            }
+            healthGainObject.isRewarded = collidedWithBullet
+
+            if(healthGainObject.isRewarded)
+                rewardCount += 1
+        }
+
+        return rewardCount
+
+    }
+
+    private fun checkCollision(obj1: GameObject, obj2: GameObject): Boolean {
+        val collided =
+                // X collision
+                (obj1.position.first <= obj2.position.first + obj2.width &&
+                    obj1.position.first + obj1.width >= obj2.position.first) &&
+                // Y collision
+                (obj1.position.second <= obj2.position.second + obj2.height &&
+                    obj1.position.second >= obj2.position.second)
+
+        return collided
     }
 
     fun resumeGame(){

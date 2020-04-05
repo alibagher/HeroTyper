@@ -1,13 +1,14 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.objects.BasicHealthGainObject
+import com.phatphoophoo.pdtran.herotyper.objects.BulletObject
 import com.phatphoophoo.pdtran.herotyper.objects.HealthGainObject
 
 class HealthGainService(
     val windowSize: Pair<Float,Float>
 ) {
     //TODO: Place random object within window
-    val SPAWN_OFFSET : Float = 200f // To make sure no objects are offscreen
+    private val SPAWN_OFFSET : Float = 200f // To make sure no objects are offscreen
 
     private var currentTicker: Int = 0
     private var nextSpawnTicker: Int? = null
@@ -20,9 +21,13 @@ class HealthGainService(
     fun updateHealthGainObjects(healthGainObjects: List<HealthGainObject>): List<HealthGainObject> {
         currentTicker += 1
 
-        //If an object is present, finish its lifecycle
+        //If an object is present, continue its lifecycle
         if(healthGainObjects.isNotEmpty()) {
             return healthGainObjects.flatMap{ healthGainObject ->
+                if(!healthGainObject.isDestroyed && !healthGainObject.isRewarded) {
+                    val collidedWithWall = (healthGainObject.position.second + healthGainObject.height) >= windowSize.second
+                    healthGainObject.isDestroyed = collidedWithWall
+                }
                 healthGainObject.updateState()
             }
         }
@@ -40,7 +45,6 @@ class HealthGainService(
         }
 
     }
-
 
 
 }
