@@ -7,7 +7,7 @@ import com.phatphoophoo.pdtran.herotyper.objects.HealthGainObject
 class HealthGainService(
     val windowSize: Pair<Float,Float>
 ) {
-    //TODO: Place random object within window
+
     private val SPAWN_OFFSET : Float = 200f // To make sure no objects are offscreen
 
     private var currentTicker: Int = 0

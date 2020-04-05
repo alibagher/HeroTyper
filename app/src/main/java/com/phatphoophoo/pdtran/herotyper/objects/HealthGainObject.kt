@@ -1,6 +1,7 @@
 package com.phatphoophoo.pdtran.herotyper.objects
 
 import com.phatphoophoo.pdtran.herotyper.R
+import kotlin.random.Random
 
 abstract class HealthGainObject: GameObject() {
     abstract val scoreValue: Int
@@ -35,12 +36,16 @@ class BasicHealthGainObject(
     xPos: Float, yPos: Float
 ): HealthGainObject() {
     override val velocity = 4.1f
-    override var bitmapResId: Int = R.drawable.ufo_green
-    override var height: Float = (100).toFloat()
-    override var width: Float = this.height
+    override var bitmapResId: Int = BITMAP_RES_LIST[0]
+    override var height: Float = 100F
+    override var width: Float = 130F
     override var position: Pair<Float, Float> = Pair(xPos, yPos)
     override val scoreValue = 0
     override var isRewarded: Boolean = false
+
+    init {
+        bitmapResId = BITMAP_RES_LIST[Random.nextInt(0, BITMAP_RES_LIST.size)]
+    }
 
     companion object {
         val BITMAP_RES_LIST: List<Int> = listOf(
