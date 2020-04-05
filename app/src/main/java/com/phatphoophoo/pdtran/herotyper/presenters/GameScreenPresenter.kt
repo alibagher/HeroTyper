@@ -40,8 +40,14 @@ class GameScreenPresenter(
 
     var gamePaused: Boolean = false
     set(newVal) {
-        if (newVal) scrollingBg.animator.pause()
-        else scrollingBg.animator.resume()
+        if (newVal) {
+            scrollingBg.animator.pause()
+            gameActivity.pauseSound()
+        }
+        else {
+            scrollingBg.animator.resume()
+            gameActivity.resumeSound()
+        }
         field = newVal
     }
 
@@ -84,6 +90,8 @@ class GameScreenPresenter(
 
         // set the start for measuring wpm.
         words = 0
+        // resume at the start game, in case it was paused due to a retry.
+        gameActivity.resumeSound()
     }
 
     // Where the Game tells various helper classes to update the state of the game,
@@ -107,6 +115,7 @@ class GameScreenPresenter(
             // add to the number of words typed.
             words += 1
 
+            gameActivity.playSound("shotFired")
         } else {
             gameModel.bullets = bulletService.updateBullets(gameModel.bullets)
         }
@@ -114,6 +123,11 @@ class GameScreenPresenter(
         // Check for barrier collisions
         val livesLost = enemyService.popHitStack()
         val livesLeft = gameModel.lives - livesLost
+
+        // play sound for the number of enemies hit the base.
+        if (livesLost > 0){
+            gameActivity.playSound("baseExplosion")
+        }
 
         gameModel.lives = livesLeft
 
@@ -153,6 +167,7 @@ class GameScreenPresenter(
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
                     bullet.isDestroyed = true
+                    gameActivity.playSound("asteroidExplosion")
                     break
                 }
                 curIndex++
@@ -221,6 +236,5 @@ class GameScreenPresenter(
 
             return currTimeSoFar
         }
-
     }
 }

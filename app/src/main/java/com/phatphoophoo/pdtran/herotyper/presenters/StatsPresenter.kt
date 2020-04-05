@@ -36,7 +36,7 @@ class StatsPresenter(
         val activity: StatsActivity,
         val keyboardStatsView: KeyboardStatsView
     ) {
-        private val ANALYSIS_THRESHOLD_COUNT = 10
+        private val ANALYSIS_THRESHOLD_COUNT = 5
         lateinit var keyStats : Map<String, Pair<Int, Int>>
         private var kbStyles: Array<String> = activity.resources.getStringArray(R.array.keyboard_arrays)
         private var sharedPref: SharedPreferences =
@@ -86,8 +86,9 @@ class StatsPresenter(
             this.initKeyColors(keyStats)
 
             //Initialize details
-            val KeyStatus = KeyboardStatsView.KeyStatus.GOOD
-            keyboardStatsView.showDetailedKeyStats("a", keyStats["a"]!!, KeyStatus)
+            val defaultLetter = "a"
+            val keyStatus = getKeyStatus(keyStats[defaultLetter]!!)
+            keyboardStatsView.showDetailedKeyStats(defaultLetter, keyStats[defaultLetter]!!, keyStatus)
 
         }
 
@@ -122,18 +123,17 @@ class StatsPresenter(
         private fun getKeyStatus(keyHitMissPair: Pair<Int, Int>): KeyboardStatsView.KeyStatus {
             val total = keyHitMissPair.first + keyHitMissPair.second
             val ratio =
-                if (keyHitMissPair.second > 0) {
-                    (keyHitMissPair.first / keyHitMissPair.second)
-                } else 0
+                when {
+                    keyHitMissPair.second > 0 -> keyHitMissPair.first / keyHitMissPair.second
+                    keyHitMissPair.first > 0 -> 11
+                    else -> 0
+                }
 
-            if (total < ANALYSIS_THRESHOLD_COUNT) {
-                return KeyboardStatsView.KeyStatus.UNKNOWN
-            } else if (ratio > 2) {
-                return KeyboardStatsView.KeyStatus.GOOD
-            } else if (ratio > 1) {
-                return KeyboardStatsView.KeyStatus.WARN
-            } else {
-                return KeyboardStatsView.KeyStatus.BAD
+            return when {
+                total < ANALYSIS_THRESHOLD_COUNT -> KeyboardStatsView.KeyStatus.UNKNOWN
+                ratio > 10 -> KeyboardStatsView.KeyStatus.GOOD
+                ratio > 8 -> KeyboardStatsView.KeyStatus.WARN
+                else -> KeyboardStatsView.KeyStatus.BAD
             }
         }
     }

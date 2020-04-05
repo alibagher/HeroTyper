@@ -15,7 +15,7 @@ object StatsService {
         this.sp = mainMenuActivity?.getPreferences(Context.MODE_PRIVATE)
         this.statsModel = StatsModel(sp)
 
-        // read the data right at the beginning. !!
+        // read the data right at the beginning
         statsModel = StatsModel(sp)
 
         statsModel.read()
@@ -57,16 +57,15 @@ object StatsService {
     fun getKeysMap() : MutableMap<String, Pair<Int, Int>>{
         var arr = statsModel.keysMap
         var sumMap : MutableMap<String, Pair<Int, Int>> = mutableMapOf()
-        if (arr.size != 0) {
-            //set up an empty map
-            for(i in 1..26){
-                sumMap.put((96+i).toChar().toString() ,Pair(0,0))
-            }
 
-            for (m in arr) {
-                for ((k, v) in m) {
-                    sumMap.put(k, Pair(sumMap[k]!!.first + v[0], sumMap[k]!!.second + v[1]))
-                }
+        //set up an empty map
+        for(i in 1..26){
+            sumMap.put((96+i).toChar().toString() ,Pair(0,0))
+        }
+
+        for (m in arr) {
+            for ((k, v) in m) {
+                sumMap.put(k, Pair(sumMap[k]!!.first + v[0], sumMap[k]!!.second + v[1]))
             }
         }
         return sumMap

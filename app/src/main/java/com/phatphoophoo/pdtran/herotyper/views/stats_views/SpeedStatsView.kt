@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter
 import lecho.lib.hellocharts.model.Axis
 import lecho.lib.hellocharts.model.Line
 import lecho.lib.hellocharts.model.LineChartData
@@ -22,13 +23,16 @@ class SpeedStatsView: LinearLayout {
     private val data: LineChartData = LineChartData()
 
     init {
-
         inflate(context, R.layout.speed_stats_layout, this)
 
         val axisX = Axis()
         val axisY = Axis().setHasLines(true)
         axisX.name = "Game Number"
         axisY.name = "Average WPM"
+
+        val xFormater = SimpleAxisValueFormatter()
+        xFormater.decimalDigitsNumber = 0
+        axisX.formatter = xFormater
 
         data.axisXBottom = axisX
         data.axisYLeft = axisY
