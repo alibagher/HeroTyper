@@ -16,6 +16,7 @@ class GameScreenView : View {
     private var playerObject : PlayerObject = PlayerObject(Pair(0f,0f))
     private var enemies : List<EnemyObject> = emptyList()
     private var bullets : List<BulletObject> = emptyList()
+    private var healthGainObjects: List<HealthGainObject> = emptyList()
 
     private var score: Int = 0
     private val scoreText = "Score: "
@@ -45,13 +46,14 @@ class GameScreenView : View {
         )
 
         bitmapList.addAll(0, DestroyedEnemy.BITMAP_RES_LIST)
-
+        bitmapList.addAll(BasicHealthGainObject.BITMAP_RES_LIST)
         cachedBitmaps = bitmapList.associateBy({it}, {BitmapFactory.decodeResource(resources, it)})
     }
 
     fun setModel(model: GameScreenModel) {
         enemies = model.enemies.toMutableList()
         bullets = model.bullets.toMutableList()
+        healthGainObjects = model.healthGainObjects.toMutableList()
         playerObject = model.playerObject
         score = model.score
         lives = model.lives
@@ -65,6 +67,7 @@ class GameScreenView : View {
 
         bullets.forEach { c?.drawGameObject(it) }
         enemies.forEach { c?.drawGameObject(it) }
+        healthGainObjects.forEach{ c?.drawGameObject(it)}
         c?.drawGameObject(playerObject)
 
         c?.drawText("$scoreText$score", 50f, 75f, textPaint)

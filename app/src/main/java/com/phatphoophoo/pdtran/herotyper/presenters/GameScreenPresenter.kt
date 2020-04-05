@@ -12,6 +12,7 @@ import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
+import com.phatphoophoo.pdtran.herotyper.services.HealthGainService
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
@@ -34,6 +35,7 @@ class GameScreenPresenter(
     private var gameModel : GameScreenModel = GameScreenModel()
     private val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     private val bulletService: BulletService = BulletService()
+    private val healthGainService: HealthGainService = HealthGainService(windowSize)
     private var words : Int = 0
 
     private var gameTimer: GameTimer?
@@ -102,6 +104,8 @@ class GameScreenPresenter(
         gameModel.playerObject.position = Pair(lastXPos, gameModel.playerObject.position.second)
 
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
+
+        gameModel.healthGainObjects = healthGainService.updateHealthGainObjects(gameModel.healthGainObjects)
 
         // Check for completed words to fire bullets
         if(keyboardGamePresenter.hasWordCompleted()) {
