@@ -5,14 +5,13 @@ import android.content.SharedPreferences
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.StatsActivity
-import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
-import com.phatphoophoo.pdtran.herotyper.models.colemak
-import com.phatphoophoo.pdtran.herotyper.models.dvorak
-import com.phatphoophoo.pdtran.herotyper.models.qwerty
+import com.phatphoophoo.pdtran.herotyper.consts.BUTTONS
+import com.phatphoophoo.pdtran.herotyper.consts.colemak
+import com.phatphoophoo.pdtran.herotyper.consts.dvorak
+import com.phatphoophoo.pdtran.herotyper.consts.qwerty
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.KeyboardStatsView
 import com.phatphoophoo.pdtran.herotyper.views.stats_views.SpeedStatsView
-import kotlin.random.Random
 
 class StatsPresenter(
     activity: StatsActivity,

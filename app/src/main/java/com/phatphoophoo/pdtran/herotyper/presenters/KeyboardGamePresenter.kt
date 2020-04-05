@@ -1,16 +1,16 @@
 package com.phatphoophoo.pdtran.herotyper.presenters
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
+import com.phatphoophoo.pdtran.herotyper.consts.BUTTONS
+import com.phatphoophoo.pdtran.herotyper.consts.colemak
+import com.phatphoophoo.pdtran.herotyper.consts.dvorak
+import com.phatphoophoo.pdtran.herotyper.consts.qwerty
 import com.phatphoophoo.pdtran.herotyper.models.*
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
-import kotlin.contracts.contract
 
 val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
     GAME_DIFFICULTY.EASY to listOf(

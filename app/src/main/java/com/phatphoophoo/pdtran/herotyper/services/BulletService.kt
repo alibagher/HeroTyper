@@ -3,7 +3,7 @@ import com.phatphoophoo.pdtran.herotyper.objects.BulletObject
 import com.phatphoophoo.pdtran.herotyper.objects.BasicBullet
 
 class BulletService {
-    private val bulletVelocity = 9.2f
+    private val bulletVelocity = 10.5f
 
     fun updateBullets(bullets: List<BulletObject>) : List<BulletObject> {
         // Loop over existing bullets and update their position

@@ -5,6 +5,8 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
@@ -12,54 +14,58 @@ import com.phatphoophoo.pdtran.herotyper.models.GameScreenModel
 import com.phatphoophoo.pdtran.herotyper.objects.PlayerObject
 import com.phatphoophoo.pdtran.herotyper.services.BulletService
 import com.phatphoophoo.pdtran.herotyper.services.EnemyService
+import com.phatphoophoo.pdtran.herotyper.services.PowerupService
 import com.phatphoophoo.pdtran.herotyper.services.StatsService
 import com.phatphoophoo.pdtran.herotyper.views.GameScreenView
 import com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView
-import java.lang.Error
 
 
 class GameScreenPresenter(
     private val gameActivity: GameActivity,
     private val gameScreenView: GameScreenView,
     private val keyboardGamePresenter: KeyboardGamePresenter,
-    private val windowSize: Pair<Float,Float>,
+    private val windowSize: Pair<Float, Float>,
     difficulty: GAME_DIFFICULTY
 ) {
     companion object {
         // Const values
-        const val REFRESH_RATE : Long = 50 // In MS
+        const val REFRESH_RATE: Long = 50 // In MS
     }
 
-    private var lastXPos: Float = windowSize.first/2
-    private var gameModel : GameScreenModel = GameScreenModel()
+    private var lastXPos: Float = windowSize.first / 2
+    private var gameModel: GameScreenModel = GameScreenModel()
     private val enemyService: EnemyService = EnemyService(difficulty, windowSize)
     private val bulletService: BulletService = BulletService()
-    private var words : Int = 0
+    private val powerupService: PowerupService = PowerupService()
 
+    private var missile: Button
+    private var missile_txt: TextView
+    private var words: Int = 0
     private var gameTimer: GameTimer?
 
     var gamePaused: Boolean = false
-    set(newVal) {
-        if (newVal) {
-            scrollingBg.animator.pause()
-            gameActivity.pauseSound()
+        set(newVal) {
+            if (newVal) {
+                scrollingBg.animator.pause()
+                gameActivity.pauseSound()
+            } else {
+                scrollingBg.animator.resume()
+                gameActivity.resumeSound()
+            }
+            field = newVal
         }
-        else {
-            scrollingBg.animator.resume()
-            gameActivity.resumeSound()
-        }
-        field = newVal
-    }
 
-
-    private val gameHandler : Handler = Handler(Looper.getMainLooper())
-    private val gameLooper : Runnable = Runnable { gameLoop() }
-    private val scrollingBg : ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
+    private val keyboardTxtView: TextView
+    private val keyboardView: LinearLayout
+    private val gameHandler: Handler = Handler(Looper.getMainLooper())
+    private val gameLooper: Runnable = Runnable { gameLoop() }
+    private val scrollingBg: ScrollingBGView = gameActivity.findViewById(R.id.scrolling_content)
 
     init {
         scrollingBg.animator.start()
-        gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 200))
-
+        gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 274))
+        keyboardTxtView = gameActivity.findViewById(R.id.curWordTextView) as TextView
+        keyboardView = gameActivity.findViewById(R.id.custom_keyboard_keys_large) as LinearLayout
         //Initialize game
         gameHandler.post(gameLooper)
 
@@ -73,18 +79,36 @@ class GameScreenPresenter(
         }
 
         // pause button event listener
-        val id = gameActivity.resources.getIdentifier("pause", "id", gameActivity.packageName)
-        val btn = gameActivity.findViewById(id) as Button
-        btn.setOnClickListener{
+        val btn = gameActivity.findViewById(R.id.pause) as Button
+        btn.setOnClickListener {
             gamePaused = !gamePaused
-            if (gamePaused){
+            if (gamePaused) {
                 gameTimer!!.pauseTimer()
                 gameHandler.removeCallbacks(gameLooper)
                 gameActivity.showPauseFragment()
-            }
-            else {
+            } else {
                 gameActivity.hidePauseFragment()
                 resumeGame()
+            }
+        }
+
+        // set up missiles count display + event listener
+        missile = gameActivity.findViewById(R.id.missile)
+        missile_txt = gameActivity.findViewById(R.id.num_missiles)
+        missile_txt.text = "x ${gameModel.numMissiles}"
+        missile.setOnClickListener {
+            if (gameModel.numMissiles > 0) {
+                // Clear screen
+                for (enemy in gameModel.enemies) {
+                    gameModel.score += enemy.scoreValue
+                    enemy.isDestroyed = true
+                    gameActivity.playSound("asteroidExplosion")
+                }
+                gameModel.numMissiles -= 1
+            }
+            missile_txt.text = "x ${gameModel.numMissiles}"
+            if (gameModel.numMissiles == 0) {
+                missile.background = gameActivity.resources.getDrawable(R.drawable.grayscale_rocket)
             }
         }
 
@@ -99,14 +123,16 @@ class GameScreenPresenter(
     // type in question
     private fun gameLoop() {
         // Update the state of the game objects
-        gameModel.playerObject.position = Pair(lastXPos, gameModel.playerObject.position.second)
+        gameModel.playerObject.position = Pair(lastXPos, windowSize.second - 274)
 
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 
+        gameModel.powerups = powerupService.updatePowerup(gameModel.powerups, null)
+
         // Check for completed words to fire bullets
-        if(keyboardGamePresenter.hasWordCompleted()) {
+        if (keyboardGamePresenter.hasWordCompleted()) {
             val bulletPos = Pair(
-                gameModel.playerObject.position.first + 50,
+                gameModel.playerObject.position.first + 75, // TODO: Remove hardcoded value
                 gameModel.playerObject.position.second
             )
 
@@ -125,7 +151,7 @@ class GameScreenPresenter(
         val livesLeft = gameModel.lives - livesLost
 
         // play sound for the number of enemies hit the base.
-        if (livesLost > 0){
+        if (livesLost > 0) {
             gameActivity.playSound("baseExplosion")
         }
 
@@ -134,13 +160,15 @@ class GameScreenPresenter(
         // Check for bullet-enemy collisions
         handleEnemyHit(gameModel)
 
+        // Check for powerup-user collisions
+        handlePowerupHit(gameModel)
+
         // Update the view
         gameScreenView.setModel(gameModel)
 
-        if (livesLeft <= 0){
+        if (livesLeft <= 0) {
             endGame()
-        }
-        else {
+        } else {
             gameHandler.postDelayed(gameLooper, REFRESH_RATE)
         }
     }
@@ -148,34 +176,56 @@ class GameScreenPresenter(
     // Marks all objects as destroyed; they can-self handle this
     // in the next game loop
     private fun handleEnemyHit(gameModel: GameScreenModel) {
-        val newEnemyList = gameModel.enemies.filter{ !it.isDestroyed }
+        val newEnemyList = gameModel.enemies.filter { !it.isDestroyed }
 
         gameModel.bullets.forEach { bullet ->
             var collided: Boolean
-            var curIndex = 0
 
-            for(enemy in newEnemyList) {
+            for (enemy in newEnemyList) {
                 collided =
-                    // X collision
+                        // X collision
                     (bullet.position.first <= enemy.position.first + enemy.width &&
                             bullet.position.first + bullet.width >= enemy.position.first) &&
-                    // Y collision
-                    (bullet.position.second <= enemy.position.second + enemy.height &&
-                            bullet.position.second >= enemy.position.second)
+                            // Y collision
+                            (bullet.position.second <= enemy.position.second + enemy.height &&
+                                    bullet.position.second >= enemy.position.second)
 
                 if (collided) {
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
                     bullet.isDestroyed = true
                     gameActivity.playSound("asteroidExplosion")
+                    // Generate a random power-up
+                    // see PowerupService for probability of each power-up
+                    val powerupPos = Pair(enemy.position.first, enemy.position.second)
+                    gameModel.powerups = powerupService.updatePowerup(gameModel.powerups, powerupPos)
                     break
                 }
-                curIndex++
             }
         }
     }
 
-    fun resumeGame(){
+    private fun handlePowerupHit(gameModel: GameScreenModel) {
+        val playerPos = gameModel.playerObject.position
+        val playerSz = gameModel.playerObject
+        gameModel.powerups.forEach { pup ->
+            val collided = (pup.position.first <= playerPos.first + playerSz.width*1.2 &&
+                        pup.position.first + pup.width*1.5 >= playerPos.first) &&
+                        // Y collision
+                        (pup.position.second <= playerPos.second + playerSz.height*1.2 &&
+                                pup.position.second >= playerSz.position.second)
+
+            if (collided) {
+                // TODO: Add sound effect
+                pup.isDestroyed = true
+                gameModel.numMissiles += 1
+                missile.background = gameActivity.resources.getDrawable(R.drawable.rocket)
+                missile_txt.text = "x ${gameModel.numMissiles}"
+            }
+        }
+    }
+
+    fun resumeGame() {
         gameTimer!!.resumeTimer()
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
         gamePaused = false
@@ -191,7 +241,7 @@ class GameScreenPresenter(
 
         //Save stats info
         StatsService.setKeysMap(keysHitMissMap)
-        StatsService.setWpm(((words*60*1000)/totalTime).toInt())
+        StatsService.setWpm(((words * 60 * 1000) / totalTime).toInt())
         StatsService.write()
 
         // Stop the game loop from posting so we pause
@@ -211,7 +261,7 @@ class GameScreenPresenter(
         }
 
         fun pauseTimer() {
-            if(timerCompleted){
+            if (timerCompleted) {
                 throw invalidUseError
             }
             currTimeSoFar += System.currentTimeMillis() - currFrameStartTime!!
@@ -219,7 +269,7 @@ class GameScreenPresenter(
         }
 
         fun resumeTimer() {
-            if(timerCompleted){
+            if (timerCompleted) {
                 throw invalidUseError
             }
             currFrameStartTime = System.currentTimeMillis()
@@ -227,10 +277,10 @@ class GameScreenPresenter(
 
         //Only call this when game ends
         fun endTimer(): Long {
-            if(timerCompleted){
+            if (timerCompleted) {
                 throw invalidUseError
             }
-            if(currFrameStartTime != null) {
+            if (currFrameStartTime != null) {
                 currTimeSoFar += System.currentTimeMillis() - currFrameStartTime!!
             }
 

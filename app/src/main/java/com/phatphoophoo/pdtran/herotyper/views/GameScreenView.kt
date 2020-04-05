@@ -16,6 +16,7 @@ class GameScreenView : View {
     private var playerObject : PlayerObject = PlayerObject(Pair(0f,0f))
     private var enemies : List<EnemyObject> = emptyList()
     private var bullets : List<BulletObject> = emptyList()
+    private var powerups : List<PowerupObject> = emptyList()
 
     private var score: Int = 0
     private val scoreText = "Score: "
@@ -36,6 +37,7 @@ class GameScreenView : View {
 
         // MUST pre-initialize bitmaps here, otherwise the game will LAG when loading them
         val bitmapList = mutableListOf(
+            R.drawable.bullet,
             R.drawable.rocket,
             R.drawable.spaceship,
             R.drawable.meteor,
@@ -52,6 +54,7 @@ class GameScreenView : View {
     fun setModel(model: GameScreenModel) {
         enemies = model.enemies.toMutableList()
         bullets = model.bullets.toMutableList()
+        powerups = model.powerups.toMutableList()
         playerObject = model.playerObject
         score = model.score
         lives = model.lives
@@ -65,6 +68,7 @@ class GameScreenView : View {
 
         bullets.forEach { c?.drawGameObject(it) }
         enemies.forEach { c?.drawGameObject(it) }
+        powerups.forEach { c?.drawGameObject(it) }
         c?.drawGameObject(playerObject)
 
         c?.drawText("$scoreText$score", 50f, 75f, textPaint)
