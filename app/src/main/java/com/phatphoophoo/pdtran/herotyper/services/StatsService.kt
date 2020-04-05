@@ -73,8 +73,8 @@ object StatsService {
     }
 
     fun cleanMemory(){
-        sp!!.edit().remove("currGameIndex").commit();
-        sp!!.edit().remove("wpm").commit();
-        sp!!.edit().remove("keysMap").commit();
+        sp.edit().remove("currGameIndex").apply()
+        sp.edit().remove("wpm").apply()
+        sp.edit().remove("keysMap").apply()
     }
 }

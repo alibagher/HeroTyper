@@ -14,26 +14,26 @@ import kotlinx.android.synthetic.main.activity_settings.*
 class SettingsActivity : AppCompatActivity() {
     lateinit var keyboardSettingsPresenter: KeyboardSettingsPresenter
     lateinit var sharedPref: SharedPreferences
-    lateinit var background_volume_seekbar: SeekBar
-    lateinit var sound_volume_seekbar: SeekBar
+    private lateinit var bgVolSeekbar: SeekBar
+    private lateinit var soundVolSeekbar: SeekBar
     var curKbIdx: Int = 0
-    lateinit var keyboard_spinner: Spinner
-    lateinit var kbStyles: Array<String>
+    private lateinit var kbSpinner: Spinner
+    private lateinit var kbStyles: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        background_volume_seekbar = findViewById(R.id.background_volume_seekbar)
-        sound_volume_seekbar = findViewById(R.id.sound_volume_seekbar)
-        keyboard_spinner = findViewById(R.id.keyboard_spinner)
+        bgVolSeekbar = findViewById(R.id.background_volume_seekbar)
+        soundVolSeekbar = findViewById(R.id.sound_volume_seekbar)
+        kbSpinner = findViewById(R.id.keyboard_spinner)
         keyboardSettingsPresenter = KeyboardSettingsPresenter(this, keyboard_settings_view)
         kbStyles = resources.getStringArray(R.array.keyboard_arrays)
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item, kbStyles
         )
-        keyboard_spinner.adapter = adapter
-        keyboard_spinner.onItemSelectedListener = object :
+        kbSpinner.adapter = adapter
+        kbSpinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View,
@@ -51,16 +51,17 @@ class SettingsActivity : AppCompatActivity() {
         sharedPref = getDefaultSharedPreferences(this)
 
         // Restore previous settings
-        background_volume_seekbar.progress =
+        bgVolSeekbar.progress =
             sharedPref.getInt(getString(R.string.background_volume_key), 0)
-        sound_volume_seekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
-        keyboard_spinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
+        soundVolSeekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
+        kbSpinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
 
         save_settings.setOnClickListener {
             if (kbStyles[curKbIdx] == getString(R.string.keyboard_style_custom)
-                && !keyboardSettingsPresenter.saveCustomLayoutIfValid()) {
+                && !keyboardSettingsPresenter.saveCustomLayoutIfValid()
+            ) {
                 val missingChars = keyboardSettingsPresenter.missingChars()
-                val toastTxt = "Invalid keyboard layout. You're missing ${ missingChars }!"
+                val toastTxt = "Invalid keyboard layout. You're missing ${missingChars}!"
                 Toast.makeText(
                     this,
                     toastTxt,
@@ -72,9 +73,9 @@ class SettingsActivity : AppCompatActivity() {
             with(sharedPref.edit()) {
                 putInt(
                     getString(R.string.background_volume_key),
-                    background_volume_seekbar.progress
+                    bgVolSeekbar.progress
                 )
-                putInt(getString(R.string.sound_volume_key), sound_volume_seekbar.progress)
+                putInt(getString(R.string.sound_volume_key), soundVolSeekbar.progress)
                 apply()
             }
 
