@@ -1,4 +1,4 @@
-package com.phatphoophoo.pdtran.herotyper.models
+package com.phatphoophoo.pdtran.herotyper.consts
 
 import com.phatphoophoo.pdtran.herotyper.R
 

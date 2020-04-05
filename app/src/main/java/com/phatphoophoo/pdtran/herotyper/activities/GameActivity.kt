@@ -103,7 +103,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     // Interactions from the fragment
-    // TODO Look at a way to remove activity responsibilty for this
+    // TODO Look at a way to remove activity responsibility for this
     fun onRetryPressed(view: View) {
         supportFragmentManager.popBackStackImmediate()
         for (fragment in supportFragmentManager.fragments){

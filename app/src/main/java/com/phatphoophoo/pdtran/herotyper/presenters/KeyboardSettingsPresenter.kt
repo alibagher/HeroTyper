@@ -9,7 +9,7 @@ import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import com.phatphoophoo.pdtran.herotyper.R
-import com.phatphoophoo.pdtran.herotyper.models.*
+import com.phatphoophoo.pdtran.herotyper.consts.*
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardSettingsView
 import java.util.*
 import com.phatphoophoo.pdtran.herotyper.activities.SettingsActivity as SettingsActivity1

@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import com.phatphoophoo.pdtran.herotyper.R
-import com.phatphoophoo.pdtran.herotyper.models.BUTTONS
+import com.phatphoophoo.pdtran.herotyper.consts.BUTTONS
 
 
 class KeyboardSettingsView :

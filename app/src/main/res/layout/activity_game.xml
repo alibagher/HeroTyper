@@ -20,16 +20,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="1"
             android:alpha="0.5"
-            />
+            >
+    </com.phatphoophoo.pdtran.herotyper.views.ScrollingBGView>
 
     <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/pause"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/pause"
+            android:layout_width="@dimen/pause_btn_width"
+            android:layout_height="@dimen/pause_btn_height"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:alpha="0.7"
+            android:background="@drawable/pause"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,13 +51,34 @@
 
     </FrameLayout>
 
+    <Button
+            android:id="@+id/missile"
+            android:layout_width="@dimen/missile_sz_width"
+            android:layout_height="@dimen/missile_sz_height"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rocket"
+            app:layout_constraintBottom_toTopOf="@+id/num_missiles"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+            android:id="@+id/num_missiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="70dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/num_missiles_txt_sz"
+            app:layout_constraintBottom_toTopOf="@+id/keyboard_game_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
     <com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
             android:id="@+id/keyboard_game_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" >
+            app:layout_constraintStart_toStartOf="parent">
 
     </com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView>
 
