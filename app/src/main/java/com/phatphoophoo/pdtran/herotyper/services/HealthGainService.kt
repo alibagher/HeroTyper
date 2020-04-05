@@ -32,6 +32,7 @@ class HealthGainService(
             }
         }
 
+        //TODO: Implement better spawn strategy, possibly by level
         //If no object is present, perform the logic to generate next object
         return if(nextSpawnTicker !=null && currentTicker >= nextSpawnTicker!!) {
             nextSpawnTicker = null
