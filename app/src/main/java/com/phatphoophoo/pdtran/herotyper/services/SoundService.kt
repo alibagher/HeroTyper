@@ -7,9 +7,11 @@ import android.os.DeadObjectException
 import android.os.Handler
 import com.phatphoophoo.pdtran.herotyper.R
 
-class SoundService(context: Context) {
+class SoundManager(context: Context) {
     private var backgroundVolume : Int = 60
     private var soundVolume : Int = 100
+    private var globalSoundVolume : Float = 1f // TODO Pull from device, utilize in calculations
+
     private val retryDelay : Long = 5 // in MS
 
     var soundPool : SoundPool
