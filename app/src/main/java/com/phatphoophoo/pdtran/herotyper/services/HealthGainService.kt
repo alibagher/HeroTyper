@@ -39,7 +39,7 @@ class HealthGainService(
             listOf(BasicHealthGainObject(randomHealthGainObjectXPos()))
         } else if(nextSpawnTicker == null) {
             currentTicker = 0
-            nextSpawnTicker = currentTicker + 50 + (Math.random() * 100).toInt()
+            nextSpawnTicker = currentTicker + 250 + (Math.random() * 100).toInt()
             emptyList()
         } else {
             emptyList()

@@ -107,10 +107,11 @@ class GameScreenPresenter(
                     gameActivity.soundService.playSound(R.raw.blast)
                 }
                 gameModel.numMissiles -= 1
+
             }
             missile_txt.text = "x ${gameModel.numMissiles}"
             if (gameModel.numMissiles == 0) {
-                missile.background = gameActivity.resources.getDrawable(R.drawable.grayscale_rocket)
+                missile.alpha = 0.3f
             }
         }
 
@@ -250,7 +251,7 @@ class GameScreenPresenter(
                 // TODO: Add sound effect
                 pup.isDestroyed = true
                 gameModel.numMissiles += 1
-                missile.background = gameActivity.resources.getDrawable(R.drawable.rocket)
+                missile.alpha = 1f
                 missile_txt.text = "x ${gameModel.numMissiles}"
             }
         }

@@ -37,8 +37,8 @@ class BasicHealthGainObject(
 ): HealthGainObject() {
     override val velocity = 4.1f
     override var bitmapResId: Int = R.drawable.plasma_ball
-    override var height: Float = 100F
-    override var width: Float = 130F
+    override var height: Float = 120F
+    override var width: Float = 120F
     override var position: Pair<Float, Float> = Pair(xPos, -height)
     override val scoreValue = 0
     override var isRewarded: Boolean = false

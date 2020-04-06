@@ -11,8 +11,8 @@ class PowerupService {
         powerups.forEach{ pup -> movedPups.addAll(pup.updateState())}
         if (newPos != null) {
             val randNum = (0..100).random()
-            // 30% chance missile
-            if (randNum < 30) {
+            // 10% chance missile
+            if (randNum < 10) {
                 movedPups.add(MissilePowerup(newPos, powerupVelocity))
             }
         }

@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.objects.*
+import kotlin.math.max
 
 class EnemyService(
     private val difficulty: GAME_DIFFICULTY,
@@ -17,6 +18,7 @@ class EnemyService(
     val SPAWN_OFFSET : Float = 200f // To make sure no enemies are offscreen
 
     private var currentTick = 150 // Reduce the initial wait
+    private var spawnRamp = 0
     private var hitStack = 0
 
     private fun randomEnemyXPosition(): Float {
@@ -49,7 +51,9 @@ class EnemyService(
 
      // --- Strategies for adding enemies based off the game difficulty set ---
     private fun addEnemyEasy() : List<EnemyObject> {
-         if (currentTick < 200) return emptyList()
+         val spawnWait = max(200 - spawnRamp, 100)
+
+         if (currentTick < spawnWait) return emptyList()
          currentTick = 0
 
          // Random value between 0 and 100
@@ -61,11 +65,14 @@ class EnemyService(
              else -> SplittingEnemy(randomEnemyXPosition())
          }
 
+         spawnRamp += Math.random().toInt() // 50/50 chance to ramp
          return listOf(newEnemy)
     }
 
     private fun addEnemyMedium() : List<EnemyObject> {
-        if (currentTick < 160) return emptyList()
+        val spawnWait = max(160 - spawnRamp, 80)
+
+        if (currentTick < spawnWait) return emptyList()
         currentTick = 0
 
         // Random value between 0 and 100
@@ -78,11 +85,14 @@ class EnemyService(
             else -> StrafingEnemy(randomEnemyXPosition())
         }
 
+        spawnRamp++
         return listOf(newEnemy)
     }
 
     private fun addEnemyHard() : List<EnemyObject> {
-        if (currentTick < 140) return emptyList()
+        val spawnWait = max(140 - spawnRamp, 40)
+
+        if (currentTick < spawnWait) return emptyList()
         currentTick = 0
 
         // Random value between 0 and 100
@@ -95,6 +105,7 @@ class EnemyService(
             else -> StrafingEnemy(randomEnemyXPosition())
         }
 
+        spawnRamp += 2
         return listOf(newEnemy)
     }
 
