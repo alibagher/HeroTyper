@@ -44,11 +44,11 @@ class GameScreenView : View {
             R.drawable.meteor,
             R.drawable.meteor_fast,
             R.drawable.meteor_strafe,
-            R.drawable.meteor_split
+            R.drawable.meteor_split,
+            R.drawable.plasma_ball
         )
 
         bitmapList.addAll(0, DestroyedEnemy.BITMAP_RES_LIST)
-        bitmapList.addAll(BasicHealthGainObject.BITMAP_RES_LIST)
         bitmapList.addAll(DestroyedHealthGainObject.BITMAP_RES_LIST)
         bitmapList.addAll(RewardHealthGainObject.BITMAP_RES_LIST)
         cachedBitmaps = bitmapList.associateBy({it}, {BitmapFactory.decodeResource(resources, it)})

@@ -36,6 +36,8 @@ class SoundService(context: Context) {
         soundMap[R.raw.start_level] = soundPool.load(context, R.raw.start_level, 1)
         soundMap[R.raw.button_confirm] = soundPool.load(context, R.raw.button_confirm, 1)
         soundMap[R.raw.button_cancel] = soundPool.load(context, R.raw.button_cancel, 1)
+        soundMap[R.raw.blast] = soundPool.load(context, R.raw.blast, 1)
+        soundMap[R.raw.plasma_explode] = soundPool.load(context, R.raw.plasma_explode, 1)
 
         // Setup sound levels based off shared prefs
         val sharedPref = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)

@@ -104,7 +104,7 @@ class GameScreenPresenter(
                 for (enemy in gameModel.enemies) {
                     gameModel.score += enemy.scoreValue
                     enemy.isDestroyed = true
-                    gameActivity.soundService.playSound(R.raw.asteroid_explosion)
+                    gameActivity.soundService.playSound(R.raw.blast)
                 }
                 gameModel.numMissiles -= 1
             }
@@ -220,12 +220,13 @@ class GameScreenPresenter(
             }
             healthGainObject.isRewarded = collidedWithBullet
 
-            if(healthGainObject.isRewarded)
+            if(healthGainObject.isRewarded){
                 rewardCount += 1
+                gameActivity.soundService.playSound(R.raw.plasma_explode)
+            }
         }
 
         return rewardCount
-
     }
 
     private fun checkCollision(obj1: GameObject, obj2: GameObject): Boolean {

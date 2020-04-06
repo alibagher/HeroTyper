@@ -36,25 +36,12 @@ class BasicHealthGainObject(
     xPos: Float, yPos: Float
 ): HealthGainObject() {
     override val velocity = 4.1f
-    override var bitmapResId: Int = BITMAP_RES_LIST[0]
+    override var bitmapResId: Int = R.drawable.plasma_ball
     override var height: Float = 100F
     override var width: Float = 130F
     override var position: Pair<Float, Float> = Pair(xPos, yPos)
     override val scoreValue = 0
     override var isRewarded: Boolean = false
-
-    init {
-        bitmapResId = BITMAP_RES_LIST[Random.nextInt(0, BITMAP_RES_LIST.size)]
-    }
-
-    companion object {
-        val BITMAP_RES_LIST: List<Int> = listOf(
-            R.drawable.ufo_green,
-            R.drawable.ufo_orange,
-            R.drawable.ufo_white
-        )
-    }
-
 }
 
 // Does nothing but animate
