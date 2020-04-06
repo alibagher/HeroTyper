@@ -24,7 +24,9 @@ class BulletService {
     fun updateBullets(bullets: List<BulletObject>, newBulletPosition: Pair<Float,Float>) : List<BulletObject> {
         val newList = updateBullets(bullets).toMutableList()
 
-        newList.add(BasicBullet(newBulletPosition, bulletVelocity))
+        // Bad code to move the shot to the center
+        val pos = Pair(newBulletPosition.first + 5f, newBulletPosition.second)
+        newList.add(BasicBullet(pos, bulletVelocity))
 
         return newList
     }
