@@ -66,6 +66,8 @@ class GameActivity : AppCompatActivity() {
         gameMenuFragment = GameMenuFragment.newInstance(isGameOver = false)
         fragmentTransaction.add(R.id.game_screen_layout, gameMenuFragment!!)
         fragmentTransaction.commit()
+
+        soundService.playSound(R.raw.button_confirm)
     }
 
     fun hidePauseFragment(){
@@ -83,6 +85,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         initGame()
+        soundService.playSound(R.raw.button_confirm)
     }
 
     fun onResumePressed(view: View) {
@@ -91,10 +94,14 @@ class GameActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().remove(fragment).commit()
         }
         gameScreenPresenter.resumeGame()
+
+        soundService.playSound(R.raw.button_confirm)
     }
 
     fun onExitPressed(view: View) {
         gameOver = true
         finish()
+
+        soundService.playSound(R.raw.button_cancel)
     }
 }
