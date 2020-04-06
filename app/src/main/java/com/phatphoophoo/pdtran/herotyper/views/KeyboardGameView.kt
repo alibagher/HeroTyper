@@ -44,6 +44,18 @@ class KeyboardGameView :
         }
     }
 
+    fun setKeysListener(onKeyPress: ((b: Button) -> Unit)?) {
+        for (bid in BUTTONS.values()) {
+            val btn = findViewById<Button>(bid.id)
+            if (onKeyPress == null) {
+                btn.setOnClickListener(null)
+            }
+            btn.setOnClickListener {
+                onKeyPress?.invoke(btn)
+            }
+        }
+    }
+
     fun getColoredSpanned(text: String, color: String): String {
         val input = "<font color=$color>$text</font>"
         return input

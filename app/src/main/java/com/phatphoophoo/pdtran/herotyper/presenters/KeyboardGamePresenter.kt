@@ -6,7 +6,7 @@ import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
 import com.phatphoophoo.pdtran.herotyper.consts.*
-import com.phatphoophoo.pdtran.herotyper.models.*
+import com.phatphoophoo.pdtran.herotyper.models.GAME_DIFFICULTY
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
 
 class KeyboardGamePresenter(
@@ -20,7 +20,8 @@ class KeyboardGamePresenter(
     private var curLetterIndex = 0
     private var hasWordCompleted = false
     private val keysMap: MutableMap<String, Pair<Int, Int>> = generateKeysMap()
-    private var kbStyles: Array<String> = gameActivity.resources.getStringArray(R.array.keyboard_arrays)
+    private var kbStyles: Array<String> =
+        gameActivity.resources.getStringArray(R.array.keyboard_arrays)
     private var sharedPref: SharedPreferences =
         gameActivity.getSharedPreferences(
             gameActivity.packageName + "_preferences",
@@ -96,7 +97,7 @@ class KeyboardGamePresenter(
     }
 
     private fun setNewWord() {
-        if (curDictionaryPosition >= curLevelWords.size){
+        if (curDictionaryPosition >= curLevelWords.size) {
             curDictionaryPosition = 0
         }
 
@@ -104,6 +105,10 @@ class KeyboardGamePresenter(
         curDictionaryPosition++
         curWord = newWord
         curLetterIndex = 0
+    }
+
+    fun toggleInput(isPaused: Boolean) {
+        keyboardGameView.setKeysListener(if (isPaused) null else ::onKeyPress)
     }
 
     fun hasWordCompleted(): Boolean {

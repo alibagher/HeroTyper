@@ -9,6 +9,6 @@ class PlayerObject(override var position: Pair<Float, Float>) : GameObject() {
     override var bitmapResId: Int = R.drawable.spaceship
 
     companion object {
-        val size = 200f
+        const val size = 200f
     }
 }

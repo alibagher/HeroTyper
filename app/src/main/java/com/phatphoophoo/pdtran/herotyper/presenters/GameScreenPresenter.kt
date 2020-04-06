@@ -92,6 +92,7 @@ class GameScreenPresenter(
                 gameActivity.hidePauseFragment()
                 resumeGame()
             }
+            keyboardGamePresenter.toggleInput(gamePaused)
         }
 
         // set up missiles count display + event listener
@@ -212,8 +213,7 @@ class GameScreenPresenter(
 
         var rewardCount = 0
         liveHealthGainObjects.forEach{ healthGainObject ->
-            val collidedWithPlayer = checkCollision(playerObject, healthGainObject)
-            healthGainObject.isRewarded = collidedWithPlayer
+            healthGainObject.isRewarded = checkCollision(playerObject, healthGainObject)
 
             if(healthGainObject.isRewarded){
                 rewardCount += 1
@@ -225,37 +225,28 @@ class GameScreenPresenter(
     }
 
     private fun checkCollision(obj1: GameObject, obj2: GameObject): Boolean {
-        val collided =
-                // X collision
-                (obj1.position.first <= obj2.position.first + obj2.width &&
-                    obj1.position.first + obj1.width >= obj2.position.first) &&
-                // Y collision
-                (obj1.position.second <= obj2.position.second + obj2.height &&
-                    obj1.position.second >= obj2.position.second)
-
-        return collided
+        return (obj1.position.first <= obj2.position.first + obj2.width &&
+            obj1.position.first + obj1.width >= obj2.position.first) &&
+        // Y collision
+        (obj1.position.second <= obj2.position.second + obj2.height &&
+            obj1.position.second >= obj2.position.second)
     }
 
-
     private fun handlePowerupHit(gameModel: GameScreenModel) {
-        val playerPos = gameModel.playerObject.position
-        val playerSz = gameModel.playerObject
+        val playerObj = gameModel.playerObject
         gameModel.powerups.forEach { pup ->
-            val collided = (pup.position.first <= playerPos.first + playerSz.width*1.2 &&
-                        pup.position.first + pup.width*1.5 >= playerPos.first) &&
-                        // Y collision
-                        (pup.position.second <= playerPos.second + playerSz.height*1.2 &&
-                                pup.position.second >= playerSz.position.second)
+            val collided = checkCollision(pup, playerObj)
 
             if (collided) {
-                // TODO: Add sound effect
                 pup.isDestroyed = true
                 gameModel.numMissiles += 1
                 missile.alpha = 1f
                 missile_txt.text = "x ${gameModel.numMissiles}"
+                gameActivity.soundService.playSound(R.raw.plasma_explode)
             }
         }
     }
+
     fun resumeGame(){
         gameTimer!!.resumeTimer()
         gameHandler.postDelayed(gameLooper, REFRESH_RATE)
