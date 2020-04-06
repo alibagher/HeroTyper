@@ -206,7 +206,6 @@ val WORD_DICTIONARY: Map<GAME_DIFFICULTY, List<String>> = mapOf(
         "wild",
         "clash",
         "print",
-        "bitch",
         "seed",
         "calf",
         "jail",
@@ -262,7 +261,6 @@ val WORD_DICTIONARY: Map<GAME_DIFFICULTY, List<String>> = mapOf(
         "voter",
         "glory",
         "support",
-        "torture",
         "feature",
         "construct",
         "abuse",
@@ -308,7 +306,6 @@ val WORD_DICTIONARY: Map<GAME_DIFFICULTY, List<String>> = mapOf(
         "borrow",
         "positive",
         "modernize",
-        "abortion",
         "director",
         "clarify",
         "omission",
@@ -320,7 +317,6 @@ val WORD_DICTIONARY: Map<GAME_DIFFICULTY, List<String>> = mapOf(
         "innocent",
         "victory",
         "decorative",
-        "ghostwriter"
     ),
     GAME_DIFFICULTY.HARD to listOf(
         "intermediate",
