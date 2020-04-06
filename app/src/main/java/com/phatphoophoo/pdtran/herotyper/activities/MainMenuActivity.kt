@@ -45,32 +45,39 @@ class MainMenuActivity : Activity() {
         // Setup button behavior
         start_game_button.setOnClickListener {
             setMenuState(MENU_STATE.DIFFICULTY)
+            soundService.playSound(R.raw.button_confirm)
         }
 
         easy_button.setOnClickListener{
             startGame(GAME_DIFFICULTY.EASY)
+            soundService.playSound(R.raw.button_confirm)
         }
 
         medium_button.setOnClickListener{
             startGame(GAME_DIFFICULTY.MEDIUM)
+            soundService.playSound(R.raw.button_confirm)
         }
 
         hard_button.setOnClickListener{
             startGame(GAME_DIFFICULTY.HARD)
+            soundService.playSound(R.raw.button_confirm)
         }
 
         cancel_button.setOnClickListener{
             setMenuState(MENU_STATE.MAIN)
+            soundService.playSound(R.raw.button_cancel)
         }
 
         view_stats_button.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
+            soundService.playSound(R.raw.button_confirm)
         }
 
         settings_button.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+            soundService.playSound(R.raw.button_confirm)
         }
     }
 

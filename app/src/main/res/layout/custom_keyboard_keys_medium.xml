@@ -199,6 +199,7 @@
                 android:id="@+id/button22"
                 android:layout_width="@dimen/keyboard_med_btn_sz"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/keyboard_med_txt_sz"
                 android:text="C" />
 
         <Button

@@ -2,6 +2,7 @@ package com.phatphoophoo.pdtran.herotyper.services
 
 import android.content.Context
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.SoundPool
 import android.os.DeadObjectException
 import android.os.Handler
@@ -10,7 +11,6 @@ import com.phatphoophoo.pdtran.herotyper.R
 class SoundService(context: Context) {
     private var backgroundVolume : Int = 60
     private var soundVolume : Int = 100
-    private var globalSoundVolume : Float = 1f // TODO Pull from device, utilize in calculations
 
     private val retryDelay : Long = 5 // in MS
 
