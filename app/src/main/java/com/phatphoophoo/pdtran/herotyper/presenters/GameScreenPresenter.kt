@@ -160,8 +160,6 @@ class GameScreenPresenter(
             gameActivity.soundService.playSound(R.raw.base_explosion)
         }
 
-        //TODO add sound for gaining a life
-
         gameModel.lives = livesLeft
 
         // Check for bullet-enemy collisions
@@ -209,16 +207,12 @@ class GameScreenPresenter(
     //Returns lives gained
     private fun handleHealthGainObjectHit(gameModel: GameScreenModel): Int {
         val liveHealthGainObjects = gameModel.healthGainObjects.filter { healthGainObject -> !healthGainObject.isDestroyed && !healthGainObject.isRewarded }
+        val playerObject = gameModel.playerObject
 
         var rewardCount = 0
         liveHealthGainObjects.forEach{ healthGainObject ->
-            val liveBullets = gameModel.bullets.filter { bullet -> !bullet.isDestroyed }
-            val collidedWithBullet = liveBullets.foldRight(false) { bullet, alreadyCollided ->
-                val collided = checkCollision(bullet, healthGainObject)
-                bullet.isDestroyed = collided
-                alreadyCollided ||  collided
-            }
-            healthGainObject.isRewarded = collidedWithBullet
+            val collidedWithPlayer = checkCollision(playerObject, healthGainObject)
+            healthGainObject.isRewarded = collidedWithPlayer
 
             if(healthGainObject.isRewarded){
                 rewardCount += 1

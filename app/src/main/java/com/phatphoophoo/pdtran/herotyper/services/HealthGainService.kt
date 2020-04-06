@@ -1,8 +1,8 @@
 package com.phatphoophoo.pdtran.herotyper.services
 
 import com.phatphoophoo.pdtran.herotyper.objects.BasicHealthGainObject
-import com.phatphoophoo.pdtran.herotyper.objects.BulletObject
 import com.phatphoophoo.pdtran.herotyper.objects.HealthGainObject
+import kotlin.random.Random
 
 class HealthGainService(
     val windowSize: Pair<Float,Float>
@@ -14,7 +14,7 @@ class HealthGainService(
     private var nextSpawnTicker: Int? = null
 
     private fun randomHealthGainObjectXPos(): Float {
-        return (Math.random() * (windowSize.first - SPAWN_OFFSET)).toFloat()
+        return Random.nextInt(SPAWN_OFFSET.toInt(), (windowSize.first - SPAWN_OFFSET).toInt()).toFloat()
     }
 
     //Current impl only allows one health gain object present at a time
@@ -36,7 +36,7 @@ class HealthGainService(
         //If no object is present, perform the logic to generate next object
         return if(nextSpawnTicker !=null && currentTicker >= nextSpawnTicker!!) {
             nextSpawnTicker = null
-            listOf(BasicHealthGainObject(randomHealthGainObjectXPos(), 50F))
+            listOf(BasicHealthGainObject(randomHealthGainObjectXPos()))
         } else if(nextSpawnTicker == null) {
             currentTicker = 0
             nextSpawnTicker = currentTicker + 50 + (Math.random() * 100).toInt()
