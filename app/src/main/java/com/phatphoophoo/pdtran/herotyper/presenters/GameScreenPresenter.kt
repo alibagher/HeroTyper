@@ -137,7 +137,7 @@ class GameScreenPresenter(
         // Check for completed words to fire bullets
         if (keyboardGamePresenter.hasWordCompleted()) {
             val bulletPos = Pair(
-                gameModel.playerObject.position.first + 75, // TODO: Remove hardcoded value
+                gameModel.playerObject.position.first,
                 gameModel.playerObject.position.second
             )
 
