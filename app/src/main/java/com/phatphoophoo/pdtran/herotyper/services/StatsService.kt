@@ -60,12 +60,13 @@ object StatsService {
 
         //set up an empty map
         for(i in 1..26){
-            sumMap.put((96+i).toChar().toString() ,Pair(0,0))
+            sumMap[(96+i).toChar().toString()] = Pair(0,0)
         }
 
         for (m in arr) {
             for ((k, v) in m) {
-                sumMap.put(k, Pair(sumMap[k]!!.first + v[0], sumMap[k]!!.second + v[1]))
+                if (k.isEmpty()) continue
+                sumMap[k] = Pair(sumMap[k]!!.first + v[0], sumMap[k]!!.second + v[1])
             }
         }
         return sumMap
