@@ -65,7 +65,7 @@ class GameScreenPresenter(
 
     init {
         scrollingBg.animator.start()
-        gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - 274))
+        gameModel.playerObject = PlayerObject(Pair(lastXPos, windowSize.second - PlayerObject.size))
         keyboardTxtView = gameActivity.findViewById(R.id.curWordTextView) as TextView
         keyboardView = gameActivity.findViewById(R.id.custom_keyboard_keys_large) as LinearLayout
         //Initialize game
@@ -126,7 +126,7 @@ class GameScreenPresenter(
     // type in question
     private fun gameLoop() {
         // Update the state of the game objects
-        gameModel.playerObject.position = Pair(lastXPos, windowSize.second - 274)
+        gameModel.playerObject.position = Pair(lastXPos, windowSize.second - PlayerObject.size)
 
         gameModel.enemies = enemyService.updateEnemies(gameModel.enemies)
 

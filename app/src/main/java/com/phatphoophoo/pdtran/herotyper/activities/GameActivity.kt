@@ -17,7 +17,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var keyboardGamePresenter: KeyboardGamePresenter
     lateinit var gameScreenPresenter: GameScreenPresenter
     private var gameMenuFragment: Fragment? = null
-    lateinit var screenSize: Pair<Float,Float>
+    lateinit var windowSize: Pair<Float,Float>
     lateinit var gameDifficulty: GAME_DIFFICULTY
 
     lateinit var soundService : SoundService
@@ -43,14 +43,14 @@ class GameActivity : AppCompatActivity() {
         val scale = resources.displayMetrics.density
         val height = (displayMetrics.heightPixels - 200*scale)
         val width = (displayMetrics.widthPixels).toFloat()
-        screenSize = Pair(width, height)
+        windowSize = Pair(width, height - 74)
 
         initGame()
     }
 
     fun initGame() {
         keyboardGamePresenter = KeyboardGamePresenter(this, keyboard_game_view, gameDifficulty)
-        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardGamePresenter, screenSize, gameDifficulty)
+        gameScreenPresenter = GameScreenPresenter(this, game_screen_view, keyboardGamePresenter, windowSize, gameDifficulty)
     }
 
     fun showGameOverFragment() {
