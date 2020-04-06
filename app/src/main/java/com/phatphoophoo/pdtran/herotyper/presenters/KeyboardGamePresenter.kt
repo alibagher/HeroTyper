@@ -5,90 +5,18 @@ import android.content.SharedPreferences
 import android.widget.Button
 import com.phatphoophoo.pdtran.herotyper.R
 import com.phatphoophoo.pdtran.herotyper.activities.GameActivity
-import com.phatphoophoo.pdtran.herotyper.consts.BUTTONS
-import com.phatphoophoo.pdtran.herotyper.consts.colemak
-import com.phatphoophoo.pdtran.herotyper.consts.dvorak
-import com.phatphoophoo.pdtran.herotyper.consts.qwerty
+import com.phatphoophoo.pdtran.herotyper.consts.*
 import com.phatphoophoo.pdtran.herotyper.models.*
 import com.phatphoophoo.pdtran.herotyper.views.KeyboardGameView
-
-val dictionary: Map<GAME_DIFFICULTY, List<String>> = mapOf(
-    GAME_DIFFICULTY.EASY to listOf(
-        "glow",
-        "height",
-        "deal",
-        "waste",
-        "brown",
-        "leash",
-        "rule",
-        "home",
-        "pat",
-        "block",
-        "tune",
-        "cut",
-        "spread",
-        "weave",
-        "deer",
-        "cell",
-        "leaf",
-        "pluck",
-        "north",
-        "round"
-    ),
-    GAME_DIFFICULTY.MEDIUM to listOf(
-        "correction",
-        "exemption",
-        "formation",
-        "exclusive",
-        "candidate",
-        "difference",
-        "episode",
-        "organize",
-        "accurate",
-        "average",
-        "horizon",
-        "apathy",
-        "particle",
-        "bulletin",
-        "medieval",
-        "objective",
-        "analyst",
-        "shareholder",
-        "consciousness",
-        "permanent"
-    ),
-    GAME_DIFFICULTY.HARD to listOf(
-        "intermediate",
-        "decoration",
-        "unanimous",
-        "execution",
-        "variation",
-        "institution",
-        "acceptable",
-        "deteriorate",
-        "coincidence",
-        "notorious",
-        "qualification",
-        "electronics",
-        "resignation",
-        "continental",
-        "entertainment",
-        "initiative",
-        "economist",
-        "architecture",
-        "demonstrator",
-        "integrated"
-    )
-)
 
 class KeyboardGamePresenter(
     private val gameActivity: GameActivity,
     private val keyboardGameView: KeyboardGameView,
     gameDifficulty: GAME_DIFFICULTY
 ) {
-
     private var curLevelWords: List<String> = emptyList()
     private var curWord = ""
+    private var curDictionaryPosition = 0
     private var curLetterIndex = 0
     private var hasWordCompleted = false
     private val keysMap: MutableMap<String, Pair<Int, Int>> = generateKeysMap()
@@ -101,7 +29,8 @@ class KeyboardGamePresenter(
 
     init {
         setup()
-        curLevelWords = dictionary.getValue(gameDifficulty)
+        curLevelWords = WORD_DICTIONARY.getValue(gameDifficulty).shuffled()
+        curDictionaryPosition = 0
         setNewWord()
         keyboardGameView.renderWord(curWord, curLetterIndex)
     }
@@ -167,11 +96,12 @@ class KeyboardGamePresenter(
     }
 
     private fun setNewWord() {
-        var newWord = curWord
-        while (newWord == curWord) {
-            newWord = curLevelWords[(0 until (curLevelWords.size)).random()]
+        if (curDictionaryPosition >= curLevelWords.size){
+            curDictionaryPosition = 0
         }
 
+        val newWord = curLevelWords[curDictionaryPosition]
+        curDictionaryPosition++
         curWord = newWord
         curLetterIndex = 0
     }

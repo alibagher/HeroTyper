@@ -53,8 +53,8 @@ class SettingsActivity : AppCompatActivity() {
         // Restore previous settings
         bgVolSeekbar.progress =
             sharedPref.getInt(getString(R.string.background_volume_key), 0)
-        soundVolSeekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 0)
-        kbSpinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 0))
+        soundVolSeekbar.progress = sharedPref.getInt(getString(R.string.sound_volume_key), 60)
+        kbSpinner.setSelection(sharedPref.getInt(getString(R.string.keyboard_style_key), 100))
 
         save_settings.setOnClickListener {
             if (kbStyles[curKbIdx] == getString(R.string.keyboard_style_custom)
